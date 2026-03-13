@@ -42,7 +42,7 @@ export function Header() {
   }, [])
 
   return (
-    <AnimatePresence>
+    <>
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -370,6 +370,6 @@ export function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </AnimatePresence>
+    </>
   )
 }
