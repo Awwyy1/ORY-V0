@@ -48,9 +48,9 @@ export function Header() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled 
+          isScrolled || isMenuOpen
             ? "bg-white border-b border-[#E5E5E5]" 
-            : "bg-transparent"
+            : "bg-transparent md:bg-transparent bg-white"
         }`}
       >
         <div className="w-full px-4 md:px-8 lg:px-12">
@@ -264,16 +264,16 @@ export function Header() {
           >
             <div className="flex flex-col h-full">
               {/* Navigation Links */}
-              <nav className="flex-1 border-t border-[#E5E5E5]">
+              <nav className="flex-1 border-t border-[#F0F0F0]">
                 {navLinks.map((link, index) => (
                   <motion.a
                     key={link.name}
                     href={link.href}
-                    initial={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.05 }}
+                    transition={{ duration: 0.15, delay: index * 0.03 }}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block px-4 py-4 text-base font-light tracking-wide text-[#1A1A1A] border-b border-[#E5E5E5]"
+                    className="block px-5 py-3 text-sm font-light tracking-wider text-[#1A1A1A] border-b border-[#F0F0F0] hover:bg-[#FAFAFA] transition-colors"
                   >
                     {link.name}
                   </motion.a>
@@ -281,9 +281,9 @@ export function Header() {
               </nav>
 
               {/* Bottom Section with Language and Currency */}
-              <div className="border-t border-[#E5E5E5] px-4 py-4">
-                <div className="flex items-center gap-4">
-                  <Globe strokeWidth={1} className="w-5 h-5 text-[#1A1A1A]" />
+              <div className="border-t border-[#F0F0F0] px-5 py-3">
+                <div className="flex items-center gap-6">
+                  <Globe strokeWidth={1} className="w-4 h-4 text-[#666666]" />
                   
                   {/* Language Selector */}
                   <div className="relative">
@@ -292,10 +292,10 @@ export function Header() {
                         setIsMenuLangOpen(!isMenuLangOpen)
                         setIsMenuCurrencyOpen(false)
                       }}
-                      className="flex items-center gap-1 text-sm font-light text-[#1A1A1A]"
+                      className="flex items-center gap-1 text-xs font-light text-[#666666] hover:text-[#1A1A1A] transition-colors"
                     >
                       <span>{languages.find(l => l.code === selectedLang)?.name}</span>
-                      <ChevronDown strokeWidth={1} className="w-4 h-4" />
+                      <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
                     
                     <AnimatePresence>
@@ -306,7 +306,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#E5E5E5] shadow-sm min-w-[120px]"
+                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#F0F0F0] shadow-sm min-w-[100px]"
                         >
                           {languages.map((lang) => (
                             <button
@@ -315,7 +315,7 @@ export function Header() {
                                 setSelectedLang(lang.code)
                                 setIsMenuLangOpen(false)
                               }}
-                              className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-[#F5F5F5] ${
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-[#FAFAFA] ${
                                 selectedLang === lang.code ? "text-[#1A1A1A]" : "text-[#666666]"
                               }`}
                             >
@@ -334,10 +334,10 @@ export function Header() {
                         setIsMenuCurrencyOpen(!isMenuCurrencyOpen)
                         setIsMenuLangOpen(false)
                       }}
-                      className="flex items-center gap-1 text-sm font-light text-[#1A1A1A]"
+                      className="flex items-center gap-1 text-xs font-light text-[#666666] hover:text-[#1A1A1A] transition-colors"
                     >
                       <span>{currencies.find(c => c.code === selectedCurrency)?.name}</span>
-                      <ChevronDown strokeWidth={1} className="w-4 h-4" />
+                      <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
                     
                     <AnimatePresence>
@@ -348,7 +348,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#E5E5E5] shadow-sm min-w-[160px]"
+                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#F0F0F0] shadow-sm min-w-[140px]"
                         >
                           {currencies.map((currency) => (
                             <button
@@ -357,7 +357,7 @@ export function Header() {
                                 setSelectedCurrency(currency.code)
                                 setIsMenuCurrencyOpen(false)
                               }}
-                              className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-[#F5F5F5] ${
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-[#FAFAFA] ${
                                 selectedCurrency === currency.code ? "text-[#1A1A1A]" : "text-[#666666]"
                               }`}
                             >
