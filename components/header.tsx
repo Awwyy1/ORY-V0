@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Heart, User, ShoppingBag, ChevronDown, Menu, Globe } from "lucide-react"
+import { Search, Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, Globe } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navLinks = [
@@ -11,9 +11,17 @@ const navLinks = [
   { name: "The Heritage", href: "#heritage" },
 ]
 
+const languages = [
+  { code: "de", name: "Deutsch" },
+  { code: "en", name: "English" },
+  { code: "fr", name: "Français" },
+]
+
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [cartCount] = useState(2)
+  const [isLangOpen, setIsLangOpen] = useState(false)
+  const [selectedLang, setSelectedLang] = useState("en")
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,14 +56,50 @@ export function Header() {
               >
                 <Menu strokeWidth={1} className="w-5 h-5" />
               </button>
-              <button 
-                className={`transition-colors duration-300 ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                }`}
-                aria-label="Language"
-              >
-                <Globe strokeWidth={1} className="w-5 h-5" />
-              </button>
+              <div className="relative">
+                <button 
+                  onClick={() => setIsLangOpen(!isLangOpen)}
+                  className={`flex items-center gap-1 transition-colors duration-300 ${
+                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                  }`}
+                  aria-label="Language"
+                >
+                  <Globe strokeWidth={1} className="w-5 h-5" />
+                  {isLangOpen ? (
+                    <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
+                  ) : (
+                    <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
+                  )}
+                </button>
+                
+                {/* Language Dropdown */}
+                <AnimatePresence>
+                  {isLangOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full left-0 mt-2 bg-white border border-[#E5E5E5] shadow-sm min-w-[100px]"
+                    >
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setSelectedLang(lang.code)
+                            setIsLangOpen(false)
+                          }}
+                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-[#F5F5F5] ${
+                            selectedLang === lang.code ? "text-[#1A1A1A]" : "text-[#666666]"
+                          }`}
+                        >
+                          {lang.name}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               <button 
                 className={`transition-colors duration-300 ${
                   isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
