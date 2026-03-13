@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Heart, User, ShoppingBag, ChevronDown } from "lucide-react"
+import { Search, Heart, User, ShoppingBag, ChevronDown, Menu, Globe } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navLinks = [
@@ -35,20 +35,49 @@ export function Header() {
             : "bg-transparent"
         }`}
       >
-        <div className="w-full px-8 lg:px-12">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="/" className="flex-shrink-0">
+        <div className="w-full px-4 md:px-8 lg:px-12">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            
+            {/* Mobile Left Controls */}
+            <div className="flex md:hidden items-center gap-3">
+              <button 
+                className={`transition-colors duration-300 ${
+                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                }`}
+                aria-label="Menu"
+              >
+                <Menu strokeWidth={1} className="w-5 h-5" />
+              </button>
+              <button 
+                className={`transition-colors duration-300 ${
+                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                }`}
+                aria-label="Language"
+              >
+                <Globe strokeWidth={1} className="w-5 h-5" />
+              </button>
+              <button 
+                className={`transition-colors duration-300 ${
+                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                }`}
+                aria-label="Wishlist"
+              >
+                <Heart strokeWidth={1} className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Logo - Desktop: Left, Mobile: Center */}
+            <a href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <span 
-                className={`font-display text-2xl font-bold tracking-wide transition-colors duration-500 ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-white"
+                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${
+                  isScrolled ? "text-[#1A1A1A]" : "md:text-white text-[#1A1A1A]"
                 }`}
               >
                 ORY
               </span>
             </a>
 
-            {/* Navigation - Center */}
+            {/* Navigation - Center (Desktop only) */}
             <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -65,7 +94,7 @@ export function Header() {
 
             {/* Right Controls */}
             <div className="flex items-center gap-6">
-              {/* Language/Currency Selector */}
+              {/* Language/Currency Selector - Desktop only */}
               <button 
                 className={`hidden lg:flex items-center gap-1 text-sm font-light transition-colors duration-300 ${
                   isScrolled ? "text-[#1A1A1A]" : "text-white"
@@ -77,8 +106,8 @@ export function Header() {
                 <ChevronDown strokeWidth={1} className="w-4 h-4 ml-1" />
               </button>
 
-              {/* Icons */}
-              <div className="flex items-center gap-5">
+              {/* Desktop Icons */}
+              <div className="hidden md:flex items-center gap-5">
                 <button 
                   className={`transition-colors duration-300 hover:opacity-70 ${
                     isScrolled ? "text-[#1A1A1A]" : "text-white"
@@ -118,6 +147,39 @@ export function Header() {
                           : "bg-white text-[#1A1A1A]"
                       }`}
                     >
+                      {cartCount}
+                    </span>
+                  )}
+                </button>
+              </div>
+
+              {/* Mobile Icons - Compact spacing */}
+              <div className="flex md:hidden items-center gap-2.5">
+                <button 
+                  className={`transition-colors duration-300 ${
+                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                  }`}
+                  aria-label="Search"
+                >
+                  <Search strokeWidth={1} className="w-5 h-5" />
+                </button>
+                <button 
+                  className={`transition-colors duration-300 ${
+                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                  }`}
+                  aria-label="Account"
+                >
+                  <User strokeWidth={1} className="w-5 h-5" />
+                </button>
+                <button 
+                  className={`relative transition-colors duration-300 ${
+                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
+                  }`}
+                  aria-label="Shopping Bag"
+                >
+                  <ShoppingBag strokeWidth={1} className="w-5 h-5" />
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full bg-[#1A1A1A] text-white">
                       {cartCount}
                     </span>
                   )}
