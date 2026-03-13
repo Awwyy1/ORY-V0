@@ -91,6 +91,7 @@ export function Header() {
                 <AnimatePresence>
                   {isLangOpen && (
                     <motion.div
+                      key="header-lang-dropdown"
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
@@ -253,6 +254,7 @@ export function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            key="mobile-menu-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -299,6 +301,7 @@ export function Header() {
                     <AnimatePresence>
                       {isMenuLangOpen && (
                         <motion.div
+                          key="menu-lang-dropdown"
                           initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
@@ -340,6 +343,7 @@ export function Header() {
                     <AnimatePresence>
                       {isMenuCurrencyOpen && (
                         <motion.div
+                          key="menu-currency-dropdown"
                           initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
