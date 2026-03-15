@@ -50,7 +50,7 @@ export function ProductGrid() {
           transition={{ duration: 0.6 }}
           className="mb-16 md:mb-20"
         >
-          <h2 className="text-sm font-light text-[#1A1A1A] tracking-widest uppercase">
+          <h2 className="text-sm font-light text-foreground tracking-widest uppercase">
             New Arrivals
           </h2>
         </motion.div>

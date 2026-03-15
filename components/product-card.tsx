@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { motion } from "framer-motion"
 
 interface ProductCardProps {
@@ -25,31 +26,32 @@ export function ProductCard({ name, material, price, image, hoverImage }: Produc
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Image Container - 3:4 Aspect Ratio */}
-      <div className="relative aspect-[3/4] overflow-hidden bg-[#FAFAFA] mb-4">
+      <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-4">
         {/* Primary Image */}
-        <img
+        <Image
           src={image}
           alt={name}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-            isHovered ? "opacity-0" : "opacity-100"
-          }`}
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className={`object-cover transition-opacity duration-700 ${isHovered ? "opacity-0" : "opacity-100"
+            }`}
         />
         {/* Hover Image */}
-        <img
+        <Image
           src={hoverImage}
           alt={`${name} alternate view`}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className={`object-cover transition-opacity duration-700 ${isHovered ? "opacity-100" : "opacity-0"
+            }`}
         />
-        
+
         {/* Add to Cart - Appears on Hover */}
-        <div 
-          className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-500 ${
-            isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+        <div
+          className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-500 ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
         >
-          <button className="w-full py-3 text-sm font-light tracking-wide text-white bg-[#1A1A1A] hover:bg-[#333] transition-colors duration-300">
+          <button className="w-full py-3 text-sm font-light tracking-wide text-primary-foreground bg-primary hover:bg-primary/80 transition-colors duration-300">
             Add to Bag
           </button>
         </div>
@@ -57,13 +59,13 @@ export function ProductCard({ name, material, price, image, hoverImage }: Produc
 
       {/* Product Info */}
       <div className="space-y-1">
-        <h3 className="text-sm font-normal text-[#1A1A1A] tracking-wide">
+        <h3 className="text-sm font-normal text-foreground tracking-wide">
           {name}
         </h3>
-        <p className="text-xs font-light text-[#666] tracking-wide">
+        <p className="text-xs font-light text-muted-foreground tracking-wide">
           {material}
         </p>
-        <p className="text-sm font-normal text-[#1A1A1A]">
+        <p className="text-sm font-normal text-foreground">
           {price}
         </p>
       </div>
