@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 export function Statement() {
     return (
-        <section className="py-24 md:py-32 px-8 lg:px-12 bg-foreground">
+        <section className="py-24 md:py-32 px-8 lg:px-12 bg-white">
             <div className="max-w-[1100px] mx-auto">
                 {/* Main Statement */}
                 <motion.div
@@ -12,13 +12,12 @@ export function Statement() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
+                    className="mb-16 md:mb-20"
                 >
-                    <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-background/90 tracking-wide leading-tight mb-4">
+                    <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-wide leading-tight">
                         Ordinary cotton is for ordinary days.
                     </h2>
-                    <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold tracking-wide leading-tight mb-16 md:mb-20"
-                        style={{ color: '#4DC9F6' }}
-                    >
+                    <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold text-muted-foreground/40 tracking-wide leading-tight mt-2">
                         Silk is for the moments that matter.
                     </h2>
                 </motion.div>
@@ -31,8 +30,8 @@ export function Statement() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <div className="border-l-2 border-background/20 pl-6 md:pl-8">
-                            <p className="text-base md:text-lg font-light text-background/70 leading-relaxed">
+                        <div className="border-l border-border pl-6 md:pl-8">
+                            <p className="text-sm md:text-base font-light text-muted-foreground leading-relaxed">
                                 Friction-free engineering for your most valuable assets. Designed with obsession. Built for those who give a damn. The feeling of liquid titanium against your skin.
                             </p>
                         </div>
@@ -46,19 +45,17 @@ export function Statement() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="flex flex-col items-start md:items-end justify-end"
                     >
-                        <p className="text-xs font-normal tracking-[0.25em] uppercase mb-4"
-                            style={{ color: '#4DC9F6' }}
-                        >
+                        <p className="text-xs font-normal text-foreground tracking-[0.25em] uppercase mb-4">
                             Technical Specification
                         </p>
                         <div className="space-y-1.5 md:text-right">
-                            <p className="text-xs font-light tracking-widest uppercase text-background/50">
+                            <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
                                 100% Grade 6A Mulberry Silk
                             </p>
-                            <p className="text-xs font-light tracking-widest uppercase text-background/50">
+                            <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
                                 Invisible Flat-Lock Stitching
                             </p>
-                            <p className="text-xs font-light tracking-widest uppercase text-background/50">
+                            <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
                                 Zero-Pressure Waistband
                             </p>
                         </div>

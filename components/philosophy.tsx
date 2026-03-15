@@ -19,7 +19,7 @@ const philosophyItems = [
 
 export function Philosophy() {
     return (
-        <section id="philosophy" className="py-24 md:py-32 px-8 lg:px-12 bg-foreground">
+        <section id="philosophy" className="py-24 md:py-32 px-8 lg:px-12 bg-white">
             <div className="max-w-[900px] mx-auto">
                 {/* Section Header */}
                 <motion.div
@@ -29,18 +29,13 @@ export function Philosophy() {
                     transition={{ duration: 0.6 }}
                     className="mb-16 md:mb-20"
                 >
-                    <p className="text-xs font-normal tracking-[0.3em] uppercase mb-3"
-                        style={{ color: '#4DC9F6' }}
-                    >
-                        ❝
-                    </p>
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-background tracking-wide">
+                    <h2 className="text-sm font-light text-foreground tracking-widest uppercase">
                         Philosophy
                     </h2>
                 </motion.div>
 
                 {/* Philosophy Items */}
-                <div className="space-y-14 md:space-y-16">
+                <div className="space-y-16 md:space-y-20">
                     {philosophyItems.map((item, index) => (
                         <motion.div
                             key={item.title}
@@ -48,15 +43,12 @@ export function Philosophy() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: index * 0.1 }}
-                            className="border-l-2 pl-6 md:pl-8"
-                            style={{ borderColor: 'rgba(77, 201, 246, 0.3)' }}
+                            className="border-l border-border pl-6 md:pl-8"
                         >
-                            <h3 className="text-xs font-normal tracking-[0.25em] uppercase mb-4"
-                                style={{ color: '#4DC9F6' }}
-                            >
+                            <h3 className="text-xs font-normal tracking-[0.2em] uppercase text-foreground mb-4">
                                 {item.title}
                             </h3>
-                            <p className="text-base md:text-lg font-light text-background/70 leading-relaxed max-w-2xl">
+                            <p className="text-sm md:text-base font-light text-muted-foreground leading-relaxed max-w-2xl">
                                 {item.text}
                             </p>
                         </motion.div>
