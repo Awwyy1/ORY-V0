@@ -65,7 +65,7 @@ export function Header() {
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
           ? "bg-background border-b border-border"
-          : "bg-transparent md:bg-transparent bg-background"
+          : "bg-transparent"
           }`}
       >
         <div className="w-full px-4 md:px-8 lg:px-12">
@@ -75,7 +75,7 @@ export function Header() {
             <div className="flex md:hidden items-center gap-3">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-foreground transition-colors duration-300"
+                className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                 aria-label="Menu"
               >
                 {isMenuOpen ? (
@@ -87,7 +87,7 @@ export function Header() {
               <div className="relative">
                 <button
                   onClick={() => setIsLangOpen(!isLangOpen)}
-                  className="flex items-center gap-1 text-foreground transition-colors duration-300"
+                  className={`flex items-center gap-1 transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Language"
                 >
                   <Globe strokeWidth={1} className="w-5 h-5" />
@@ -126,18 +126,20 @@ export function Header() {
                   )}
                 </AnimatePresence>
               </div>
+              {/* Wishlist - Hidden for now
               <button
                 className="text-foreground transition-colors duration-300"
                 aria-label="Wishlist"
               >
                 <Heart strokeWidth={1} className="w-5 h-5" />
               </button>
+              */}
             </div>
 
             {/* Logo - Desktop: Left, Mobile: Center */}
             <a href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <span
-                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled ? "text-foreground" : "md:text-white text-foreground"
+                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"
                   }`}
               >
                 ORY
@@ -257,6 +259,7 @@ export function Header() {
 
               {/* Desktop Icons */}
               <div className="hidden md:flex items-center gap-5">
+                {/* Search - Hidden for now
                 <button
                   className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
@@ -264,6 +267,8 @@ export function Header() {
                 >
                   <Search strokeWidth={1} className="w-5 h-5" />
                 </button>
+                */}
+                {/* Wishlist - Hidden for now
                 <button
                   className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
@@ -271,6 +276,7 @@ export function Header() {
                 >
                   <Heart strokeWidth={1} className="w-5 h-5" />
                 </button>
+                */}
                 <button
                   className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
@@ -299,25 +305,27 @@ export function Header() {
 
               {/* Mobile Icons - Compact spacing */}
               <div className="flex md:hidden items-center gap-2.5">
+                {/* Search - Hidden for now
                 <button
-                  className="text-foreground transition-colors duration-300"
+                  className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Search"
                 >
                   <Search strokeWidth={1} className="w-5 h-5" />
                 </button>
+                */}
                 <button
-                  className="text-foreground transition-colors duration-300"
+                  className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Account"
                 >
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
                 <button
-                  className="relative text-foreground transition-colors duration-300"
+                  className={`relative transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full bg-foreground text-background">
+                    <span className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled || isMenuOpen ? "bg-foreground text-background" : "bg-white text-foreground"}`}>
                       {cartCount}
                     </span>
                   )}
