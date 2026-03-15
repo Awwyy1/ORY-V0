@@ -7,7 +7,7 @@ export function Hero() {
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image/Video Placeholder */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-no-repeat bg-[position:65%_center] md:bg-center"
         style={{
           backgroundImage: `url('/images/hero.png')`,
         }}
