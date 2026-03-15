@@ -47,22 +47,19 @@ export function Header() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled || isMenuOpen
-            ? "bg-white border-b border-[#E5E5E5]" 
-            : "bg-transparent md:bg-transparent bg-white"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
+            ? "bg-background border-b border-border"
+            : "bg-transparent md:bg-transparent bg-background"
+          }`}
       >
         <div className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 md:h-20">
-            
+
             {/* Mobile Left Controls */}
             <div className="flex md:hidden items-center gap-3">
-              <button 
+              <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`transition-colors duration-300 ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                }`}
+                className="text-foreground transition-colors duration-300"
                 aria-label="Menu"
               >
                 {isMenuOpen ? (
@@ -72,11 +69,9 @@ export function Header() {
                 )}
               </button>
               <div className="relative">
-                <button 
+                <button
                   onClick={() => setIsLangOpen(!isLangOpen)}
-                  className={`flex items-center gap-1 transition-colors duration-300 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                  }`}
+                  className="flex items-center gap-1 text-foreground transition-colors duration-300"
                   aria-label="Language"
                 >
                   <Globe strokeWidth={1} className="w-5 h-5" />
@@ -86,7 +81,7 @@ export function Header() {
                     <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
                   )}
                 </button>
-                
+
                 {/* Language Dropdown */}
                 <AnimatePresence>
                   {isLangOpen && (
@@ -96,7 +91,7 @@ export function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-2 bg-white border border-[#E5E5E5] shadow-sm min-w-[100px]"
+                      className="absolute top-full left-0 mt-2 bg-background border border-border shadow-sm min-w-[100px]"
                     >
                       {languages.map((lang) => (
                         <button
@@ -105,9 +100,8 @@ export function Header() {
                             setSelectedLang(lang.code)
                             setIsLangOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-[#F5F5F5] ${
-                            selectedLang === lang.code ? "text-[#1A1A1A]" : "text-[#666666]"
-                          }`}
+                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                            }`}
                         >
                           {lang.name}
                         </button>
@@ -116,10 +110,8 @@ export function Header() {
                   )}
                 </AnimatePresence>
               </div>
-              <button 
-                className={`transition-colors duration-300 ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                }`}
+              <button
+                className="text-foreground transition-colors duration-300"
                 aria-label="Wishlist"
               >
                 <Heart strokeWidth={1} className="w-5 h-5" />
@@ -128,10 +120,9 @@ export function Header() {
 
             {/* Logo - Desktop: Left, Mobile: Center */}
             <a href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
-              <span 
-                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${
-                  isScrolled ? "text-[#1A1A1A]" : "md:text-white text-[#1A1A1A]"
-                }`}
+              <span
+                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled ? "text-foreground" : "md:text-white text-foreground"
+                  }`}
               >
                 ORY
               </span>
@@ -143,9 +134,8 @@ export function Header() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-light tracking-wide transition-colors duration-300 hover:opacity-70 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-white"
-                  }`}
+                  className={`text-sm font-light tracking-wide transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
                 >
                   {link.name}
                 </a>
@@ -155,10 +145,9 @@ export function Header() {
             {/* Right Controls */}
             <div className="flex items-center gap-6">
               {/* Language/Currency Selector - Desktop only */}
-              <button 
-                className={`hidden lg:flex items-center gap-1 text-sm font-light transition-colors duration-300 ${
-                  isScrolled ? "text-[#1A1A1A]" : "text-white"
-                }`}
+              <button
+                className={`hidden lg:flex items-center gap-1 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
+                  }`}
               >
                 <span>English</span>
                 <span className="mx-1 opacity-30">|</span>
@@ -168,44 +157,39 @@ export function Header() {
 
               {/* Desktop Icons */}
               <div className="hidden md:flex items-center gap-5">
-                <button 
-                  className={`transition-colors duration-300 hover:opacity-70 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-white"
-                  }`}
+                <button
+                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
                   aria-label="Search"
                 >
                   <Search strokeWidth={1} className="w-5 h-5" />
                 </button>
-                <button 
-                  className={`transition-colors duration-300 hover:opacity-70 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-white"
-                  }`}
+                <button
+                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
                   aria-label="Wishlist"
                 >
                   <Heart strokeWidth={1} className="w-5 h-5" />
                 </button>
-                <button 
-                  className={`transition-colors duration-300 hover:opacity-70 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-white"
-                  }`}
+                <button
+                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
                   aria-label="Account"
                 >
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
-                <button 
-                  className={`relative transition-colors duration-300 hover:opacity-70 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-white"
-                  }`}
+                <button
+                  className={`relative transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span 
-                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${
-                        isScrolled 
-                          ? "bg-[#1A1A1A] text-white" 
-                          : "bg-white text-[#1A1A1A]"
-                      }`}
+                    <span
+                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled
+                          ? "bg-foreground text-background"
+                          : "bg-white text-foreground"
+                        }`}
                     >
                       {cartCount}
                     </span>
@@ -215,31 +199,25 @@ export function Header() {
 
               {/* Mobile Icons - Compact spacing */}
               <div className="flex md:hidden items-center gap-2.5">
-                <button 
-                  className={`transition-colors duration-300 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                  }`}
+                <button
+                  className="text-foreground transition-colors duration-300"
                   aria-label="Search"
                 >
                   <Search strokeWidth={1} className="w-5 h-5" />
                 </button>
-                <button 
-                  className={`transition-colors duration-300 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                  }`}
+                <button
+                  className="text-foreground transition-colors duration-300"
                   aria-label="Account"
                 >
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
-                <button 
-                  className={`relative transition-colors duration-300 ${
-                    isScrolled ? "text-[#1A1A1A]" : "text-[#1A1A1A]"
-                  }`}
+                <button
+                  className="relative text-foreground transition-colors duration-300"
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full bg-[#1A1A1A] text-white">
+                    <span className="absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full bg-foreground text-background">
                       {cartCount}
                     </span>
                   )}
@@ -259,12 +237,12 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-white md:hidden"
+            className="fixed inset-0 z-40 bg-background md:hidden"
             style={{ top: '64px' }}
           >
             <div className="flex flex-col h-full">
               {/* Navigation Links */}
-              <nav className="flex-1 border-t border-[#F0F0F0]">
+              <nav className="flex-1 border-t border-border/50">
                 {navLinks.map((link, index) => (
                   <motion.a
                     key={link.name}
@@ -273,7 +251,7 @@ export function Header() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.15, delay: index * 0.03 }}
                     onClick={() => setIsMenuOpen(false)}
-                    className="block px-5 py-3 text-sm font-light tracking-wider text-[#1A1A1A] border-b border-[#F0F0F0] hover:bg-[#FAFAFA] transition-colors"
+                    className="block px-5 py-3 text-sm font-light tracking-wider text-foreground border-b border-border/50 hover:bg-muted transition-colors"
                   >
                     {link.name}
                   </motion.a>
@@ -281,23 +259,23 @@ export function Header() {
               </nav>
 
               {/* Bottom Section with Language and Currency */}
-              <div className="border-t border-[#F0F0F0] px-5 py-3">
+              <div className="border-t border-border/50 px-5 py-3">
                 <div className="flex items-center gap-6">
-                  <Globe strokeWidth={1} className="w-4 h-4 text-[#666666]" />
-                  
+                  <Globe strokeWidth={1} className="w-4 h-4 text-muted-foreground" />
+
                   {/* Language Selector */}
                   <div className="relative">
-                    <button 
+                    <button
                       onClick={() => {
                         setIsMenuLangOpen(!isMenuLangOpen)
                         setIsMenuCurrencyOpen(false)
                       }}
-                      className="flex items-center gap-1 text-xs font-light text-[#666666] hover:text-[#1A1A1A] transition-colors"
+                      className="flex items-center gap-1 text-xs font-light text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <span>{languages.find(l => l.code === selectedLang)?.name}</span>
                       <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
-                    
+
                     <AnimatePresence>
                       {isMenuLangOpen && (
                         <motion.div
@@ -306,7 +284,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#F0F0F0] shadow-sm min-w-[100px]"
+                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[100px]"
                         >
                           {languages.map((lang) => (
                             <button
@@ -315,9 +293,8 @@ export function Header() {
                                 setSelectedLang(lang.code)
                                 setIsMenuLangOpen(false)
                               }}
-                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-[#FAFAFA] ${
-                                selectedLang === lang.code ? "text-[#1A1A1A]" : "text-[#666666]"
-                              }`}
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                                }`}
                             >
                               {lang.name}
                             </button>
@@ -329,17 +306,17 @@ export function Header() {
 
                   {/* Currency Selector */}
                   <div className="relative">
-                    <button 
+                    <button
                       onClick={() => {
                         setIsMenuCurrencyOpen(!isMenuCurrencyOpen)
                         setIsMenuLangOpen(false)
                       }}
-                      className="flex items-center gap-1 text-xs font-light text-[#666666] hover:text-[#1A1A1A] transition-colors"
+                      className="flex items-center gap-1 text-xs font-light text-muted-foreground hover:text-foreground transition-colors"
                     >
                       <span>{currencies.find(c => c.code === selectedCurrency)?.name}</span>
                       <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
-                    
+
                     <AnimatePresence>
                       {isMenuCurrencyOpen && (
                         <motion.div
@@ -348,7 +325,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-white border border-[#F0F0F0] shadow-sm min-w-[140px]"
+                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[140px]"
                         >
                           {currencies.map((currency) => (
                             <button
@@ -357,9 +334,8 @@ export function Header() {
                                 setSelectedCurrency(currency.code)
                                 setIsMenuCurrencyOpen(false)
                               }}
-                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-[#FAFAFA] ${
-                                selectedCurrency === currency.code ? "text-[#1A1A1A]" : "text-[#666666]"
-                              }`}
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${selectedCurrency === currency.code ? "text-foreground" : "text-muted-foreground"
+                                }`}
                             >
                               {currency.name}
                             </button>
