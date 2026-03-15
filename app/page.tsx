@@ -1,6 +1,9 @@
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
+import { Statement } from "@/components/statement"
+import { WhySilk } from "@/components/why-silk"
 import { ProductGrid } from "@/components/product-grid"
+import { Philosophy } from "@/components/philosophy"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -8,7 +11,10 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <Header />
       <Hero />
+      <Statement />
+      <WhySilk />
       <ProductGrid />
+      <Philosophy />
       <Footer />
     </main>
   )

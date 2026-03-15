@@ -23,35 +23,39 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Shop */}
+          {/* Explore */}
           <div>
             <h4 className="text-xs font-normal text-foreground tracking-widest uppercase mb-6">
-              Shop
+              Explore
             </h4>
             <ul className="space-y-3">
-              {["New Arrivals", "Boxer Briefs", "Trunks", "Lounge Shorts"].map((item) => (
-                <li key={item}>
+              {[
+                { name: "Why Silk", href: "#why-silk" },
+                { name: "Collection", href: "#collection" },
+                { name: "Philosophy", href: "#philosophy" },
+              ].map((item) => (
+                <li key={item.name}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* About */}
+          {/* Shop */}
           <div>
             <h4 className="text-xs font-normal text-foreground tracking-widest uppercase mb-6">
-              About
+              Shop
             </h4>
             <ul className="space-y-3">
-              {["Our Story", "The Heritage", "Sustainability", "Press"].map((item) => (
+              {["Boxer Briefs", "Trunks", "Lounge Shorts"].map((item) => (
                 <li key={item}>
                   <a
-                    href="#"
+                    href="#collection"
                     className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
                     {item}
