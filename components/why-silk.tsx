@@ -44,7 +44,7 @@ const benefits = [
 
 export function WhySilk() {
     return (
-        <section id="why-silk" className="py-24 md:py-32 px-8 lg:px-12 bg-foreground">
+        <section id="why-silk" className="py-24 md:py-32 px-8 lg:px-12 bg-muted border-t border-border">
             <div className="max-w-[1200px] mx-auto">
                 {/* Section Header */}
                 <motion.div
@@ -54,17 +54,16 @@ export function WhySilk() {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16 md:mb-20"
                 >
-                    <h2 className="font-display text-3xl md:text-4xl font-bold text-background tracking-wide mb-6">
+                    <h2 className="text-sm font-light text-foreground tracking-widest uppercase mb-6">
                         Why Silk?
                     </h2>
-                    <p className="text-sm md:text-base font-light text-background/60 max-w-xl mx-auto leading-relaxed">
+                    <p className="text-sm font-light text-muted-foreground max-w-lg mx-auto leading-relaxed">
                         Cotton is a compromise. Synthetics are a lie. Silk is the only material engineered by nature to protect what matters most.
                     </p>
-                    <div className="w-12 h-0.5 mx-auto mt-8" style={{ backgroundColor: '#4DC9F6' }} />
                 </motion.div>
 
                 {/* Benefits Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
                     {benefits.map((benefit, index) => (
                         <motion.div
                             key={benefit.title}
@@ -72,27 +71,26 @@ export function WhySilk() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: index * 0.08 }}
-                            className="border border-background/10 p-6 md:p-8 group hover:border-background/20 transition-colors duration-500"
+                            className="bg-muted p-8 md:p-10"
                         >
                             {/* Icon + Stat Row */}
-                            <div className="flex items-center justify-between mb-5">
+                            <div className="flex items-center justify-between mb-6">
                                 <benefit.icon
                                     strokeWidth={1}
-                                    className="w-5 h-5 transition-colors duration-500"
-                                    style={{ color: '#4DC9F6' }}
+                                    className="w-5 h-5 text-muted-foreground/50"
                                 />
-                                <span className="text-xl md:text-2xl font-display font-bold text-background/30 tracking-wider">
+                                <span className="text-lg md:text-xl font-display font-bold text-border tracking-wider">
                                     {benefit.stat}
                                 </span>
                             </div>
 
                             {/* Title */}
-                            <h3 className="text-xs font-normal tracking-[0.2em] uppercase text-background/80 mb-3">
+                            <h3 className="text-xs font-normal tracking-[0.2em] uppercase text-foreground mb-3">
                                 {benefit.title}
                             </h3>
 
                             {/* Description */}
-                            <p className="text-xs font-light text-background/50 leading-relaxed">
+                            <p className="text-xs font-light text-muted-foreground leading-relaxed">
                                 {benefit.description}
                             </p>
                         </motion.div>
