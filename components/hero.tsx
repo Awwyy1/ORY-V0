@@ -25,7 +25,7 @@ export function Hero() {
           className="text-center"
         >
           <p className="text-white text-sm md:text-base font-light tracking-widest mb-6">
-            The Ultimate Second Skin.
+            For Those with Balls
           </p>
           <a
             href="#collection"
