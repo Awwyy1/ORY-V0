@@ -5,10 +5,9 @@ import { Search, Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, Globe, 
 import { motion, AnimatePresence } from "framer-motion"
 
 const navLinks = [
-  { name: "Men", href: "#men" },
-  { name: "NEW IN", href: "#new-in" },
-  { name: "100% Pure Silk", href: "#silk" },
-  { name: "The Heritage", href: "#heritage" },
+  { name: "Why Silk", href: "#why-silk" },
+  { name: "Collection", href: "#collection" },
+  { name: "Philosophy", href: "#philosophy" },
 ]
 
 const languages = [
@@ -48,8 +47,8 @@ export function Header() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
-            ? "bg-background border-b border-border"
-            : "bg-transparent md:bg-transparent bg-background"
+          ? "bg-background border-b border-border"
+          : "bg-transparent md:bg-transparent bg-background"
           }`}
       >
         <div className="w-full px-4 md:px-8 lg:px-12">
@@ -187,8 +186,8 @@ export function Header() {
                   {cartCount > 0 && (
                     <span
                       className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled
-                          ? "bg-foreground text-background"
-                          : "bg-white text-foreground"
+                        ? "bg-foreground text-background"
+                        : "bg-white text-foreground"
                         }`}
                     >
                       {cartCount}

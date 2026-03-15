@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image/Video Placeholder */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/images/hero.jpg')`,
@@ -28,7 +28,7 @@ export function Hero() {
             The Ultimate Second Skin.
           </p>
           <a
-            href="#new-arrivals"
+            href="#collection"
             className="inline-block text-white text-sm font-light tracking-wide border-b border-white/50 pb-1 hover:border-white transition-colors duration-300"
           >
             Discover

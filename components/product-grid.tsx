@@ -40,7 +40,7 @@ const products = [
 
 export function ProductGrid() {
   return (
-    <section id="new-arrivals" className="py-24 md:py-32 px-8 lg:px-12 bg-white">
+    <section id="collection" className="py-24 md:py-32 px-8 lg:px-12 bg-white">
       <div className="max-w-[1600px] mx-auto">
         {/* Section Header */}
         <motion.div
@@ -51,7 +51,7 @@ export function ProductGrid() {
           className="mb-16 md:mb-20"
         >
           <h2 className="text-sm font-light text-foreground tracking-widest uppercase">
-            New Arrivals
+            Collection
           </h2>
         </motion.div>
 
