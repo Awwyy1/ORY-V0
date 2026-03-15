@@ -170,8 +170,8 @@ export function Header() {
                   className={`flex items-center gap-1.5 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
                 >
-                  <Globe strokeWidth={1} className="w-4 h-4" />
-                  <span>{languages.find(l => l.code === selectedLang)?.name}</span>
+                  <Globe strokeWidth={1} className="w-4 h-4 flex-shrink-0" />
+                  <span className="w-[60px] text-left">{languages.find(l => l.code === selectedLang)?.name}</span>
                   {isDesktopLangOpen ? (
                     <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
                   ) : (
@@ -218,7 +218,7 @@ export function Header() {
                   className={`flex items-center gap-1.5 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
                 >
-                  <span>{currencies.find(c => c.code === selectedCurrency)?.name}</span>
+                  <span className="w-[115px] text-left">{currencies.find(c => c.code === selectedCurrency)?.name}</span>
                   {isDesktopCurrencyOpen ? (
                     <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
                   ) : (
