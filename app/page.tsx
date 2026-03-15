@@ -4,6 +4,7 @@ import { Statement } from "@/components/statement"
 import { WhySilk } from "@/components/why-silk"
 import { ProductGrid } from "@/components/product-grid"
 import { Philosophy } from "@/components/philosophy"
+import { Newsletter } from "@/components/newsletter"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <WhySilk />
       <ProductGrid />
       <Philosophy />
+      <Newsletter />
       <Footer />
     </main>
   )
