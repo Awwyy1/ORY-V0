@@ -31,6 +31,7 @@ export function Header() {
   const [isMenuLangOpen, setIsMenuLangOpen] = useState(false)
   const [isMenuCurrencyOpen, setIsMenuCurrencyOpen] = useState(false)
   const [selectedCurrency, setSelectedCurrency] = useState("eur")
+  const [isDesktopLangCurrencyOpen, setIsDesktopLangCurrencyOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +40,18 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Close desktop dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement
+      if (isDesktopLangCurrencyOpen && !target.closest('[data-desktop-dropdown]')) {
+        setIsDesktopLangCurrencyOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [isDesktopLangCurrencyOpen])
 
   return (
     <>
@@ -144,15 +157,74 @@ export function Header() {
             {/* Right Controls */}
             <div className="flex items-center gap-6">
               {/* Language/Currency Selector - Desktop only */}
-              <button
-                className={`hidden lg:flex items-center gap-1 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
-                  }`}
-              >
-                <span>English</span>
-                <span className="mx-1 opacity-30">|</span>
-                <span>EUR (€)</span>
-                <ChevronDown strokeWidth={1} className="w-4 h-4 ml-1" />
-              </button>
+              <div className="relative hidden lg:block" data-desktop-dropdown>
+                <button
+                  onClick={() => setIsDesktopLangCurrencyOpen(!isDesktopLangCurrencyOpen)}
+                  className={`flex items-center gap-1 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
+                    }`}
+                >
+                  <span>{languages.find(l => l.code === selectedLang)?.name}</span>
+                  <span className="mx-1 opacity-30">|</span>
+                  <span>{currencies.find(c => c.code === selectedCurrency)?.name.split(' ')[0]} {currencies.find(c => c.code === selectedCurrency)?.name.match(/\(.*\)/)?.[0]}</span>
+                  {isDesktopLangCurrencyOpen ? (
+                    <ChevronUp strokeWidth={1} className="w-4 h-4 ml-1" />
+                  ) : (
+                    <ChevronDown strokeWidth={1} className="w-4 h-4 ml-1" />
+                  )}
+                </button>
+
+                {/* Desktop Dropdown */}
+                <AnimatePresence>
+                  {isDesktopLangCurrencyOpen && (
+                    <motion.div
+                      key="desktop-lang-currency-dropdown"
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full right-0 mt-2 bg-background border border-border shadow-lg min-w-[200px]"
+                    >
+                      {/* Language Section */}
+                      <div className="border-b border-border">
+                        <div className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Language
+                        </div>
+                        {languages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => {
+                              setSelectedLang(lang.code)
+                            }}
+                            className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground bg-muted/50" : "text-muted-foreground"
+                              }`}
+                          >
+                            {lang.name}
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Currency Section */}
+                      <div>
+                        <div className="px-4 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                          Currency
+                        </div>
+                        {currencies.map((currency) => (
+                          <button
+                            key={currency.code}
+                            onClick={() => {
+                              setSelectedCurrency(currency.code)
+                            }}
+                            className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedCurrency === currency.code ? "text-foreground bg-muted/50" : "text-muted-foreground"
+                              }`}
+                          >
+                            {currency.name}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Desktop Icons */}
               <div className="hidden md:flex items-center gap-5">
