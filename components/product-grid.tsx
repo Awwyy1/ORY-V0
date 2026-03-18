@@ -2,41 +2,7 @@
 
 import { motion } from "framer-motion"
 import { ProductCard } from "./product-card"
-
-const products = [
-  {
-    id: 1,
-    name: "ORY STEALTH",
-    material: "BLACK OBSIDIAN SILK",
-    price: "$85",
-    image: "/images/products/stealth.png",
-    hoverImage: "/images/products/stealth-hover.png",
-  },
-  {
-    id: 2,
-    name: "ORY CARBON",
-    material: "MATTE GREY FUSION",
-    price: "$95",
-    image: "/images/products/carbon.png",
-    hoverImage: "/images/products/carbon-hover.png",
-  },
-  {
-    id: 3,
-    name: "ORY ICE",
-    material: "COLD SILVER WEAVE",
-    price: "$85",
-    image: "/images/products/ice.png",
-    hoverImage: "/images/products/ice-hover.png",
-  },
-  {
-    id: 4,
-    name: "ORY MIDNIGHT",
-    material: "ROYAL DEEP BLUE",
-    price: "$110",
-    image: "/images/products/midnight.png",
-    hoverImage: "/images/products/midnight-hover.png",
-  },
-]
+import { products } from "@/lib/products"
 
 export function ProductGrid() {
   return (
@@ -58,14 +24,7 @@ export function ProductGrid() {
         {/* Product Grid */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-12">
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              name={product.name}
-              material={product.material}
-              price={product.price}
-              image={product.image}
-              hoverImage={product.hoverImage}
-            />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
