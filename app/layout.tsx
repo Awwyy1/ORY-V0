@@ -1,19 +1,6 @@
 import type { Metadata } from 'next'
-import { Outfit, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
-
-const outfit = Outfit({ 
-  subsets: ["latin"],
-  variable: '--font-outfit',
-  weight: ['700', '800']
-});
-
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter',
-  weight: ['300', '400', '500']
-});
 
 export const metadata: Metadata = {
   title: 'ORY | Premium Silk Menswear',
@@ -45,7 +32,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${outfit.variable} ${inter.variable} font-sans antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-sans antialiased">
         {children}
         <Analytics />
       </body>

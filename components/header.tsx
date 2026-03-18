@@ -1,8 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Search, Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, Globe, X } from "lucide-react"
+import Link from "next/link"
+import { Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, Globe, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useCartStore } from "@/lib/cart-store"
 
 const navLinks = [
   { name: "Why Silk", href: "#why-silk" },
@@ -24,7 +26,6 @@ const currencies = [
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [cartCount] = useState(2)
   const [isLangOpen, setIsLangOpen] = useState(false)
   const [selectedLang, setSelectedLang] = useState("en")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -33,6 +34,17 @@ export function Header() {
   const [selectedCurrency, setSelectedCurrency] = useState("eur")
   const [isDesktopLangOpen, setIsDesktopLangOpen] = useState(false)
   const [isDesktopCurrencyOpen, setIsDesktopCurrencyOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  const toggleCart = useCartStore((s) => s.toggleCart)
+  const getTotalItems = useCartStore((s) => s.getTotalItems)
+
+  // Prevent hydration mismatch — cart count comes from localStorage
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const cartCount = mounted ? getTotalItems() : 0
 
   useEffect(() => {
     const handleScroll = () => {
@@ -126,25 +138,17 @@ export function Header() {
                   )}
                 </AnimatePresence>
               </div>
-              {/* Wishlist - Hidden for now
-              <button
-                className="text-foreground transition-colors duration-300"
-                aria-label="Wishlist"
-              >
-                <Heart strokeWidth={1} className="w-5 h-5" />
-              </button>
-              */}
             </div>
 
             {/* Logo - Desktop: Left, Mobile: Center */}
-            <a href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+            <Link href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <span
                 className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"
                   }`}
               >
                 ORY
               </span>
-            </a>
+            </Link>
 
             {/* Navigation - Center (Desktop only) */}
             <nav className="hidden md:flex items-center gap-8">
@@ -259,24 +263,6 @@ export function Header() {
 
               {/* Desktop Icons */}
               <div className="hidden md:flex items-center gap-5">
-                {/* Search - Hidden for now
-                <button
-                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
-                  aria-label="Search"
-                >
-                  <Search strokeWidth={1} className="w-5 h-5" />
-                </button>
-                */}
-                {/* Wishlist - Hidden for now
-                <button
-                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
-                  aria-label="Wishlist"
-                >
-                  <Heart strokeWidth={1} className="w-5 h-5" />
-                </button>
-                */}
                 <button
                   className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
@@ -285,34 +271,30 @@ export function Header() {
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
                 <button
+                  onClick={toggleCart}
                   className={`relative transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span
+                    <motion.span
+                      key={cartCount}
+                      initial={{ scale: 0.5 }}
+                      animate={{ scale: 1 }}
                       className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled
                         ? "bg-foreground text-background"
                         : "bg-white text-foreground"
                         }`}
                     >
                       {cartCount}
-                    </span>
+                    </motion.span>
                   )}
                 </button>
               </div>
 
-              {/* Mobile Icons - Compact spacing */}
+              {/* Mobile Icons */}
               <div className="flex md:hidden items-center gap-2.5">
-                {/* Search - Hidden for now
-                <button
-                  className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
-                  aria-label="Search"
-                >
-                  <Search strokeWidth={1} className="w-5 h-5" />
-                </button>
-                */}
                 <button
                   className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Account"
@@ -320,14 +302,20 @@ export function Header() {
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
                 <button
+                  onClick={toggleCart}
                   className={`relative transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled || isMenuOpen ? "bg-foreground text-background" : "bg-white text-foreground"}`}>
+                    <motion.span
+                      key={cartCount}
+                      initial={{ scale: 0.5 }}
+                      animate={{ scale: 1 }}
+                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled || isMenuOpen ? "bg-foreground text-background" : "bg-white text-foreground"}`}
+                    >
                       {cartCount}
-                    </span>
+                    </motion.span>
                   )}
                 </button>
               </div>
