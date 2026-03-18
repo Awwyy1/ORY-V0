@@ -3,11 +3,13 @@
 import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Minus, Plus, ShoppingBag, ArrowRight } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 
 export function CartSidebar() {
+  const router = useRouter()
   const { items, isOpen, closeCart, removeItem, updateQuantity, getTotalPrice, getTotalItems } =
     useCartStore()
 
@@ -201,7 +203,13 @@ export function CartSidebar() {
                 </p>
 
                 {/* Checkout Button */}
-                <button className="w-full py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300">
+                <button
+                  onClick={() => {
+                    closeCart()
+                    router.push("/checkout")
+                  }}
+                  className="w-full py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300"
+                >
                   Proceed to Checkout
                 </button>
 
