@@ -19,6 +19,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { SizeGuideModal } from "@/components/size-guide-modal"
+import { ProductSchema } from "@/components/product-schema"
 
 export default function ProductPage() {
   const params = useParams()
@@ -80,6 +81,7 @@ export default function ProductPage() {
 
   return (
     <>
+      <ProductSchema product={product} />
       <Header />
       <CartSidebar />
       <SizeGuideModal
