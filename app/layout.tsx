@@ -2,10 +2,67 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
+const siteUrl = 'https://oryfor.men'
+
 export const metadata: Metadata = {
-  title: 'ORY | Premium Silk Menswear',
-  description: 'Luxury 100% pure silk underwear exclusively for men. The ultimate second skin.',
-  generator: 'v0.app',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'ORY | Premium Silk Underwear for Men',
+    template: '%s | ORY',
+  },
+  description:
+    'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. Thermoregulating, hypoallergenic, featherlight — the ultimate second skin. Free shipping on orders over $200.',
+  keywords: [
+    'silk underwear',
+    'luxury mens underwear',
+    'mulberry silk boxers',
+    'premium boxer briefs',
+    'silk boxer briefs men',
+    'hypoallergenic underwear',
+    'thermoregulating underwear',
+    'ORY silk',
+  ],
+  authors: [{ name: 'ORY' }],
+  creator: 'ORY',
+  publisher: 'ORY',
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: 'ORY',
+    title: 'ORY | Premium Silk Underwear for Men',
+    description:
+      'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. The ultimate second skin.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'ORY — Premium Silk Underwear for Men',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ORY | Premium Silk Underwear for Men',
+    description:
+      'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. The ultimate second skin.',
+    images: ['/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       {
@@ -22,6 +79,9 @@ export const metadata: Metadata = {
       },
     ],
     apple: '/apple-icon.png',
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 }
 
