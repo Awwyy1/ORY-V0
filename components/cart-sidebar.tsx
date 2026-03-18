@@ -7,13 +7,15 @@ import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, Minus, Plus, ShoppingBag, ArrowRight } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
+import { useTranslations, useFormatPrice } from "@/lib/i18n"
 
 export function CartSidebar() {
   const router = useRouter()
   const { items, isOpen, closeCart, removeItem, updateQuantity, getTotalPrice, getTotalItems } =
     useCartStore()
+  const t = useTranslations()
+  const fp = useFormatPrice()
 
-  // Lock body scroll when cart is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
@@ -32,7 +34,6 @@ export function CartSidebar() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -42,7 +43,6 @@ export function CartSidebar() {
             className="fixed inset-0 bg-black/40 z-[60]"
           />
 
-          {/* Sidebar */}
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -50,15 +50,14 @@ export function CartSidebar() {
             transition={{ type: "tween", duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
             className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background z-[70] flex flex-col"
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-border">
               <div className="flex items-center gap-3">
                 <h2 className="text-sm font-light tracking-widest uppercase text-foreground">
-                  Your Bag
+                  {t.cart.yourBag}
                 </h2>
                 {totalItems > 0 && (
                   <span className="text-xs font-light text-muted-foreground">
-                    ({totalItems} {totalItems === 1 ? "item" : "items"})
+                    ({totalItems} {totalItems === 1 ? t.cart.item : t.cart.items})
                   </span>
                 )}
               </div>
@@ -71,22 +70,21 @@ export function CartSidebar() {
               </button>
             </div>
 
-            {/* Cart Items */}
             {items.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
                 <ShoppingBag strokeWidth={0.5} className="w-16 h-16 text-muted-foreground/30 mb-6" />
                 <p className="text-sm font-light text-muted-foreground mb-2">
-                  Your bag is empty
+                  {t.cart.empty}
                 </p>
                 <p className="text-xs font-light text-muted-foreground/70 mb-8">
-                  Discover our collection of premium silk underwear
+                  {t.cart.emptyDesc}
                 </p>
                 <Link
                   href="/#collection"
                   onClick={closeCart}
                   className="inline-flex items-center gap-2 text-xs font-light tracking-widest uppercase text-foreground border border-foreground px-8 py-3 hover:bg-foreground hover:text-background transition-all duration-300"
                 >
-                  Shop Collection
+                  {t.cart.shopCollection}
                   <ArrowRight strokeWidth={1} className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -102,7 +100,6 @@ export function CartSidebar() {
                       exit={{ opacity: 0, x: 50 }}
                       className="flex gap-4 py-5 border-b border-border last:border-b-0"
                     >
-                      {/* Product Image */}
                       <Link
                         href={`/product/${item.slug}`}
                         onClick={closeCart}
@@ -117,7 +114,6 @@ export function CartSidebar() {
                         />
                       </Link>
 
-                      {/* Product Info */}
                       <div className="flex-1 flex flex-col justify-between min-w-0">
                         <div>
                           <div className="flex items-start justify-between gap-2">
@@ -142,12 +138,11 @@ export function CartSidebar() {
                             </button>
                           </div>
                           <p className="text-xs font-light text-muted-foreground mt-1">
-                            Size: {item.size}
+                            {t.product.size}: {item.size}
                           </p>
                         </div>
 
                         <div className="flex items-center justify-between mt-3">
-                          {/* Quantity Controls */}
                           <div className="flex items-center border border-border">
                             <button
                               onClick={() =>
@@ -172,9 +167,8 @@ export function CartSidebar() {
                             </button>
                           </div>
 
-                          {/* Item Total */}
                           <p className="text-sm font-normal text-foreground">
-                            {item.currency}{item.price * item.quantity}
+                            {fp(item.price * item.quantity)}
                           </p>
                         </div>
                       </div>
@@ -184,25 +178,21 @@ export function CartSidebar() {
               </div>
             )}
 
-            {/* Footer - Summary & Checkout */}
             {items.length > 0 && (
               <div className="border-t border-border px-6 py-5 space-y-4">
-                {/* Subtotal */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-light text-muted-foreground tracking-wide">
-                    Subtotal
+                    {t.cart.subtotal}
                   </span>
                   <span className="text-sm font-normal text-foreground">
-                    ${totalPrice}
+                    {fp(totalPrice)}
                   </span>
                 </div>
 
-                {/* Shipping Note */}
                 <p className="text-xs font-light text-muted-foreground">
-                  Shipping & taxes calculated at checkout
+                  {t.cart.shippingNote}
                 </p>
 
-                {/* Checkout Button */}
                 <button
                   onClick={() => {
                     closeCart()
@@ -210,15 +200,14 @@ export function CartSidebar() {
                   }}
                   className="w-full py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300"
                 >
-                  Proceed to Checkout
+                  {t.cart.checkout}
                 </button>
 
-                {/* Continue Shopping */}
                 <button
                   onClick={closeCart}
                   className="w-full py-3 text-xs font-light tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors text-center"
                 >
-                  Continue Shopping
+                  {t.cart.continueShopping}
                 </button>
               </div>
             )}
