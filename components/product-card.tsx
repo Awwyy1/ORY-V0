@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { useCartStore } from "@/lib/cart-store"
+import { useTranslations, useFormatPrice } from "@/lib/i18n"
 import type { Product, Size } from "@/lib/products"
 import { sizes } from "@/lib/products"
 
@@ -17,6 +18,8 @@ export function ProductCard({ product }: ProductCardProps) {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
   const [showSizes, setShowSizes] = useState(false)
   const addItem = useCartStore((s) => s.addItem)
+  const t = useTranslations()
+  const fp = useFormatPrice()
 
   const handleAddToBag = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -65,10 +68,8 @@ export function ProductCard({ product }: ProductCardProps) {
         setSelectedSize(null)
       }}
     >
-      {/* Image Container */}
       <Link href={`/product/${product.slug}`} className="block">
         <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-4">
-          {/* Primary Image */}
           <Image
             src={product.image}
             alt={product.name}
@@ -78,7 +79,6 @@ export function ProductCard({ product }: ProductCardProps) {
               isHovered ? "opacity-0" : "opacity-100"
             }`}
           />
-          {/* Hover Image */}
           <Image
             src={product.hoverImage}
             alt={`${product.name} alternate view`}
@@ -89,13 +89,11 @@ export function ProductCard({ product }: ProductCardProps) {
             }`}
           />
 
-          {/* Quick Add Section */}
           <div
             className={`absolute bottom-0 left-0 right-0 transition-all duration-500 ${
               isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
             }`}
           >
-            {/* Size Selector */}
             {showSizes && (
               <div className="px-3 pb-2">
                 <div className="flex gap-1">
@@ -127,24 +125,22 @@ export function ProductCard({ product }: ProductCardProps) {
               </div>
             )}
 
-            {/* Add to Bag Button */}
             <div className="p-3 pt-0">
               <button
                 onClick={handleAddToBag}
                 className="w-full py-3 text-sm font-light tracking-wide text-primary-foreground bg-primary hover:bg-primary/80 transition-colors duration-300"
               >
                 {showSizes && selectedSize
-                  ? `Add ${selectedSize} to Bag`
+                  ? t.product.addSizeToBag.replace("{size}", selectedSize)
                   : showSizes
-                    ? "Select Size"
-                    : "Quick Add"}
+                    ? t.product.selectSize
+                    : t.product.quickAdd}
               </button>
             </div>
           </div>
         </div>
       </Link>
 
-      {/* Product Info */}
       <Link href={`/product/${product.slug}`} className="block space-y-1">
         <h3 className="text-sm font-normal text-foreground tracking-wide">
           {product.name}
@@ -153,7 +149,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.material}
         </p>
         <p className="text-sm font-normal text-foreground">
-          {product.currency}{product.price}
+          {fp(product.price)}
         </p>
       </Link>
     </motion.article>

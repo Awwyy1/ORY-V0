@@ -8,14 +8,13 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ArrowLeft, Minus, Plus, Ruler, ChevronDown, Check } from "lucide-react"
 import {
   getProductBySlug,
-  getStockLabel,
-  getStockColor,
   sizes,
   sizeGuide,
   products,
   type Size,
 } from "@/lib/products"
 import { useCartStore } from "@/lib/cart-store"
+import { useTranslations, useFormatPrice } from "@/lib/i18n"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
@@ -36,6 +35,8 @@ export default function ProductPage() {
   const [justAdded, setJustAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"details" | "care">("details")
   const addItem = useCartStore((s) => s.addItem)
+  const t = useTranslations()
+  const fp = useFormatPrice()
 
   const handleAddToBag = () => {
     if (!selectedSize) {
@@ -63,7 +64,18 @@ export default function ProductPage() {
 
   const currentStock = selectedSize ? product.stock[selectedSize] : null
 
-  // Get other products for "You may also like"
+  const getStockLabel = (count: number): string => {
+    if (count === 0) return t.product.outOfStock
+    if (count <= 3) return t.product.onlyLeft.replace("{count}", String(count))
+    return t.product.inStock
+  }
+
+  const getStockColor = (count: number): string => {
+    if (count === 0) return "text-red-500"
+    if (count <= 3) return "text-amber-600"
+    return "text-emerald-600"
+  }
+
   const otherProducts = products.filter((p) => p.id !== product.id)
 
   return (
@@ -76,7 +88,6 @@ export default function ProductPage() {
       />
 
       <main className="min-h-screen bg-white pt-16 md:pt-20">
-        {/* Breadcrumb */}
         <div className="px-4 md:px-8 lg:px-12 py-4">
           <div className="max-w-[1600px] mx-auto">
             <Link
@@ -84,22 +95,19 @@ export default function ProductPage() {
               className="inline-flex items-center gap-2 text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
             >
               <ArrowLeft strokeWidth={1} className="w-4 h-4" />
-              Back to Collection
+              {t.product.backToCollection}
             </Link>
           </div>
         </div>
 
-        {/* Product Section */}
         <div className="px-4 md:px-8 lg:px-12 pb-24">
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-              {/* Image Gallery */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                {/* Main Image */}
                 <div className="relative aspect-[3/4] bg-secondary mb-3 overflow-hidden">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -122,7 +130,6 @@ export default function ProductPage() {
                   </AnimatePresence>
                 </div>
 
-                {/* Thumbnails */}
                 <div className="flex gap-3">
                   {product.images.map((img, idx) => (
                     <button
@@ -146,14 +153,12 @@ export default function ProductPage() {
                 </div>
               </motion.div>
 
-              {/* Product Info */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex flex-col"
               >
-                {/* Name & Price */}
                 <div className="mb-6">
                   <h1 className="font-display text-2xl md:text-3xl font-bold tracking-wide text-foreground">
                     {product.name}
@@ -162,27 +167,25 @@ export default function ProductPage() {
                     {product.material}
                   </p>
                   <p className="text-xl md:text-2xl font-light text-foreground mt-4">
-                    {product.currency}{product.price}
+                    {fp(product.price)}
                   </p>
                 </div>
 
-                {/* Description */}
                 <p className="text-sm font-light text-muted-foreground leading-relaxed mb-8">
                   {product.description}
                 </p>
 
-                {/* Size Selection */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-xs font-light tracking-widest uppercase text-foreground">
-                      Size {selectedSize && `— ${selectedSize}`}
+                      {t.product.size} {selectedSize && `— ${selectedSize}`}
                     </span>
                     <button
                       onClick={() => setShowSizeGuide(true)}
                       className="inline-flex items-center gap-1.5 text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
                     >
                       <Ruler strokeWidth={1} className="w-3.5 h-3.5" />
-                      Size Guide
+                      {t.product.sizeGuide}
                     </button>
                   </div>
 
@@ -218,7 +221,6 @@ export default function ProductPage() {
                     })}
                   </div>
 
-                  {/* Size Error */}
                   <AnimatePresence>
                     {sizeError && (
                       <motion.p
@@ -227,12 +229,11 @@ export default function ProductPage() {
                         exit={{ opacity: 0, y: -4 }}
                         className="text-xs text-red-500 mt-2 font-light"
                       >
-                        Please select a size
+                        {t.product.selectSize}
                       </motion.p>
                     )}
                   </AnimatePresence>
 
-                  {/* Stock Indicator */}
                   {selectedSize && currentStock !== null && (
                     <motion.p
                       initial={{ opacity: 0 }}
@@ -244,7 +245,6 @@ export default function ProductPage() {
                   )}
                 </div>
 
-                {/* Add to Bag Button */}
                 <button
                   onClick={handleAddToBag}
                   disabled={selectedSize !== null && currentStock === 0}
@@ -261,21 +261,19 @@ export default function ProductPage() {
                   {justAdded ? (
                     <span className="inline-flex items-center gap-2">
                       <Check strokeWidth={1.5} className="w-4 h-4" />
-                      Added to Bag
+                      {t.product.addedToBag}
                     </span>
                   ) : selectedSize && currentStock === 0 ? (
-                    "Out of Stock"
+                    t.product.outOfStock
                   ) : (
-                    "Add to Bag"
+                    t.product.addToBag
                   )}
                 </button>
 
-                {/* Shipping Note */}
                 <p className="text-xs font-light text-muted-foreground text-center mt-3">
-                  Free shipping on orders over $200 &middot; Free returns within 30 days
+                  {t.product.freeShippingNote}
                 </p>
 
-                {/* Details / Care Tabs */}
                 <div className="mt-10 border-t border-border pt-8">
                   <div className="flex gap-8 mb-6">
                     <button
@@ -286,7 +284,7 @@ export default function ProductPage() {
                           : "text-muted-foreground border-transparent hover:text-foreground"
                       }`}
                     >
-                      Details
+                      {t.product.details}
                     </button>
                     <button
                       onClick={() => setActiveTab("care")}
@@ -296,7 +294,7 @@ export default function ProductPage() {
                           : "text-muted-foreground border-transparent hover:text-foreground"
                       }`}
                     >
-                      Care
+                      {t.product.care}
                     </button>
                   </div>
 
@@ -326,10 +324,9 @@ export default function ProductPage() {
               </motion.div>
             </div>
 
-            {/* You May Also Like */}
             <div className="mt-24 md:mt-32">
               <h2 className="text-sm font-light text-foreground tracking-widest uppercase mb-12">
-                You May Also Like
+                {t.product.youMayAlsoLike}
               </h2>
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
                 {otherProducts.map((p) => (
@@ -354,7 +351,7 @@ export default function ProductPage() {
                       {p.material}
                     </p>
                     <p className="text-sm font-normal text-foreground mt-0.5">
-                      {p.currency}{p.price}
+                      {fp(p.price)}
                     </p>
                   </Link>
                 ))}

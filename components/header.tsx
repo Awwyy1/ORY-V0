@@ -5,41 +5,27 @@ import Link from "next/link"
 import { Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, Globe, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useCartStore } from "@/lib/cart-store"
-
-const navLinks = [
-  { name: "Why Silk", href: "#why-silk" },
-  { name: "Collection", href: "#collection" },
-  { name: "Philosophy", href: "#philosophy" },
-]
-
-const languages = [
-  { code: "de", name: "Deutsch" },
-  { code: "en", name: "English" },
-  { code: "fr", name: "Français" },
-]
-
-const currencies = [
-  { code: "usd", name: "United States ($)" },
-  { code: "eur", name: "Europe (€)" },
-  { code: "chf", name: "Switzerland (CHF)" },
-]
+import { useTranslations, useI18nStore, languages, currencies, type Language, type Currency } from "@/lib/i18n"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isLangOpen, setIsLangOpen] = useState(false)
-  const [selectedLang, setSelectedLang] = useState("en")
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isMenuLangOpen, setIsMenuLangOpen] = useState(false)
-  const [isMenuCurrencyOpen, setIsMenuCurrencyOpen] = useState(false)
-  const [selectedCurrency, setSelectedCurrency] = useState("eur")
   const [isDesktopLangOpen, setIsDesktopLangOpen] = useState(false)
   const [isDesktopCurrencyOpen, setIsDesktopCurrencyOpen] = useState(false)
+  const [isMobileLangOpen, setIsMobileLangOpen] = useState(false)
+  const [isMenuLangOpen, setIsMenuLangOpen] = useState(false)
+  const [isMenuCurrencyOpen, setIsMenuCurrencyOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   const toggleCart = useCartStore((s) => s.toggleCart)
   const getTotalItems = useCartStore((s) => s.getTotalItems)
 
-  // Prevent hydration mismatch — cart count comes from localStorage
+  const t = useTranslations()
+  const { language, currency, setLanguage, setCurrency } = useI18nStore()
+
+  const currentLang = languages.find((l) => l.code === language)!
+  const currentCurrency = currencies.find((c) => c.code === currency)!
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -54,7 +40,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Close desktop dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
@@ -68,6 +53,12 @@ export function Header() {
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
   }, [isDesktopLangOpen, isDesktopCurrencyOpen])
+
+  const navLinks = [
+    { name: t.header.whySilk, href: "#why-silk" },
+    { name: t.header.collection, href: "#collection" },
+    { name: t.header.philosophy, href: "#philosophy" },
+  ]
 
   return (
     <>
@@ -98,37 +89,36 @@ export function Header() {
               </button>
               <div className="relative">
                 <button
-                  onClick={() => setIsLangOpen(!isLangOpen)}
+                  onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
                   className={`flex items-center gap-1 transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
                   aria-label="Language"
                 >
                   <Globe strokeWidth={1} className="w-5 h-5" />
-                  {isLangOpen ? (
+                  {isMobileLangOpen ? (
                     <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
                   ) : (
                     <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
                   )}
                 </button>
 
-                {/* Language Dropdown */}
                 <AnimatePresence>
-                  {isLangOpen && (
+                  {isMobileLangOpen && (
                     <motion.div
                       key="header-lang-dropdown"
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-2 bg-background border border-border shadow-sm min-w-[100px]"
+                      className="absolute top-full left-0 mt-2 bg-background border border-border shadow-sm min-w-[120px]"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
                           onClick={() => {
-                            setSelectedLang(lang.code)
-                            setIsLangOpen(false)
+                            setLanguage(lang.code)
+                            setIsMobileLangOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${language === lang.code ? "text-foreground" : "text-muted-foreground"
                             }`}
                         >
                           {lang.name}
@@ -140,7 +130,7 @@ export function Header() {
               </div>
             </div>
 
-            {/* Logo - Desktop: Left, Mobile: Center */}
+            {/* Logo */}
             <Link href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <span
                 className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"
@@ -150,7 +140,7 @@ export function Header() {
               </span>
             </Link>
 
-            {/* Navigation - Center (Desktop only) */}
+            {/* Navigation - Desktop */}
             <nav className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <a
@@ -166,7 +156,7 @@ export function Header() {
 
             {/* Right Controls */}
             <div className="flex items-center gap-6">
-              {/* Language Selector - Desktop only */}
+              {/* Language Selector - Desktop */}
               <div className="relative hidden lg:block" data-desktop-lang-dropdown>
                 <button
                   onClick={() => {
@@ -177,7 +167,7 @@ export function Header() {
                     }`}
                 >
                   <Globe strokeWidth={1} className="w-4 h-4 flex-shrink-0" />
-                  <span className="w-[60px] text-left">{languages.find(l => l.code === selectedLang)?.name}</span>
+                  <span className="w-[70px] text-left">{currentLang.name}</span>
                   {isDesktopLangOpen ? (
                     <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
                   ) : (
@@ -185,7 +175,6 @@ export function Header() {
                   )}
                 </button>
 
-                {/* Desktop Language Dropdown */}
                 <AnimatePresence>
                   {isDesktopLangOpen && (
                     <motion.div
@@ -194,16 +183,16 @@ export function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 mt-2 bg-background border border-border shadow-sm min-w-[120px]"
+                      className="absolute top-full left-0 mt-2 bg-background border border-border shadow-sm min-w-[140px]"
                     >
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
                           onClick={() => {
-                            setSelectedLang(lang.code)
+                            setLanguage(lang.code)
                             setIsDesktopLangOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted flex items-center gap-2 ${language === lang.code ? "text-foreground" : "text-muted-foreground"
                             }`}
                         >
                           {lang.name}
@@ -214,7 +203,7 @@ export function Header() {
                 </AnimatePresence>
               </div>
 
-              {/* Currency Selector - Desktop only */}
+              {/* Currency Selector - Desktop */}
               <div className="relative hidden lg:block" data-desktop-currency-dropdown>
                 <button
                   onClick={() => {
@@ -224,7 +213,7 @@ export function Header() {
                   className={`flex items-center gap-1.5 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
                     }`}
                 >
-                  <span className="w-[115px] text-left">{currencies.find(c => c.code === selectedCurrency)?.name}</span>
+                  <span className="w-[70px] text-left">{currentCurrency.name}</span>
                   {isDesktopCurrencyOpen ? (
                     <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
                   ) : (
@@ -232,7 +221,6 @@ export function Header() {
                   )}
                 </button>
 
-                {/* Desktop Currency Dropdown */}
                 <AnimatePresence>
                   {isDesktopCurrencyOpen && (
                     <motion.div
@@ -241,19 +229,19 @@ export function Header() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full right-0 mt-2 bg-background border border-border shadow-sm min-w-[160px]"
+                      className="absolute top-full right-0 mt-2 bg-background border border-border shadow-sm min-w-[120px]"
                     >
-                      {currencies.map((currency) => (
+                      {currencies.map((curr) => (
                         <button
-                          key={currency.code}
+                          key={curr.code}
                           onClick={() => {
-                            setSelectedCurrency(currency.code)
+                            setCurrency(curr.code)
                             setIsDesktopCurrencyOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${selectedCurrency === currency.code ? "text-foreground" : "text-muted-foreground"
+                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${currency === curr.code ? "text-foreground" : "text-muted-foreground"
                             }`}
                         >
-                          {currency.name}
+                          {curr.name}
                         </button>
                       ))}
                     </motion.div>
@@ -337,7 +325,6 @@ export function Header() {
             style={{ top: '64px' }}
           >
             <div className="flex flex-col h-full">
-              {/* Navigation Links */}
               <nav className="flex-1 border-t border-border/50">
                 {navLinks.map((link, index) => (
                   <motion.a
@@ -354,12 +341,12 @@ export function Header() {
                 ))}
               </nav>
 
-              {/* Bottom Section with Language and Currency */}
+              {/* Bottom — Language & Currency */}
               <div className="border-t border-border/50 px-5 py-3">
                 <div className="flex items-center gap-6">
                   <Globe strokeWidth={1} className="w-4 h-4 text-muted-foreground" />
 
-                  {/* Language Selector */}
+                  {/* Language */}
                   <div className="relative">
                     <button
                       onClick={() => {
@@ -368,7 +355,7 @@ export function Header() {
                       }}
                       className="flex items-center gap-1 text-xs font-light text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <span>{languages.find(l => l.code === selectedLang)?.name}</span>
+                      <span>{currentLang.name}</span>
                       <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
 
@@ -380,16 +367,16 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[100px]"
+                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[120px]"
                         >
                           {languages.map((lang) => (
                             <button
                               key={lang.code}
                               onClick={() => {
-                                setSelectedLang(lang.code)
+                                setLanguage(lang.code)
                                 setIsMenuLangOpen(false)
                               }}
-                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${selectedLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${language === lang.code ? "text-foreground" : "text-muted-foreground"
                                 }`}
                             >
                               {lang.name}
@@ -400,7 +387,7 @@ export function Header() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Currency Selector */}
+                  {/* Currency */}
                   <div className="relative">
                     <button
                       onClick={() => {
@@ -409,7 +396,7 @@ export function Header() {
                       }}
                       className="flex items-center gap-1 text-xs font-light text-muted-foreground hover:text-foreground transition-colors"
                     >
-                      <span>{currencies.find(c => c.code === selectedCurrency)?.name}</span>
+                      <span>{currentCurrency.name}</span>
                       <ChevronDown strokeWidth={1} className="w-3 h-3" />
                     </button>
 
@@ -421,19 +408,19 @@ export function Header() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 4 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[140px]"
+                          className="absolute bottom-full left-0 mb-2 bg-background border border-border/50 shadow-sm min-w-[120px]"
                         >
-                          {currencies.map((currency) => (
+                          {currencies.map((curr) => (
                             <button
-                              key={currency.code}
+                              key={curr.code}
                               onClick={() => {
-                                setSelectedCurrency(currency.code)
+                                setCurrency(curr.code)
                                 setIsMenuCurrencyOpen(false)
                               }}
-                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${selectedCurrency === currency.code ? "text-foreground" : "text-muted-foreground"
+                              className={`w-full text-left px-3 py-1.5 text-xs font-light transition-colors hover:bg-muted ${currency === curr.code ? "text-foreground" : "text-muted-foreground"
                                 }`}
                             >
-                              {currency.name}
+                              {curr.name}
                             </button>
                           ))}
                         </motion.div>

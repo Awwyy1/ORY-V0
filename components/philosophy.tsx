@@ -1,27 +1,20 @@
 "use client"
 
 import { motion } from "framer-motion"
-
-const philosophyItems = [
-    {
-        title: "The Silk Covenant",
-        text: "We believe that luxury shouldn't be fragile. Our philosophy centers on the intersection of biological comfort and mechanical precision. To wear ORY is to enter a pact with your own skin — a promise of zero friction and absolute confidence.",
-    },
-    {
-        title: "Anatomical Engineering",
-        text: "We don't design underwear; we engineer habitats. Every curve and stitch is dictated by the physics of the male body in motion. We use 100% Grade 6A Mulberry silk because it is the only material that respects the complexity of human biology.",
-    },
-    {
-        title: "Quiet Luxury",
-        text: "True confidence is silent. Our garments carry no external logos. The value of ORY is known only to the wearer. It is a private standard of excellence for the man who demands the best where it matters most.",
-    },
-]
+import { useTranslations } from "@/lib/i18n"
 
 export function Philosophy() {
+    const t = useTranslations()
+
+    const philosophyItems = [
+        { title: t.philosophy.covenantTitle, text: t.philosophy.covenantBody },
+        { title: t.philosophy.engineeringTitle, text: t.philosophy.engineeringBody },
+        { title: t.philosophy.luxuryTitle, text: t.philosophy.luxuryBody },
+    ]
+
     return (
         <section id="philosophy" className="py-24 md:py-32 px-8 lg:px-12 bg-white">
             <div className="max-w-[900px] mx-auto">
-                {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -30,15 +23,14 @@ export function Philosophy() {
                     className="mb-16 md:mb-20"
                 >
                     <h2 className="text-sm font-light text-foreground tracking-widest uppercase">
-                        Philosophy
+                        {t.philosophy.title}
                     </h2>
                 </motion.div>
 
-                {/* Philosophy Items */}
                 <div className="space-y-16 md:space-y-20">
                     {philosophyItems.map((item, index) => (
                         <motion.div
-                            key={item.title}
+                            key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}

@@ -1,12 +1,14 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useTranslations } from "@/lib/i18n"
 
 export function Statement() {
+    const t = useTranslations()
+
     return (
         <section className="py-24 md:py-32 px-8 lg:px-12 bg-white">
             <div className="max-w-[1100px] mx-auto">
-                {/* Main Statement */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -15,15 +17,14 @@ export function Statement() {
                     className="mb-16 md:mb-20"
                 >
                     <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold text-foreground tracking-wide leading-tight">
-                        Ordinary cotton is for ordinary days.
+                        {t.statement.line1}
                     </h2>
                     <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold text-muted-foreground/40 tracking-wide leading-tight mt-2">
-                        Silk is for the moments that matter.
+                        {t.statement.line2}
                     </h2>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
-                    {/* Left - Quote */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -32,12 +33,11 @@ export function Statement() {
                     >
                         <div className="border-l border-border pl-6 md:pl-8">
                             <p className="text-sm md:text-base font-light text-muted-foreground leading-relaxed">
-                                Friction-free engineering for your most valuable assets. Designed with obsession. Built for those who give a damn. The feeling of liquid titanium against your skin.
+                                {t.statement.body}
                             </p>
                         </div>
                     </motion.div>
 
-                    {/* Right - Technical Specification */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -46,17 +46,17 @@ export function Statement() {
                         className="flex flex-col items-start md:items-end justify-end"
                     >
                         <p className="text-xs font-normal text-foreground tracking-[0.25em] uppercase mb-4">
-                            Technical Specification
+                            {t.statement.specTitle}
                         </p>
                         <div className="space-y-1.5 md:text-right">
                             <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
-                                100% Grade 6A Mulberry Silk
+                                {t.statement.spec1}
                             </p>
                             <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
-                                Invisible Flat-Lock Stitching
+                                {t.statement.spec2}
                             </p>
                             <p className="text-xs font-light tracking-widest uppercase text-muted-foreground">
-                                Zero-Pressure Waistband
+                                {t.statement.spec3}
                             </p>
                         </div>
                     </motion.div>
