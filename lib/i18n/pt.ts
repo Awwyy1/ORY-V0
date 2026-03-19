@@ -3,14 +3,14 @@ import type { Translations } from "./en"
 const pt: Translations = {
   header: {
     whySilk: "Por Que Seda",
-    collection: "Coleção",
+    collection: "Loja",
     philosophy: "Filosofia",
     secureCheckout: "Pagamento Seguro",
   },
 
   hero: {
     title: "Para Quem Tem Coragem",
-    cta: "Descobrir",
+    cta: "Comprar Agora",
   },
 
   statement: {
@@ -41,7 +41,7 @@ const pt: Translations = {
   },
 
   product: {
-    collection: "Coleção",
+    collection: "Loja",
     selectSize: "Selecionar Tamanho",
     quickAdd: "Adição Rápida",
     addToBag: "Adicionar à Sacola",
@@ -54,7 +54,7 @@ const pt: Translations = {
     sizeGuide: "Guia de Tamanhos",
     details: "Detalhes",
     care: "Cuidados",
-    backToCollection: "Voltar à Coleção",
+    backToCollection: "Voltar à Loja",
     youMayAlsoLike: "Você Também Pode Gostar",
     freeShippingNote: "Frete grátis em pedidos acima de R$1.000 · Devoluções grátis em 30 dias",
   },
