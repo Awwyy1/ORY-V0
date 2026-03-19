@@ -1,12 +1,14 @@
 import type { Product } from "@/lib/products"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+
 interface ProductSchemaProps {
   product: Product
 }
 
 export function ProductSchema({ product }: ProductSchemaProps) {
-  const url = `https://oryfor.men/product/${product.slug}`
-  const image = `https://oryfor.men${product.image}`
+  const url = `${siteUrl}/product/${product.slug}`
+  const image = `${siteUrl}${product.image}`
 
   const totalStock = Object.values(product.stock).reduce((a, b) => a + b, 0)
 
@@ -15,7 +17,7 @@ export function ProductSchema({ product }: ProductSchemaProps) {
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.images.map((img) => `https://oryfor.men${img}`),
+    image: product.images.map((img) => `${siteUrl}${img}`),
     url,
     brand: {
       "@type": "Brand",
@@ -77,13 +79,13 @@ export function ProductSchema({ product }: ProductSchemaProps) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://oryfor.men",
+        item: siteUrl,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Shop",
-        item: "https://oryfor.men/#collection",
+        item: `${siteUrl}/#collection`,
       },
       {
         "@type": "ListItem",

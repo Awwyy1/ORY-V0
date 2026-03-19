@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next"
 import { products } from "@/lib/products"
 
-const siteUrl = "https://oryfor.men"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const productPages = products.map((product) => ({

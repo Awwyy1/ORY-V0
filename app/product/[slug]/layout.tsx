@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { getProductBySlug, products } from "@/lib/products"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+
 interface Props {
   params: Promise<{ slug: string }>
   children: React.ReactNode
@@ -18,8 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const title = `${product.name} — ${product.material}`
   const description = product.description
-  const url = `https://oryfor.men/product/${product.slug}`
-  const image = `https://oryfor.men${product.image}`
+  const url = `${siteUrl}/product/${product.slug}`
+  const image = `${siteUrl}${product.image}`
 
   return {
     title,

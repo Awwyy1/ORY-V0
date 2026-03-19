@@ -8,12 +8,14 @@ import { Newsletter } from "@/components/newsletter"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "ORY",
-  url: "https://oryfor.men",
-  logo: "https://oryfor.men/icon.svg",
+  url: siteUrl,
+  logo: `${siteUrl}/icon.svg`,
   description:
     "Premium 100% Grade 6A Mulberry silk underwear exclusively for men.",
   sameAs: [],
@@ -23,12 +25,12 @@ const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "ORY",
-  url: "https://oryfor.men",
+  url: siteUrl,
   description:
     "Luxury 100% pure silk underwear exclusively for men. The ultimate second skin.",
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://oryfor.men/?q={search_term_string}",
+    target: `${siteUrl}/?q={search_term_string}`,
     "query-input": "required name=search_term_string",
   },
 }
