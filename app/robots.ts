@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next"
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
@@ -9,6 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/checkout", "/order-confirmation", "/api/"],
       },
     ],
-    sitemap: "https://oryfor.men/sitemap.xml",
+    sitemap: `${siteUrl}/sitemap.xml`,
   }
 }
