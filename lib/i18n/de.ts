@@ -3,14 +3,14 @@ import type { Translations } from "./en"
 const de: Translations = {
   header: {
     whySilk: "Warum Seide",
-    collection: "Kollektion",
+    collection: "Shop",
     philosophy: "Philosophie",
     secureCheckout: "Sicherer Checkout",
   },
 
   hero: {
     title: "Für Männer mit Charakter",
-    cta: "Entdecken",
+    cta: "Jetzt Shoppen",
   },
 
   statement: {
@@ -41,7 +41,7 @@ const de: Translations = {
   },
 
   product: {
-    collection: "Kollektion",
+    collection: "Shop",
     selectSize: "Größe Wählen",
     quickAdd: "Schnell Hinzufügen",
     addToBag: "In den Warenkorb",
@@ -54,7 +54,7 @@ const de: Translations = {
     sizeGuide: "Größentabelle",
     details: "Details",
     care: "Pflege",
-    backToCollection: "Zurück zur Kollektion",
+    backToCollection: "Zurück zum Shop",
     youMayAlsoLike: "Das Könnte Ihnen Auch Gefallen",
     freeShippingNote: "Kostenloser Versand ab 200€ · Kostenlose Rücksendung innerhalb von 30 Tagen",
   },

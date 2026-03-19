@@ -3,14 +3,14 @@ import type { Translations } from "./en"
 const es: Translations = {
   header: {
     whySilk: "Por Qué Seda",
-    collection: "Colección",
+    collection: "Tienda",
     philosophy: "Filosofía",
     secureCheckout: "Pago Seguro",
   },
 
   hero: {
     title: "Para Los Que Tienen Agallas",
-    cta: "Descubrir",
+    cta: "Comprar Ahora",
   },
 
   statement: {
@@ -41,7 +41,7 @@ const es: Translations = {
   },
 
   product: {
-    collection: "Colección",
+    collection: "Tienda",
     selectSize: "Seleccionar Talla",
     quickAdd: "Añadir Rápido",
     addToBag: "Añadir al Carrito",
@@ -54,7 +54,7 @@ const es: Translations = {
     sizeGuide: "Guía de Tallas",
     details: "Detalles",
     care: "Cuidado",
-    backToCollection: "Volver a la Colección",
+    backToCollection: "Volver a la Tienda",
     youMayAlsoLike: "También Te Puede Gustar",
     freeShippingNote: "Envío gratis en pedidos superiores a 200€ · Devoluciones gratis en 30 días",
   },

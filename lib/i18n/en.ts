@@ -2,7 +2,7 @@ const en = {
   // Header
   header: {
     whySilk: "Why Silk",
-    collection: "Collection",
+    collection: "Shop",
     philosophy: "Philosophy",
     secureCheckout: "Secure Checkout",
   },
@@ -10,7 +10,7 @@ const en = {
   // Hero
   hero: {
     title: "For Those with Balls",
-    cta: "Discover",
+    cta: "Shop Now",
   },
 
   // Statement
@@ -44,7 +44,7 @@ const en = {
 
   // Product
   product: {
-    collection: "Collection",
+    collection: "Shop",
     selectSize: "Select Size",
     quickAdd: "Quick Add",
     addToBag: "Add to Bag",
@@ -57,7 +57,7 @@ const en = {
     sizeGuide: "Size Guide",
     details: "Details",
     care: "Care",
-    backToCollection: "Back to Collection",
+    backToCollection: "Back to Shop",
     youMayAlsoLike: "You May Also Like",
     freeShippingNote: "Free shipping on orders over $200 · Free returns within 30 days",
   },
@@ -97,7 +97,7 @@ const en = {
     item: "item",
     items: "items",
     empty: "Your bag is empty",
-    emptyDesc: "Discover our collection of premium silk underwear",
+    emptyDesc: "Explore our premium silk underwear",
     shopCollection: "Shop Collection",
     subtotal: "Subtotal",
     shippingNote: "Shipping & taxes calculated at checkout",

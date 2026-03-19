@@ -82,7 +82,7 @@ export function ProductSchema({ product }: ProductSchemaProps) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Collection",
+        name: "Shop",
         item: "https://oryfor.men/#collection",
       },
       {

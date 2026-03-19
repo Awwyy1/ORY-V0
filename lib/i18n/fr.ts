@@ -3,14 +3,14 @@ import type { Translations } from "./en"
 const fr: Translations = {
   header: {
     whySilk: "Pourquoi la Soie",
-    collection: "Collection",
+    collection: "Boutique",
     philosophy: "Philosophie",
     secureCheckout: "Paiement Sécurisé",
   },
 
   hero: {
     title: "Pour Ceux Qui Ont du Cran",
-    cta: "Découvrir",
+    cta: "Acheter Maintenant",
   },
 
   statement: {
@@ -41,7 +41,7 @@ const fr: Translations = {
   },
 
   product: {
-    collection: "Collection",
+    collection: "Boutique",
     selectSize: "Choisir la Taille",
     quickAdd: "Ajout Rapide",
     addToBag: "Ajouter au Panier",
@@ -54,7 +54,7 @@ const fr: Translations = {
     sizeGuide: "Guide des Tailles",
     details: "Détails",
     care: "Entretien",
-    backToCollection: "Retour à la Collection",
+    backToCollection: "Retour à la Boutique",
     youMayAlsoLike: "Vous Aimerez Aussi",
     freeShippingNote: "Livraison gratuite dès 200€ · Retours gratuits sous 30 jours",
   },
