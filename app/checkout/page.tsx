@@ -13,26 +13,24 @@ import {
   Lock,
   Package,
   Truck,
-  CreditCard,
   ClipboardList,
   ShieldCheck,
+  CreditCard,
 } from "lucide-react"
 import { useCartStore } from "@/lib/cart-store"
 import {
   useCheckoutStore,
   shippingOptions,
   type CheckoutStep,
-  type ShippingInfo,
-  type PaymentInfo,
 } from "@/lib/checkout-store"
 import { useTranslations, useFormatPrice } from "@/lib/i18n"
 import type { Translations } from "@/lib/i18n/en"
 
-const stepIcons = [ClipboardList, Truck, CreditCard, Check]
+const stepIcons = [ClipboardList, Truck, CreditCard]
 
 function StepIndicator({ currentStep, t }: { currentStep: CheckoutStep; t: Translations }) {
-  const stepIds: CheckoutStep[] = ["information", "shipping", "payment", "review"]
-  const stepLabels = [t.checkout.information, t.checkout.shipping, t.checkout.payment, t.checkout.review]
+  const stepIds: CheckoutStep[] = ["information", "shipping", "review"]
+  const stepLabels = [t.checkout.information, t.checkout.shipping, t.checkout.review]
   const currentIndex = stepIds.indexOf(currentStep)
 
   return (
@@ -70,7 +68,7 @@ function StepIndicator({ currentStep, t }: { currentStep: CheckoutStep; t: Trans
                 {stepLabels[index]}
               </span>
             </div>
-            {index < 3 && (
+            {index < 2 && (
               <div
                 className={`w-8 sm:w-12 md:w-16 h-px mx-1 sm:mx-2 mb-5 sm:mb-0 transition-colors duration-300 ${
                   index < currentIndex ? "bg-foreground" : "bg-border"
@@ -128,10 +126,10 @@ function ReviewSection({ title, onEdit, children }: { title: string; onEdit?: ()
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { items, getTotalPrice, getTotalItems, clearCart } = useCartStore()
+  const { items, getTotalPrice, clearCart } = useCartStore()
   const {
-    step, shippingInfo, shippingMethod, paymentInfo,
-    setStep, setShippingInfo, setShippingMethod, setPaymentInfo, placeOrder, reset: resetCheckout,
+    step, shippingInfo, shippingMethod,
+    setStep, setShippingInfo, setShippingMethod, reset: resetCheckout,
   } = useCheckoutStore()
 
   const t = useTranslations()
@@ -140,8 +138,8 @@ export default function CheckoutPage() {
   const [mounted, setMounted] = useState(false)
   const [summaryExpanded, setSummaryExpanded] = useState(false)
   const [infoErrors, setInfoErrors] = useState<Record<string, string>>({})
-  const [paymentErrors, setPaymentErrors] = useState<Record<string, string>>({})
-  const [isPlacing, setIsPlacing] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [stripeError, setStripeError] = useState<string | null>(null)
 
   useEffect(() => { setMounted(true) }, [])
 
@@ -177,42 +175,48 @@ export default function CheckoutPage() {
     return Object.keys(errors).length === 0
   }
 
-  const validatePayment = (): boolean => {
-    const errors: Record<string, string> = {}
-    const cardDigits = paymentInfo.cardNumber.replace(/\s/g, "")
-    if (!cardDigits) errors.cardNumber = t.checkout.cardRequired
-    else if (cardDigits.length < 13) errors.cardNumber = t.checkout.cardInvalid
-    if (!paymentInfo.cardName.trim()) errors.cardName = t.checkout.cardNameRequired
-    const expiryDigits = paymentInfo.expiry.replace(/\D/g, "")
-    if (!expiryDigits) errors.expiry = t.checkout.expiryRequired
-    else if (expiryDigits.length < 4) errors.expiry = t.checkout.expiryInvalid
-    if (!paymentInfo.cvc) errors.cvc = t.checkout.cvcRequired
-    else if (paymentInfo.cvc.length < 3) errors.cvc = t.checkout.cvcInvalid
-    setPaymentErrors(errors)
-    return Object.keys(errors).length === 0
-  }
-
   const goTo = (s: CheckoutStep) => { setStep(s); window.scrollTo({ top: 0, behavior: "smooth" }) }
   const handleInfoNext = () => { if (validateInfo()) goTo("shipping") }
-  const handleShippingNext = () => goTo("payment")
-  const handlePaymentNext = () => { if (validatePayment()) goTo("review") }
+  const handleShippingNext = () => goTo("review")
 
   const handlePlaceOrder = async () => {
-    setIsPlacing(true)
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    const orderId = placeOrder()
-    clearCart()
-    router.push(`/order-confirmation?id=${orderId}`)
-  }
+    setIsRedirecting(true)
+    setStripeError(null)
 
-  const formatCardNumber = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 16)
-    return digits.replace(/(\d{4})(?=\d)/g, "$1 ")
-  }
-  const formatExpiry = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 4)
-    if (digits.length >= 3) return digits.slice(0, 2) + " / " + digits.slice(2)
-    return digits
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            slug: item.slug,
+            name: item.name,
+            size: item.size,
+            quantity: item.quantity,
+            price: item.price,
+            image: item.image,
+          })),
+          shippingMethod,
+          shippingCost: shipping.price,
+          shippingInfo,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong")
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      console.error("Checkout error:", error)
+      setStripeError(error instanceof Error ? error.message : "Payment failed. Please try again.")
+      setIsRedirecting(false)
+    }
   }
 
   const clearError = (errors: Record<string, string>, setErrors: (e: Record<string, string>) => void, field: string) => {
@@ -339,44 +343,13 @@ export default function CheckoutPage() {
                       <ArrowLeft strokeWidth={1} className="w-4 h-4" />{t.checkout.back}
                     </button>
                     <button onClick={handleShippingNext} className="sm:flex-[2] py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 flex items-center justify-center gap-2">
-                      {t.checkout.continueToPayment}<ArrowRight strokeWidth={1} className="w-4 h-4" />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* PAYMENT */}
-              {step === "payment" && (
-                <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <h2 className="text-lg md:text-xl font-light tracking-wide text-foreground">{t.checkout.paymentTitle}</h2>
-                    <Lock strokeWidth={1} className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                  <p className="text-xs font-light text-muted-foreground mb-8">{t.checkout.paymentSecure}</p>
-                  <div className="border border-border p-5 md:p-6 space-y-5">
-                    <InputField label={t.checkout.cardNumber} value={paymentInfo.cardNumber} error={paymentErrors.cardNumber} placeholder={t.checkout.cardNumberPlaceholder} autoComplete="cc-number" inputMode="numeric" onChange={(v) => { setPaymentInfo({ cardNumber: formatCardNumber(v) }); clearError(paymentErrors, setPaymentErrors, "cardNumber") }} />
-                    <InputField label={t.checkout.nameOnCard} value={paymentInfo.cardName} error={paymentErrors.cardName} autoComplete="cc-name" onChange={(v) => { setPaymentInfo({ cardName: v }); clearError(paymentErrors, setPaymentErrors, "cardName") }} />
-                    <div className="grid grid-cols-2 gap-4">
-                      <InputField label={t.checkout.expiryDate} value={paymentInfo.expiry} error={paymentErrors.expiry} placeholder={t.checkout.expiryPlaceholder} autoComplete="cc-exp" inputMode="numeric" onChange={(v) => { setPaymentInfo({ expiry: formatExpiry(v) }); clearError(paymentErrors, setPaymentErrors, "expiry") }} />
-                      <InputField label={t.checkout.securityCode} value={paymentInfo.cvc} error={paymentErrors.cvc} placeholder="CVC" autoComplete="cc-csc" inputMode="numeric" maxLength={4} onChange={(v) => { setPaymentInfo({ cvc: v.replace(/\D/g, "").slice(0, 4) }); clearError(paymentErrors, setPaymentErrors, "cvc") }} />
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 mt-4 text-muted-foreground">
-                    <ShieldCheck strokeWidth={1} className="w-4 h-4 flex-shrink-0" />
-                    <span className="text-xs font-light">{t.checkout.encryptedNote}</span>
-                  </div>
-                  <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                    <button onClick={() => goTo("shipping")} className="sm:flex-1 py-4 text-sm font-light tracking-widest uppercase border border-border text-foreground hover:bg-muted transition-colors duration-300 flex items-center justify-center gap-2">
-                      <ArrowLeft strokeWidth={1} className="w-4 h-4" />{t.checkout.back}
-                    </button>
-                    <button onClick={handlePaymentNext} className="sm:flex-[2] py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 flex items-center justify-center gap-2">
                       {t.checkout.reviewOrder}<ArrowRight strokeWidth={1} className="w-4 h-4" />
                     </button>
                   </div>
                 </motion.div>
               )}
 
-              {/* REVIEW */}
+              {/* REVIEW & PAY */}
               {step === "review" && (
                 <motion.div key="review" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
                   <h2 className="text-lg md:text-xl font-light tracking-wide text-foreground mb-1">{t.checkout.reviewTitle}</h2>
@@ -394,13 +367,6 @@ export default function CheckoutPage() {
                     <p className="text-xs font-light text-muted-foreground mt-0.5">
                       {shippingOptionLabels[shippingMethod].days} · {shipping.price === 0 ? t.checkout.free : fp(shipping.price)}
                     </p>
-                  </ReviewSection>
-
-                  <ReviewSection title={t.checkout.paymentTitle}>
-                    <p className="text-sm font-light text-foreground">
-                      Card ending in {paymentInfo.cardNumber.replace(/\s/g, "").slice(-4)}
-                    </p>
-                    <p className="text-xs font-light text-muted-foreground mt-0.5">{paymentInfo.cardName}</p>
                   </ReviewSection>
 
                   <div className="border-t border-border pt-6 mt-6">
@@ -442,12 +408,22 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
+                  {stripeError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 p-4 border border-red-300 bg-red-50 text-sm text-red-700 font-light"
+                    >
+                      {stripeError}
+                    </motion.div>
+                  )}
+
                   <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                    <button onClick={() => goTo("payment")} className="sm:flex-1 py-4 text-sm font-light tracking-widest uppercase border border-border text-foreground hover:bg-muted transition-colors duration-300 flex items-center justify-center gap-2">
+                    <button onClick={() => goTo("shipping")} className="sm:flex-1 py-4 text-sm font-light tracking-widest uppercase border border-border text-foreground hover:bg-muted transition-colors duration-300 flex items-center justify-center gap-2">
                       <ArrowLeft strokeWidth={1} className="w-4 h-4" />{t.checkout.back}
                     </button>
-                    <button onClick={handlePlaceOrder} disabled={isPlacing} className="sm:flex-[2] py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-60">
-                      {isPlacing ? (
+                    <button onClick={handlePlaceOrder} disabled={isRedirecting} className="sm:flex-[2] py-4 text-sm font-light tracking-widest uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-60">
+                      {isRedirecting ? (
                         <>
                           <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full" />
                           {t.checkout.processing}
@@ -459,6 +435,11 @@ export default function CheckoutPage() {
                         </>
                       )}
                     </button>
+                  </div>
+
+                  <div className="mt-6 flex items-center justify-center gap-2 text-muted-foreground/50">
+                    <ShieldCheck strokeWidth={1} className="w-4 h-4" />
+                    <span className="text-xs font-light">{t.checkout.encryptedNote}</span>
                   </div>
                 </motion.div>
               )}

@@ -49,27 +49,17 @@ export const shippingOptions: ShippingOption[] = [
   },
 ]
 
-export interface PaymentInfo {
-  cardNumber: string
-  cardName: string
-  expiry: string
-  cvc: string
-}
-
-export type CheckoutStep = "information" | "shipping" | "payment" | "review"
+export type CheckoutStep = "information" | "shipping" | "review"
 
 interface CheckoutState {
   step: CheckoutStep
   shippingInfo: ShippingInfo
   shippingMethod: ShippingMethod
-  paymentInfo: PaymentInfo
   orderId: string | null
 
   setStep: (step: CheckoutStep) => void
   setShippingInfo: (info: Partial<ShippingInfo>) => void
   setShippingMethod: (method: ShippingMethod) => void
-  setPaymentInfo: (info: Partial<PaymentInfo>) => void
-  placeOrder: () => string
   reset: () => void
 }
 
@@ -86,27 +76,10 @@ const initialShippingInfo: ShippingInfo = {
   zip: "",
 }
 
-const initialPaymentInfo: PaymentInfo = {
-  cardNumber: "",
-  cardName: "",
-  expiry: "",
-  cvc: "",
-}
-
-function generateOrderId(): string {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
-  let id = "ORY-"
-  for (let i = 0; i < 8; i++) {
-    id += chars[Math.floor(Math.random() * chars.length)]
-  }
-  return id
-}
-
-export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
+export const useCheckoutStore = create<CheckoutState>()((set) => ({
   step: "information",
   shippingInfo: initialShippingInfo,
   shippingMethod: "standard",
-  paymentInfo: initialPaymentInfo,
   orderId: null,
 
   setStep: (step) => set({ step }),
@@ -118,23 +91,11 @@ export const useCheckoutStore = create<CheckoutState>()((set, get) => ({
 
   setShippingMethod: (method) => set({ shippingMethod: method }),
 
-  setPaymentInfo: (info) =>
-    set((state) => ({
-      paymentInfo: { ...state.paymentInfo, ...info },
-    })),
-
-  placeOrder: () => {
-    const orderId = generateOrderId()
-    set({ orderId })
-    return orderId
-  },
-
   reset: () =>
     set({
       step: "information",
       shippingInfo: initialShippingInfo,
       shippingMethod: "standard",
-      paymentInfo: initialPaymentInfo,
       orderId: null,
     }),
 }))
