@@ -6,13 +6,25 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Check, Mail, ArrowRight, MapPin, Truck } from "lucide-react"
 import { useCheckoutStore, shippingOptions } from "@/lib/checkout-store"
+import { useCartStore } from "@/lib/cart-store"
 import { useTranslations } from "@/lib/i18n"
+
+interface SessionData {
+  customerEmail: string
+  amountTotal: number
+  paymentStatus: string
+  shippingMethod: string
+  customerName: string
+}
 
 function OrderConfirmationContent() {
   const searchParams = useSearchParams()
-  const orderId = searchParams.get("id")
+  const sessionId = searchParams.get("session_id")
+  const legacyOrderId = searchParams.get("id") // backward compat
   const { shippingInfo, shippingMethod, reset } = useCheckoutStore()
+  const { clearCart } = useCartStore()
   const [mounted, setMounted] = useState(false)
+  const [sessionData, setSessionData] = useState<SessionData | null>(null)
   const t = useTranslations()
 
   const shipping = shippingOptions.find((o) => o.id === shippingMethod)!
@@ -25,7 +37,11 @@ function OrderConfirmationContent() {
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    // Clear cart after successful payment
+    if (sessionId) {
+      clearCart()
+    }
+  }, [sessionId, clearCart])
 
   useEffect(() => {
     return () => {
@@ -34,6 +50,15 @@ function OrderConfirmationContent() {
   }, [reset])
 
   if (!mounted) return null
+
+  const displayOrderId = sessionId
+    ? `ORY-${sessionId.slice(-8).toUpperCase()}`
+    : legacyOrderId || "ORY-XXXXXXXX"
+
+  const displayEmail = shippingInfo.email || sessionData?.customerEmail || "your@email.com"
+  const displayCity = shippingInfo.city && shippingInfo.state
+    ? `${shippingInfo.city}, ${shippingInfo.state}`
+    : "—"
 
   const steps = [
     { title: t.confirmation.step1Title, desc: t.confirmation.step1Desc },
@@ -86,7 +111,7 @@ function OrderConfirmationContent() {
             {t.confirmation.orderNumber}
           </p>
           <p className="text-xl md:text-2xl font-normal tracking-[0.2em] text-foreground">
-            {orderId || "ORY-XXXXXXXX"}
+            {displayOrderId}
           </p>
         </motion.div>
 
@@ -99,14 +124,12 @@ function OrderConfirmationContent() {
           <div className="border border-border p-4 text-center">
             <Mail strokeWidth={1} className="w-5 h-5 mx-auto text-muted-foreground mb-2" />
             <p className="text-xs font-light text-muted-foreground tracking-wide mb-1">{t.confirmation.confirmationSent}</p>
-            <p className="text-xs font-normal text-foreground break-all">{shippingInfo.email || "your@email.com"}</p>
+            <p className="text-xs font-normal text-foreground break-all">{displayEmail}</p>
           </div>
           <div className="border border-border p-4 text-center">
             <MapPin strokeWidth={1} className="w-5 h-5 mx-auto text-muted-foreground mb-2" />
             <p className="text-xs font-light text-muted-foreground tracking-wide mb-1">{t.confirmation.shippingTo}</p>
-            <p className="text-xs font-normal text-foreground">
-              {shippingInfo.city && shippingInfo.state ? `${shippingInfo.city}, ${shippingInfo.state}` : "—"}
-            </p>
+            <p className="text-xs font-normal text-foreground">{displayCity}</p>
           </div>
           <div className="border border-border p-4 text-center">
             <Truck strokeWidth={1} className="w-5 h-5 mx-auto text-muted-foreground mb-2" />
