@@ -5,7 +5,7 @@ import { persist } from "zustand/middleware"
 import type { Size } from "./products"
 
 export interface CartItem {
-  productId: number
+  productId: string
   slug: string
   name: string
   material: string
@@ -23,8 +23,8 @@ interface CartState {
   closeCart: () => void
   toggleCart: () => void
   addItem: (item: Omit<CartItem, "quantity">) => void
-  removeItem: (productId: number, size: Size) => void
-  updateQuantity: (productId: number, size: Size, quantity: number) => void
+  removeItem: (productId: string, size: Size) => void
+  updateQuantity: (productId: string, size: Size, quantity: number) => void
   clearCart: () => void
   getTotalItems: () => number
   getTotalPrice: () => number

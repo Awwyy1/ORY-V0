@@ -1,9 +1,13 @@
 import type { MetadataRoute } from "next"
-import { products } from "@/lib/products"
+import { getAllProducts } from "@/lib/db/products"
+
+export const dynamic = "force-dynamic"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const products = await getAllProducts()
+
   const productPages = products.map((product) => ({
     url: `${siteUrl}/product/${product.slug}`,
     lastModified: new Date(),

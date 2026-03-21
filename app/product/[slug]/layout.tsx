@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { getProductBySlug, products } from "@/lib/products"
+import { getProductBySlug, getProductSlugs } from "@/lib/db/products"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
@@ -10,7 +10,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const product = getProductBySlug(slug)
+  const product = await getProductBySlug(slug)
 
   if (!product) {
     return {
@@ -53,7 +53,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }))
+  try {
+    const slugs = await getProductSlugs()
+    return slugs.map((slug) => ({ slug }))
+  } catch {
+    return []
+  }
 }
 
 export default function ProductLayout({ children }: Props) {

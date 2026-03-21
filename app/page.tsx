@@ -7,6 +7,9 @@ import { Philosophy } from "@/components/philosophy"
 import { Newsletter } from "@/components/newsletter"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
+import { getAllProducts } from "@/lib/db/products"
+
+export const dynamic = "force-dynamic"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
@@ -35,7 +38,9 @@ const webSiteSchema = {
   },
 }
 
-export default function Home() {
+export default async function Home() {
+  const products = await getAllProducts()
+
   return (
     <main className="min-h-screen bg-white">
       <script
@@ -51,7 +56,7 @@ export default function Home() {
       <Hero />
       <Statement />
       <WhySilk />
-      <ProductGrid />
+      <ProductGrid products={products} />
       <Philosophy />
       <Newsletter />
       <Footer />
