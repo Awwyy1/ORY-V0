@@ -102,9 +102,7 @@ const es: Translations = {
     brand: "Ropa interior 100% seda pura premium, confeccionada exclusivamente para hombres que aprecian las mejores cosas de la vida.",
     explore: "Explorar",
     shop: "Tienda",
-    boxerBriefs: "Bóxers",
-    trunks: "Trunks",
-    loungeShorts: "Shorts de Descanso",
+    weAccept: "Aceptamos",
     support: "Soporte",
     contact: "Contacto",
     shippingReturns: "Envíos y Devoluciones",
@@ -228,6 +226,12 @@ const es: Translations = {
     overnight: "Envío 24 Horas",
     overnightDesc: "Entrega al siguiente día hábil",
     overnightDays: "1 día hábil",
+  },
+
+  cookie: {
+    message: "Usamos cookies para mejorar tu experiencia. Al continuar visitando este sitio, aceptas nuestro uso de cookies.",
+    accept: "Aceptar",
+    decline: "Rechazar",
   },
 }
 

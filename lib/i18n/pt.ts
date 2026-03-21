@@ -102,9 +102,7 @@ const pt: Translations = {
     brand: "Roupas íntimas 100% seda pura premium, confeccionadas exclusivamente para homens que apreciam as melhores coisas da vida.",
     explore: "Explorar",
     shop: "Loja",
-    boxerBriefs: "Cuecas Boxer",
-    trunks: "Trunks",
-    loungeShorts: "Shorts de Descanso",
+    weAccept: "Aceitamos",
     support: "Suporte",
     contact: "Contato",
     shippingReturns: "Entregas e Devoluções",
@@ -228,6 +226,12 @@ const pt: Translations = {
     overnight: "Entrega em 24 Horas",
     overnightDesc: "Entrega no próximo dia útil",
     overnightDays: "1 dia útil",
+  },
+
+  cookie: {
+    message: "Usamos cookies para melhorar sua experiência. Ao continuar visitando este site, você concorda com nosso uso de cookies.",
+    accept: "Aceitar",
+    decline: "Recusar",
   },
 }
 

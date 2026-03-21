@@ -110,9 +110,7 @@ const en = {
     brand: "Premium 100% pure silk underwear, crafted exclusively for men who appreciate the finest things in life.",
     explore: "Explore",
     shop: "Shop",
-    boxerBriefs: "Boxer Briefs",
-    trunks: "Trunks",
-    loungeShorts: "Lounge Shorts",
+    weAccept: "We accept",
     support: "Support",
     contact: "Contact",
     shippingReturns: "Shipping & Returns",
@@ -254,6 +252,13 @@ const en = {
     overnight: "Overnight Shipping",
     overnightDesc: "Next business day delivery",
     overnightDays: "1 business day",
+  },
+
+  // Cookie banner
+  cookie: {
+    message: "We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.",
+    accept: "Accept",
+    decline: "Decline",
   },
 }
 

@@ -102,9 +102,7 @@ const de: Translations = {
     brand: "Premium 100% reine Seidenunterwäsche, exklusiv für Männer gefertigt, die das Feinste im Leben schätzen.",
     explore: "Entdecken",
     shop: "Shop",
-    boxerBriefs: "Boxershorts",
-    trunks: "Trunks",
-    loungeShorts: "Lounge Shorts",
+    weAccept: "Wir akzeptieren",
     support: "Support",
     contact: "Kontakt",
     shippingReturns: "Versand & Rücksendung",
@@ -228,6 +226,12 @@ const de: Translations = {
     overnight: "Overnight-Versand",
     overnightDesc: "Zustellung am nächsten Werktag",
     overnightDays: "1 Werktag",
+  },
+
+  cookie: {
+    message: "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Durch den weiteren Besuch dieser Website stimmen Sie unserer Verwendung von Cookies zu.",
+    accept: "Akzeptieren",
+    decline: "Ablehnen",
   },
 }
 

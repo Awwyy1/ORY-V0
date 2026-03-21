@@ -102,9 +102,7 @@ const fr: Translations = {
     brand: "Sous-vêtements 100% soie pure premium, conçus exclusivement pour les hommes qui apprécient les plus belles choses de la vie.",
     explore: "Explorer",
     shop: "Boutique",
-    boxerBriefs: "Boxers",
-    trunks: "Trunks",
-    loungeShorts: "Shorts Détente",
+    weAccept: "Nous acceptons",
     support: "Support",
     contact: "Contact",
     shippingReturns: "Livraison & Retours",
@@ -228,6 +226,12 @@ const fr: Translations = {
     overnight: "Livraison Express 24h",
     overnightDesc: "Livraison le jour ouvré suivant",
     overnightDays: "1 jour ouvré",
+  },
+
+  cookie: {
+    message: "Nous utilisons des cookies pour améliorer votre expérience. En continuant à visiter ce site, vous acceptez notre utilisation des cookies.",
+    accept: "Accepter",
+    decline: "Refuser",
   },
 }
 
