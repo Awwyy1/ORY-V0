@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
 import { getAllProducts } from "@/lib/db/products"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
