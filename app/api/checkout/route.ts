@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 })
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
     // Build line items from cart — verify prices from our product data
     const lineItems = items.map((item) => {

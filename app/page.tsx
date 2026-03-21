@@ -8,7 +8,7 @@ import { Newsletter } from "@/components/newsletter"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://v0-ory-v0.vercel.app"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
 const organizationSchema = {
   "@context": "https://schema.org",
