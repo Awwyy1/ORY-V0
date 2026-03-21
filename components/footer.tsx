@@ -15,10 +15,8 @@ const shopLinks = [
 const paymentMethods = [
   { name: "Visa", src: "/images/payments/visa.svg" },
   { name: "Mastercard", src: "/images/payments/mastercard.svg" },
-  { name: "American Express", src: "/images/payments/amex.svg" },
   { name: "Apple Pay", src: "/images/payments/applepay.svg" },
   { name: "Google Pay", src: "/images/payments/gpay.svg" },
-  { name: "Klarna", src: "/images/payments/klarna.svg" },
 ]
 
 export function Footer() {
