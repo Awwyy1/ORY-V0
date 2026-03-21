@@ -18,7 +18,7 @@ export default function Icon() {
           color: "#fafafa",
           fontSize: 15,
           fontWeight: 700,
-          fontFamily: "Arial, Helvetica, sans-serif",
+          fontFamily: "Bold, Outfit, sans-serif",
           letterSpacing: "0.5px",
         }}
       >
