@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { getProductBySlug, getAllProducts } from "@/lib/db/products"
 import { ProductClient } from "./product-client"
 
-export const dynamic = "force-dynamic"
+export const revalidate = 60
 
 interface Props {
   params: Promise<{ slug: string }>
