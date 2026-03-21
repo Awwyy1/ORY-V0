@@ -1,24 +1,17 @@
-// Prisma client singleton for Next.js
-// Run `pnpm prisma generate` after setting DATABASE_URL in .env
-// to generate the Prisma client before using this module.
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-let PrismaClient: any
-
-try {
-  PrismaClient = require("@/lib/generated/prisma").PrismaClient
-} catch {
-  // Prisma client not generated yet — run `pnpm prisma generate`
-}
+import { PrismaNeon } from "@prisma/adapter-neon"
+import { PrismaClient } from "@/lib/generated/prisma/client"
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: any | undefined
+  prisma: InstanceType<typeof PrismaClient> | undefined
 }
 
-export const db = PrismaClient
-  ? (globalForPrisma.prisma ?? new PrismaClient())
-  : null
+function createPrismaClient() {
+  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL })
+  return new PrismaClient({ adapter })
+}
 
-if (process.env.NODE_ENV !== "production" && db) {
+export const db = globalForPrisma.prisma ?? createPrismaClient()
+
+if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = db
 }
