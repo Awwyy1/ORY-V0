@@ -105,16 +105,20 @@ export function Footer() {
             &copy; 2026 ORY. {t.footer.rights}
           </p>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {paymentMethods.map((pm) => (
-              <Image
+              <div
                 key={pm.name}
-                src={pm.src}
-                alt={pm.name}
-                width={46}
-                height={30}
-                className="h-[30px] w-auto"
-              />
+                className="flex items-center justify-center w-[50px] h-[34px] rounded border border-gray-200 bg-white"
+              >
+                <Image
+                  src={pm.src}
+                  alt={pm.name}
+                  width={32}
+                  height={20}
+                  className="h-[20px] w-auto object-contain"
+                />
+              </div>
             ))}
           </div>
 
