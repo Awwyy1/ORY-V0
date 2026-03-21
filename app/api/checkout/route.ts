@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getStripe } from "@/lib/stripe"
-import { getProductBySlug } from "@/lib/products"
+import { getProductBySlug } from "@/lib/db/products"
 
 interface CartItem {
   slug: string
@@ -19,6 +19,7 @@ interface CheckoutBody {
     email: string
     firstName: string
     lastName: string
+    phone?: string
     address: string
     apartment: string
     city: string
@@ -40,24 +41,26 @@ export async function POST(req: NextRequest) {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
 
     // Build line items from cart — verify prices from our product data
-    const lineItems = items.map((item) => {
-      const product = getProductBySlug(item.slug)
-      // Use server-side price (not client-sent) to prevent manipulation
-      const unitPrice = product ? product.price : item.price
+    const lineItems = await Promise.all(
+      items.map(async (item) => {
+        const product = await getProductBySlug(item.slug)
+        // Use server-side price (not client-sent) to prevent manipulation
+        const unitPrice = product ? product.price : item.price
 
-      return {
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: item.name,
-            description: `Size: ${item.size}`,
-            images: [`${siteUrl}${item.image}`],
+        return {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.name,
+              description: `Size: ${item.size}`,
+              images: [`${siteUrl}${item.image}`],
+            },
+            unit_amount: Math.round(unitPrice * 100), // Stripe uses cents
           },
-          unit_amount: Math.round(unitPrice * 100), // Stripe uses cents
-        },
-        quantity: item.quantity,
-      }
-    })
+          quantity: item.quantity,
+        }
+      })
+    )
 
     // Add shipping as a line item if not free
     if (shippingCost > 0) {
@@ -75,6 +78,13 @@ export async function POST(req: NextRequest) {
       })
     }
 
+    // Encode items as metadata for webhook to create order
+    const itemsMeta = items.map((i) => ({
+      slug: i.slug,
+      size: i.size,
+      qty: i.quantity,
+    }))
+
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -82,11 +92,18 @@ export async function POST(req: NextRequest) {
       customer_email: shippingInfo.email,
       metadata: {
         shippingMethod,
-        customerName: `${shippingInfo.firstName} ${shippingInfo.lastName}`,
-        address: `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zip}`,
-        country: shippingInfo.country,
+        shippingCost: String(shippingCost),
+        customerFirstName: shippingInfo.firstName,
+        customerLastName: shippingInfo.lastName,
+        phone: shippingInfo.phone || "",
+        address: shippingInfo.address,
+        apartment: shippingInfo.apartment || "",
+        city: shippingInfo.city,
+        state: shippingInfo.state,
+        zip: shippingInfo.zip,
+        country: shippingInfo.country || "US",
+        items: JSON.stringify(itemsMeta),
       },
-      shipping_address_collection: undefined, // We already collected the address
       success_url: `${siteUrl}/order-confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout`,
     })

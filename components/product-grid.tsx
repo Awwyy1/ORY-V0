@@ -2,10 +2,14 @@
 
 import { motion } from "framer-motion"
 import { ProductCard } from "./product-card"
-import { products } from "@/lib/products"
 import { useTranslations } from "@/lib/i18n"
+import type { Product } from "@/lib/products"
 
-export function ProductGrid() {
+interface ProductGridProps {
+  products: Product[]
+}
+
+export function ProductGrid({ products }: ProductGridProps) {
   const t = useTranslations()
 
   return (
