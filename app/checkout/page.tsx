@@ -24,6 +24,7 @@ import {
   type CheckoutStep,
 } from "@/lib/checkout-store"
 import { useTranslations, useFormatPrice } from "@/lib/i18n"
+import { trackBeginCheckout } from "@/lib/analytics"
 import type { Translations } from "@/lib/i18n/en"
 
 const stepIcons = [ClipboardList, Truck, CreditCard]
@@ -177,7 +178,19 @@ export default function CheckoutPage() {
 
   const goTo = (s: CheckoutStep) => { setStep(s); window.scrollTo({ top: 0, behavior: "smooth" }) }
   const handleInfoNext = () => { if (validateInfo()) goTo("shipping") }
-  const handleShippingNext = () => goTo("review")
+  const handleShippingNext = () => {
+    trackBeginCheckout(
+      items.map((item) => ({
+        slug: item.slug,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        size: item.size,
+      })),
+      total
+    )
+    goTo("review")
+  }
 
   const handlePlaceOrder = async () => {
     setIsRedirecting(true)
