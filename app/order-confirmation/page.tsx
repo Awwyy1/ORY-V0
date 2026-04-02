@@ -8,6 +8,7 @@ import { Check, Mail, ArrowRight, MapPin, Truck } from "lucide-react"
 import { useCheckoutStore, shippingOptions } from "@/lib/checkout-store"
 import { useCartStore } from "@/lib/cart-store"
 import { useTranslations } from "@/lib/i18n"
+import { trackPurchase } from "@/lib/analytics"
 
 interface SessionData {
   customerEmail: string
@@ -39,9 +40,14 @@ function OrderConfirmationContent() {
     setMounted(true)
     // Clear cart after successful payment
     if (sessionId) {
+      trackPurchase(
+        `ORY-${sessionId.slice(-8).toUpperCase()}`,
+        shipping.price,
+        shipping.price
+      )
       clearCart()
     }
-  }, [sessionId, clearCart])
+  }, [sessionId, clearCart, shipping.price])
 
   useEffect(() => {
     return () => {

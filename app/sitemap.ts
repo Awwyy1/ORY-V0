@@ -3,7 +3,7 @@ import { getAllProducts } from "@/lib/db/products"
 
 export const dynamic = "force-dynamic"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://orysilk.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.orysilk.com"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const products = await getAllProducts()

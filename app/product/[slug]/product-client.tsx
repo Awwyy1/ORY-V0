@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
@@ -8,6 +8,7 @@ import { ArrowLeft, Minus, Plus, Ruler, ChevronDown, Check } from "lucide-react"
 import { sizes, type Size, type Product } from "@/lib/products"
 import { useCartStore } from "@/lib/cart-store"
 import { useTranslations, useFormatPrice } from "@/lib/i18n"
+import { trackViewItem, trackAddToCart } from "@/lib/analytics"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CartSidebar } from "@/components/cart-sidebar"
@@ -30,6 +31,15 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const t = useTranslations()
   const fp = useFormatPrice()
 
+  useEffect(() => {
+    trackViewItem({
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      material: product.material,
+    })
+  }, [product.slug, product.name, product.price, product.material])
+
   const handleAddToBag = () => {
     if (!selectedSize) {
       setSizeError(true)
@@ -48,6 +58,13 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
       currency: product.currency,
       size: selectedSize,
       image: product.image,
+    })
+
+    trackAddToCart({
+      slug: product.slug,
+      name: product.name,
+      price: product.price,
+      size: selectedSize,
     })
 
     setJustAdded(true)
