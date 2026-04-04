@@ -123,14 +123,18 @@ export function Footer() {
           </div>
 
           <div className="flex items-center gap-6">
-            {[t.footer.privacyPolicy, t.footer.termsOfService, t.footer.cookieSettings].map((item) => (
-              <a
-                key={item}
-                href="#"
+            {[
+              { label: t.footer.privacyPolicy, href: "/privacy-policy" },
+              { label: t.footer.termsOfService, href: "/terms-of-service" },
+              { label: t.footer.cookieSettings, href: "/cookie-settings" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
                 className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors duration-300"
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
           </div>
         </div>
