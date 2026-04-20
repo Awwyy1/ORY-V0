@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Minus, Plus, Ruler, ChevronDown, Check } from "lucide-react"
+import { motion, AnimatePresence, type PanInfo } from "framer-motion"
+import { Minus, Plus, Ruler, ChevronDown, Check, ChevronRight } from "lucide-react"
 import { sizes, type Size, type Product } from "@/lib/products"
 import { useCartStore } from "@/lib/cart-store"
 import { useTranslations, useFormatPrice } from "@/lib/i18n"
@@ -20,16 +20,24 @@ interface ProductClientProps {
   otherProducts: Product[]
 }
 
+const TOTAL_SLIDES = 5
+const SWIPE_THRESHOLD = 50
+
 export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [currentSlide, setCurrentSlide] = useState(0)
   const [showSizeGuide, setShowSizeGuide] = useState(false)
   const [sizeError, setSizeError] = useState(false)
   const [justAdded, setJustAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"details" | "care">("details")
+  const [isDragging, setIsDragging] = useState(false)
   const addItem = useCartStore((s) => s.addItem)
   const t = useTranslations()
   const fp = useFormatPrice()
+
+  const galleryImages = Array.from({ length: TOTAL_SLIDES }, (_, i) =>
+    product.images[i % product.images.length]
+  )
 
   useEffect(() => {
     trackViewItem({
@@ -71,6 +79,18 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
     setTimeout(() => setJustAdded(false), 2000)
   }
 
+  const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    setIsDragging(false)
+    const { offset, velocity } = info
+    if (Math.abs(offset.x) > SWIPE_THRESHOLD || Math.abs(velocity.x) > 300) {
+      if (offset.x < 0 && currentSlide < TOTAL_SLIDES - 1) {
+        setCurrentSlide((s) => s + 1)
+      } else if (offset.x > 0 && currentSlide > 0) {
+        setCurrentSlide((s) => s - 1)
+      }
+    }
+  }
+
   const currentStock = selectedSize ? product.stock[selectedSize] : null
 
   const getStockLabel = (count: number): string => {
@@ -96,71 +116,93 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
       />
 
       <main className="min-h-screen bg-white pt-16 md:pt-20">
+        {/* Breadcrumbs */}
         <div className="px-4 md:px-8 lg:px-12 py-4">
           <div className="max-w-[1600px] mx-auto">
-            <Link
-              href="/#collection"
-              className="inline-flex items-center gap-2 text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
-            >
-              <ArrowLeft strokeWidth={1} className="w-4 h-4" />
-              {t.product.backToCollection}
-            </Link>
+            <nav aria-label="Breadcrumb" className="flex items-center gap-1.5">
+              <Link
+                href="/"
+                className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+              >
+                ORY
+              </Link>
+              <ChevronRight strokeWidth={1} className="w-3 h-3 text-muted-foreground/50" />
+              <Link
+                href="/#collection"
+                className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+              >
+                {t.product.collection}
+              </Link>
+              <ChevronRight strokeWidth={1} className="w-3 h-3 text-muted-foreground/50" />
+              <span className="text-xs font-light text-foreground tracking-wide">
+                {product.name}
+              </span>
+            </nav>
           </div>
         </div>
 
         <div className="px-4 md:px-8 lg:px-12 pb-24">
           <div className="max-w-[1600px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+              {/* Image Gallery — Horizontal Swipe */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="relative aspect-[3/4] bg-secondary mb-3 overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={selectedImageIndex}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0"
-                    >
-                      <Image
-                        src={product.images[selectedImageIndex]}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
-                        priority
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+                <div className="relative aspect-[3/4] bg-secondary overflow-hidden select-none">
+                  <motion.div
+                    className="flex h-full"
+                    animate={{ x: `-${currentSlide * 100}%` }}
+                    transition={{ type: "tween", duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+                    drag="x"
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.12}
+                    onDragStart={() => setIsDragging(true)}
+                    onDragEnd={handleDragEnd}
+                    style={{ cursor: isDragging ? "grabbing" : "grab" }}
+                  >
+                    {galleryImages.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative w-full h-full flex-shrink-0"
+                      >
+                        <Image
+                          src={img}
+                          alt={`${product.name} — ${idx + 1} of ${TOTAL_SLIDES}`}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover pointer-events-none"
+                          priority={idx === 0}
+                          draggable={false}
+                        />
+                      </div>
+                    ))}
+                  </motion.div>
                 </div>
 
-                <div className="flex gap-3">
-                  {product.images.map((img, idx) => (
+                {/* Thin slide indicators */}
+                <div className="flex gap-1.5 mt-3 px-0.5">
+                  {Array.from({ length: TOTAL_SLIDES }).map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative aspect-[3/4] w-20 md:w-24 bg-secondary overflow-hidden transition-all duration-200 ${
-                        selectedImageIndex === idx
-                          ? "ring-1 ring-foreground"
-                          : "ring-1 ring-transparent opacity-60 hover:opacity-100"
-                      }`}
+                      onClick={() => setCurrentSlide(idx)}
+                      aria-label={`View image ${idx + 1}`}
+                      className="relative h-[2px] flex-1 group"
                     >
-                      <Image
-                        src={img}
-                        alt={`${product.name} view ${idx + 1}`}
-                        fill
-                        sizes="96px"
-                        className="object-cover"
+                      <div className="absolute inset-0 bg-border rounded-full" />
+                      <motion.div
+                        className="absolute inset-0 bg-foreground rounded-full origin-left"
+                        initial={false}
+                        animate={{ scaleX: currentSlide === idx ? 1 : 0 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                       />
                     </button>
                   ))}
                 </div>
               </motion.div>
 
+              {/* Product Info */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -183,6 +225,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   {product.description}
                 </p>
 
+                {/* Size Selector */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-xs font-light tracking-widest uppercase text-foreground">
@@ -253,6 +296,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   )}
                 </div>
 
+                {/* Add to Bag */}
                 <button
                   onClick={handleAddToBag}
                   disabled={selectedSize !== null && currentStock === 0}
@@ -282,6 +326,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   {t.product.freeShippingNote}
                 </p>
 
+                {/* Details / Care Tabs */}
                 <div className="mt-10 border-t border-border pt-8">
                   <div className="flex gap-8 mb-6">
                     <button
@@ -332,6 +377,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
               </motion.div>
             </div>
 
+            {/* Related Products */}
             <div className="mt-24 md:mt-32">
               <h2 className="text-sm font-light text-foreground tracking-widest uppercase mb-12">
                 {t.product.youMayAlsoLike}

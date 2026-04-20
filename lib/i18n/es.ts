@@ -56,7 +56,7 @@ const es: Translations = {
     care: "Cuidado",
     backToCollection: "Volver a la Tienda",
     youMayAlsoLike: "También Te Puede Gustar",
-    freeShippingNote: "Envío gratis en pedidos superiores a 200€ · Devoluciones gratis en 30 días",
+    freeShippingNote: "Envío estándar gratis en pedidos superiores a $150 · Devoluciones gratis en 30 días",
   },
 
   sizeGuide: {
