@@ -135,8 +135,8 @@ export default function TermsOfServicePage() {
                   Brazil.
                 </li>
                 <li>
-                  Shipping options include Standard (5–7 business days, free), Express (2–3 business
-                  days, $12), and Overnight (1 business day, $25).
+                  Shipping options include Standard (5–7 business days, free on orders over $150),
+                  Express (2–3 business days, $12), and Overnight (1 business day, $25).
                 </li>
                 <li>
                   Delivery times are estimates and not guaranteed. We are not responsible for delays

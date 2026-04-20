@@ -56,7 +56,7 @@ const de: Translations = {
     care: "Pflege",
     backToCollection: "Zurück zum Shop",
     youMayAlsoLike: "Das Könnte Ihnen Auch Gefallen",
-    freeShippingNote: "Kostenloser Versand ab 200€ · Kostenlose Rücksendung innerhalb von 30 Tagen",
+    freeShippingNote: "Kostenloser Standardversand ab 150$ · Kostenlose Rücksendung innerhalb von 30 Tagen",
   },
 
   sizeGuide: {

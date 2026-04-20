@@ -56,7 +56,7 @@ const pt: Translations = {
     care: "Cuidados",
     backToCollection: "Voltar à Loja",
     youMayAlsoLike: "Você Também Pode Gostar",
-    freeShippingNote: "Frete grátis em pedidos acima de R$1.000 · Devoluções grátis em 30 dias",
+    freeShippingNote: "Frete padrão grátis em pedidos acima de $150 · Devoluções grátis em 30 dias",
   },
 
   sizeGuide: {

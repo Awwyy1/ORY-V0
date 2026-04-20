@@ -56,7 +56,7 @@ const fr: Translations = {
     care: "Entretien",
     backToCollection: "Retour à la Boutique",
     youMayAlsoLike: "Vous Aimerez Aussi",
-    freeShippingNote: "Livraison gratuite dès 200€ · Retours gratuits sous 30 jours",
+    freeShippingNote: "Livraison standard gratuite dès 150$ · Retours gratuits sous 30 jours",
   },
 
   sizeGuide: {

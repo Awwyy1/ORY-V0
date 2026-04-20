@@ -59,7 +59,7 @@ const en = {
     care: "Care",
     backToCollection: "Back to Shop",
     youMayAlsoLike: "You May Also Like",
-    freeShippingNote: "Free shipping on orders over $200 · Free returns within 30 days",
+    freeShippingNote: "Free standard shipping on orders over $150 · Free returns within 30 days",
   },
 
   // Size Guide
