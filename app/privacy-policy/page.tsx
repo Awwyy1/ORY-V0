@@ -3,10 +3,12 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ArrowLeft } from "lucide-react"
+import { Footer } from "@/components/footer"
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <main className="min-h-screen bg-background">
       <div className="border-b border-border">
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
           <Link
@@ -339,5 +341,7 @@ export default function PrivacyPolicyPage() {
         </motion.div>
       </div>
     </main>
+      <Footer />
+    </>
   )
 }
