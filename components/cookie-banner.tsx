@@ -1,31 +1,42 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { X } from "lucide-react"
 import { useTranslations } from "@/lib/i18n"
-
-const COOKIE_CONSENT_KEY = "ory-cookie-consent"
+import {
+  CONSENT_CHANGE_EVENT,
+  clearAnalyticsCookies,
+  getConsent,
+  setConsent,
+} from "@/lib/consent"
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false)
   const t = useTranslations()
 
   useEffect(() => {
-    const consent = localStorage.getItem(COOKIE_CONSENT_KEY)
-    if (!consent) {
+    if (getConsent() === null) {
       const timer = setTimeout(() => setVisible(true), 1500)
       return () => clearTimeout(timer)
     }
+
+    const handleChange = () => {
+      if (getConsent() !== null) setVisible(false)
+    }
+    window.addEventListener(CONSENT_CHANGE_EVENT, handleChange)
+    return () => window.removeEventListener(CONSENT_CHANGE_EVENT, handleChange)
   }, [])
 
   const accept = () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, "accepted")
+    setConsent("accepted")
     setVisible(false)
   }
 
   const decline = () => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, "declined")
+    setConsent("declined")
+    clearAnalyticsCookies()
     setVisible(false)
   }
 
@@ -42,7 +53,14 @@ export function CookieBanner() {
           <div className="max-w-[640px] mx-auto bg-background border border-border shadow-lg p-5 md:p-6">
             <div className="flex items-start justify-between gap-4 mb-4">
               <p className="text-xs font-light text-muted-foreground leading-relaxed">
-                {t.cookie.message}
+                {t.cookie.message}{" "}
+                <Link
+                  href="/cookie-settings"
+                  className="underline underline-offset-2 text-foreground hover:text-foreground/80 transition-colors"
+                >
+                  Manage preferences
+                </Link>
+                .
               </p>
               <button
                 onClick={decline}
