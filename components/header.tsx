@@ -7,7 +7,11 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useCartStore } from "@/lib/cart-store"
 import { useTranslations, useI18nStore, languages, currencies, type Language, type Currency } from "@/lib/i18n"
 
-export function Header() {
+interface HeaderProps {
+  variant?: "transparent" | "solid"
+}
+
+export function Header({ variant = "transparent" }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isDesktopLangOpen, setIsDesktopLangOpen] = useState(false)
@@ -54,6 +58,10 @@ export function Header() {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [isDesktopLangOpen, isDesktopCurrencyOpen])
 
+  const isSolid = variant === "solid" || isScrolled || isMenuOpen
+  const textClass = isSolid ? "text-foreground" : "text-white"
+  const badgeClass = isSolid ? "bg-foreground text-background" : "bg-white text-foreground"
+
   const navLinks = [
     { name: t.header.whySilk, href: "#why-silk" },
     { name: t.header.collection, href: "#collection" },
@@ -66,19 +74,19 @@ export function Header() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isSolid
           ? "bg-background border-b border-border"
           : "bg-transparent"
           }`}
       >
         <div className="w-full px-4 md:px-8 lg:px-12">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-12 md:h-14">
 
             {/* Mobile Left Controls */}
             <div className="flex md:hidden items-center gap-3">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
+                className={`transition-colors duration-300 ${textClass}`}
                 aria-label="Menu"
               >
                 {isMenuOpen ? (
@@ -90,14 +98,14 @@ export function Header() {
               <div className="relative">
                 <button
                   onClick={() => setIsMobileLangOpen(!isMobileLangOpen)}
-                  className={`flex items-center gap-1 transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
+                  className={`flex items-center gap-1 transition-colors duration-300 ${textClass}`}
                   aria-label="Language"
                 >
-                  <Globe strokeWidth={1} className="w-5 h-5" />
+                  <Globe strokeWidth={1} className="w-4.5 h-4.5" />
                   {isMobileLangOpen ? (
-                    <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronUp strokeWidth={1} className="w-3 h-3" />
                   ) : (
-                    <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronDown strokeWidth={1} className="w-3 h-3" />
                   )}
                 </button>
 
@@ -133,8 +141,7 @@ export function Header() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0 md:flex-shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
               <span
-                className={`font-display text-xl md:text-2xl font-bold tracking-wide transition-colors duration-500 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"
-                  }`}
+                className={`font-display text-lg md:text-xl font-bold tracking-wide transition-colors duration-500 ${textClass}`}
               >
                 ORY
               </span>
@@ -146,8 +153,7 @@ export function Header() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`text-sm font-light tracking-wide transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
+                  className={`text-xs font-light tracking-wide transition-colors duration-300 hover:opacity-70 ${textClass}`}
                 >
                   {link.name}
                 </a>
@@ -155,7 +161,7 @@ export function Header() {
             </nav>
 
             {/* Right Controls */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-5">
               {/* Language Selector - Desktop */}
               <div className="relative hidden lg:block" data-desktop-lang-dropdown>
                 <button
@@ -163,15 +169,14 @@ export function Header() {
                     setIsDesktopLangOpen(!isDesktopLangOpen)
                     setIsDesktopCurrencyOpen(false)
                   }}
-                  className={`flex items-center gap-1.5 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
+                  className={`flex items-center gap-1.5 text-xs font-light transition-colors duration-300 ${textClass}`}
                 >
-                  <Globe strokeWidth={1} className="w-4 h-4 flex-shrink-0" />
-                  <span className="w-[70px] text-left">{currentLang.name}</span>
+                  <Globe strokeWidth={1} className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span className="w-[65px] text-left">{currentLang.name}</span>
                   {isDesktopLangOpen ? (
-                    <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronUp strokeWidth={1} className="w-3 h-3" />
                   ) : (
-                    <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronDown strokeWidth={1} className="w-3 h-3" />
                   )}
                 </button>
 
@@ -192,7 +197,7 @@ export function Header() {
                             setLanguage(lang.code)
                             setIsDesktopLangOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted flex items-center gap-2 ${language === lang.code ? "text-foreground" : "text-muted-foreground"
+                          className={`w-full text-left px-4 py-2 text-xs font-light transition-colors hover:bg-muted flex items-center gap-2 ${language === lang.code ? "text-foreground" : "text-muted-foreground"
                             }`}
                         >
                           {lang.name}
@@ -210,14 +215,13 @@ export function Header() {
                     setIsDesktopCurrencyOpen(!isDesktopCurrencyOpen)
                     setIsDesktopLangOpen(false)
                   }}
-                  className={`flex items-center gap-1.5 text-sm font-light transition-colors duration-300 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
+                  className={`flex items-center gap-1.5 text-xs font-light transition-colors duration-300 ${textClass}`}
                 >
-                  <span className="w-[70px] text-left">{currentCurrency.name}</span>
+                  <span className="w-[65px] text-left">{currentCurrency.name}</span>
                   {isDesktopCurrencyOpen ? (
-                    <ChevronUp strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronUp strokeWidth={1} className="w-3 h-3" />
                   ) : (
-                    <ChevronDown strokeWidth={1} className="w-3.5 h-3.5" />
+                    <ChevronDown strokeWidth={1} className="w-3 h-3" />
                   )}
                 </button>
 
@@ -238,7 +242,7 @@ export function Header() {
                             setCurrency(curr.code)
                             setIsDesktopCurrencyOpen(false)
                           }}
-                          className={`w-full text-left px-4 py-2 text-sm font-light transition-colors hover:bg-muted ${currency === curr.code ? "text-foreground" : "text-muted-foreground"
+                          className={`w-full text-left px-4 py-2 text-xs font-light transition-colors hover:bg-muted ${currency === curr.code ? "text-foreground" : "text-muted-foreground"
                             }`}
                         >
                           {curr.name}
@@ -250,30 +254,25 @@ export function Header() {
               </div>
 
               {/* Desktop Icons */}
-              <div className="hidden md:flex items-center gap-5">
+              <div className="hidden md:flex items-center gap-4">
                 <button
-                  className={`transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
+                  className={`transition-colors duration-300 hover:opacity-70 ${textClass}`}
                   aria-label="Account"
                 >
-                  <User strokeWidth={1} className="w-5 h-5" />
+                  <User strokeWidth={1} className="w-[18px] h-[18px]" />
                 </button>
                 <button
                   onClick={toggleCart}
-                  className={`relative transition-colors duration-300 hover:opacity-70 ${isScrolled ? "text-foreground" : "text-white"
-                    }`}
+                  className={`relative transition-colors duration-300 hover:opacity-70 ${textClass}`}
                   aria-label="Shopping Bag"
                 >
-                  <ShoppingBag strokeWidth={1} className="w-5 h-5" />
+                  <ShoppingBag strokeWidth={1} className="w-[18px] h-[18px]" />
                   {cartCount > 0 && (
                     <motion.span
                       key={cartCount}
                       initial={{ scale: 0.5 }}
                       animate={{ scale: 1 }}
-                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled
-                        ? "bg-foreground text-background"
-                        : "bg-white text-foreground"
-                        }`}
+                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${badgeClass}`}
                     >
                       {cartCount}
                     </motion.span>
@@ -284,14 +283,14 @@ export function Header() {
               {/* Mobile Icons */}
               <div className="flex md:hidden items-center gap-2.5">
                 <button
-                  className={`transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
+                  className={`transition-colors duration-300 ${textClass}`}
                   aria-label="Account"
                 >
                   <User strokeWidth={1} className="w-5 h-5" />
                 </button>
                 <button
                   onClick={toggleCart}
-                  className={`relative transition-colors duration-300 ${isScrolled || isMenuOpen ? "text-foreground" : "text-white"}`}
+                  className={`relative transition-colors duration-300 ${textClass}`}
                   aria-label="Shopping Bag"
                 >
                   <ShoppingBag strokeWidth={1} className="w-5 h-5" />
@@ -300,7 +299,7 @@ export function Header() {
                       key={cartCount}
                       initial={{ scale: 0.5 }}
                       animate={{ scale: 1 }}
-                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${isScrolled || isMenuOpen ? "bg-foreground text-background" : "bg-white text-foreground"}`}
+                      className={`absolute -top-1.5 -right-1.5 w-4 h-4 text-[10px] font-medium flex items-center justify-center rounded-full ${badgeClass}`}
                     >
                       {cartCount}
                     </motion.span>
@@ -322,7 +321,7 @@ export function Header() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-40 bg-background md:hidden"
-            style={{ top: '64px' }}
+            style={{ top: '48px' }}
           >
             <div className="flex flex-col h-full">
               <nav className="flex-1 border-t border-border/50">

@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence, type PanInfo } from "framer-motion"
-import { Minus, Plus, Ruler, ChevronDown, Check, ChevronRight } from "lucide-react"
+import { Ruler, Check, ChevronRight } from "lucide-react"
 import { sizes, type Size, type Product } from "@/lib/products"
 import { useCartStore } from "@/lib/cart-store"
 import { useTranslations, useFormatPrice } from "@/lib/i18n"
@@ -108,49 +108,50 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
   return (
     <>
       <ProductSchema product={product} />
-      <Header />
+      <Header variant="solid" />
       <CartSidebar />
       <SizeGuideModal
         isOpen={showSizeGuide}
         onClose={() => setShowSizeGuide(false)}
       />
 
-      <main className="min-h-screen bg-white pt-16 md:pt-20">
+      <main className="min-h-screen bg-white pt-12 md:pt-14">
         {/* Breadcrumbs */}
-        <div className="px-4 md:px-8 lg:px-12 py-4">
-          <div className="max-w-[1600px] mx-auto">
+        <div className="px-4 md:px-8 lg:px-12 py-3">
+          <div className="max-w-[1400px] mx-auto">
             <nav aria-label="Breadcrumb" className="flex items-center gap-1.5">
               <Link
                 href="/"
-                className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+                className="text-[11px] font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
               >
                 ORY
               </Link>
-              <ChevronRight strokeWidth={1} className="w-3 h-3 text-muted-foreground/50" />
+              <ChevronRight strokeWidth={1} className="w-2.5 h-2.5 text-muted-foreground/40" />
               <Link
                 href="/#collection"
-                className="text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+                className="text-[11px] font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
               >
                 {t.product.collection}
               </Link>
-              <ChevronRight strokeWidth={1} className="w-3 h-3 text-muted-foreground/50" />
-              <span className="text-xs font-light text-foreground tracking-wide">
+              <ChevronRight strokeWidth={1} className="w-2.5 h-2.5 text-muted-foreground/40" />
+              <span className="text-[11px] font-light text-foreground tracking-wide">
                 {product.name}
               </span>
             </nav>
           </div>
         </div>
 
-        <div className="px-4 md:px-8 lg:px-12 pb-24">
-          <div className="max-w-[1600px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+        <div className="px-4 md:px-8 lg:px-12 pb-20">
+          <div className="max-w-[1400px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start">
               {/* Image Gallery — Horizontal Swipe */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
+                className="lg:sticky lg:top-16"
               >
-                <div className="relative aspect-[3/4] bg-secondary overflow-hidden select-none">
+                <div className="relative aspect-[4/5] lg:aspect-[4/5] bg-secondary overflow-hidden select-none">
                   <motion.div
                     className="flex h-full"
                     animate={{ x: `-${currentSlide * 100}%` }}
@@ -182,13 +183,13 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                 </div>
 
                 {/* Thin slide indicators */}
-                <div className="flex gap-1.5 mt-3 px-0.5">
+                <div className="flex gap-1.5 mt-2.5 px-0.5">
                   {Array.from({ length: TOTAL_SLIDES }).map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentSlide(idx)}
                       aria-label={`View image ${idx + 1}`}
-                      className="relative h-[2px] flex-1 group"
+                      className="relative h-[1.5px] flex-1 group"
                     >
                       <div className="absolute inset-0 bg-border rounded-full" />
                       <motion.div
@@ -207,40 +208,40 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="flex flex-col"
+                className="flex flex-col lg:py-2"
               >
-                <div className="mb-6">
-                  <h1 className="font-display text-2xl md:text-3xl font-bold tracking-wide text-foreground">
+                <div className="mb-4">
+                  <h1 className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">
                     {product.name}
                   </h1>
-                  <p className="text-sm font-light text-muted-foreground tracking-widest uppercase mt-1">
+                  <p className="text-xs font-light text-muted-foreground tracking-widest uppercase mt-0.5">
                     {product.material}
                   </p>
-                  <p className="text-xl md:text-2xl font-light text-foreground mt-4">
+                  <p className="text-lg md:text-xl font-light text-foreground mt-3">
                     {fp(product.price)}
                   </p>
                 </div>
 
-                <p className="text-sm font-light text-muted-foreground leading-relaxed mb-8">
+                <p className="text-xs font-light text-muted-foreground leading-relaxed mb-5">
                   {product.description}
                 </p>
 
                 {/* Size Selector */}
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-light tracking-widest uppercase text-foreground">
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-light tracking-widest uppercase text-foreground">
                       {t.product.size} {selectedSize && `— ${selectedSize}`}
                     </span>
                     <button
                       onClick={() => setShowSizeGuide(true)}
-                      className="inline-flex items-center gap-1.5 text-xs font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
+                      className="inline-flex items-center gap-1 text-[11px] font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
                     >
-                      <Ruler strokeWidth={1} className="w-3.5 h-3.5" />
+                      <Ruler strokeWidth={1} className="w-3 h-3" />
                       {t.product.sizeGuide}
                     </button>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5">
                     {sizes.map((size) => {
                       const stock = product.stock[size]
                       const isSelected = selectedSize === size
@@ -257,7 +258,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                           }}
                           disabled={isOutOfStock}
                           className={`
-                            relative flex-1 py-3 text-sm font-light tracking-wide transition-all duration-200
+                            relative flex-1 py-2.5 text-xs font-light tracking-wide transition-all duration-200
                             ${isOutOfStock
                               ? "text-muted-foreground/40 cursor-not-allowed line-through border border-border/50"
                               : isSelected
@@ -278,7 +279,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -4 }}
-                        className="text-xs text-red-500 mt-2 font-light"
+                        className="text-[11px] text-red-500 mt-1.5 font-light"
                       >
                         {t.product.selectSize}
                       </motion.p>
@@ -289,7 +290,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className={`text-xs font-light mt-2 ${getStockColor(currentStock)}`}
+                      className={`text-[11px] font-light mt-1.5 ${getStockColor(currentStock)}`}
                     >
                       {getStockLabel(currentStock)}
                     </motion.p>
@@ -301,7 +302,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   onClick={handleAddToBag}
                   disabled={selectedSize !== null && currentStock === 0}
                   className={`
-                    w-full py-4 text-sm font-light tracking-widest uppercase transition-all duration-300
+                    w-full py-3.5 text-xs font-light tracking-widest uppercase transition-all duration-300
                     ${justAdded
                       ? "bg-emerald-900 text-white"
                       : selectedSize && currentStock === 0
@@ -312,7 +313,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                 >
                   {justAdded ? (
                     <span className="inline-flex items-center gap-2">
-                      <Check strokeWidth={1.5} className="w-4 h-4" />
+                      <Check strokeWidth={1.5} className="w-3.5 h-3.5" />
                       {t.product.addedToBag}
                     </span>
                   ) : selectedSize && currentStock === 0 ? (
@@ -322,16 +323,16 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   )}
                 </button>
 
-                <p className="text-xs font-light text-muted-foreground text-center mt-3">
+                <p className="text-[11px] font-light text-muted-foreground text-center mt-2">
                   {t.product.freeShippingNote}
                 </p>
 
                 {/* Details / Care Tabs */}
-                <div className="mt-10 border-t border-border pt-8">
-                  <div className="flex gap-8 mb-6">
+                <div className="mt-6 border-t border-border pt-5">
+                  <div className="flex gap-6 mb-4">
                     <button
                       onClick={() => setActiveTab("details")}
-                      className={`text-xs font-light tracking-widest uppercase pb-2 transition-colors border-b ${
+                      className={`text-[11px] font-light tracking-widest uppercase pb-1.5 transition-colors border-b ${
                         activeTab === "details"
                           ? "text-foreground border-foreground"
                           : "text-muted-foreground border-transparent hover:text-foreground"
@@ -341,7 +342,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                     </button>
                     <button
                       onClick={() => setActiveTab("care")}
-                      className={`text-xs font-light tracking-widest uppercase pb-2 transition-colors border-b ${
+                      className={`text-[11px] font-light tracking-widest uppercase pb-1.5 transition-colors border-b ${
                         activeTab === "care"
                           ? "text-foreground border-foreground"
                           : "text-muted-foreground border-transparent hover:text-foreground"
@@ -354,19 +355,19 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   <AnimatePresence mode="wait">
                     <motion.ul
                       key={activeTab}
-                      initial={{ opacity: 0, y: 6 }}
+                      initial={{ opacity: 0, y: 4 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
+                      exit={{ opacity: 0, y: -4 }}
                       transition={{ duration: 0.2 }}
-                      className="space-y-2.5"
+                      className="space-y-1.5"
                     >
                       {(activeTab === "details" ? product.details : product.care).map(
                         (item, i) => (
                           <li
                             key={i}
-                            className="text-sm font-light text-muted-foreground leading-relaxed flex items-start gap-2"
+                            className="text-xs font-light text-muted-foreground leading-relaxed flex items-start gap-2"
                           >
-                            <span className="w-1 h-1 rounded-full bg-muted-foreground/50 mt-2 flex-shrink-0" />
+                            <span className="w-1 h-1 rounded-full bg-muted-foreground/50 mt-1.5 flex-shrink-0" />
                             {item}
                           </li>
                         )
@@ -378,18 +379,18 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
             </div>
 
             {/* Related Products */}
-            <div className="mt-24 md:mt-32">
-              <h2 className="text-sm font-light text-foreground tracking-widest uppercase mb-12">
+            <div className="mt-20 md:mt-28">
+              <h2 className="text-xs font-light text-foreground tracking-widest uppercase mb-10">
                 {t.product.youMayAlsoLike}
               </h2>
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-12">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
                 {otherProducts.map((p) => (
                   <Link
                     key={p.id}
                     href={`/product/${p.slug}`}
                     className="group"
                   >
-                    <div className="relative aspect-[3/4] bg-secondary mb-4 overflow-hidden">
+                    <div className="relative aspect-[4/5] bg-secondary mb-3 overflow-hidden">
                       <Image
                         src={p.image}
                         alt={p.name}
@@ -398,13 +399,13 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
-                    <h3 className="text-sm font-normal text-foreground tracking-wide">
+                    <h3 className="text-xs font-normal text-foreground tracking-wide">
                       {p.name}
                     </h3>
-                    <p className="text-xs font-light text-muted-foreground tracking-wide mt-0.5">
+                    <p className="text-[11px] font-light text-muted-foreground tracking-wide mt-0.5">
                       {p.material}
                     </p>
-                    <p className="text-sm font-normal text-foreground mt-0.5">
+                    <p className="text-xs font-normal text-foreground mt-0.5">
                       {fp(p.price)}
                     </p>
                   </Link>
