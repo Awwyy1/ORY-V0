@@ -20,7 +20,6 @@ interface ProductClientProps {
   otherProducts: Product[]
 }
 
-const TOTAL_SLIDES = 5
 const SWIPE_THRESHOLD = 50
 
 export function ProductClient({ product, otherProducts }: ProductClientProps) {
@@ -35,9 +34,8 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const t = useTranslations()
   const fp = useFormatPrice()
 
-  const galleryImages = Array.from({ length: TOTAL_SLIDES }, (_, i) =>
-    product.images[i % product.images.length]
-  )
+  const galleryImages = product.images
+  const totalSlides = galleryImages.length
 
   useEffect(() => {
     trackViewItem({
@@ -83,7 +81,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
     setIsDragging(false)
     const { offset, velocity } = info
     if (Math.abs(offset.x) > SWIPE_THRESHOLD || Math.abs(velocity.x) > 300) {
-      if (offset.x < 0 && currentSlide < TOTAL_SLIDES - 1) {
+      if (offset.x < 0 && currentSlide < totalSlides - 1) {
         setCurrentSlide((s) => s + 1)
       } else if (offset.x > 0 && currentSlide > 0) {
         setCurrentSlide((s) => s - 1)
@@ -170,7 +168,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                       >
                         <Image
                           src={img}
-                          alt={`${product.name} — ${idx + 1} of ${TOTAL_SLIDES}`}
+                          alt={`${product.name} — ${idx + 1} of ${totalSlides}`}
                           fill
                           sizes="(max-width: 1024px) 100vw, 50vw"
                           className="object-cover pointer-events-none"
@@ -184,7 +182,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
 
                 {/* Thin slide indicators */}
                 <div className="flex gap-1.5 mt-2.5 px-0.5">
-                  {Array.from({ length: TOTAL_SLIDES }).map((_, idx) => (
+                  {Array.from({ length: totalSlides }).map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentSlide(idx)}
