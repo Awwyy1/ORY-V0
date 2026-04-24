@@ -75,7 +75,7 @@ export function Header({ variant = "transparent" }: HeaderProps) {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isSolid
-          ? "bg-background border-b border-border"
+          ? "bg-background"
           : "bg-transparent"
           }`}
       >
