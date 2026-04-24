@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence, type PanInfo } from "framer-motion"
+import { motion, AnimatePresence, useMotionValue, animate, type PanInfo } from "framer-motion"
 import { Ruler, Check, ChevronRight } from "lucide-react"
 import { sizes, type Size, type Product } from "@/lib/products"
 import { useCartStore } from "@/lib/cart-store"
@@ -20,8 +20,6 @@ interface ProductClientProps {
   otherProducts: Product[]
 }
 
-const SWIPE_THRESHOLD = 50
-
 export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const [selectedSize, setSelectedSize] = useState<Size | null>(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -30,12 +28,44 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const [justAdded, setJustAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"details" | "care">("details")
   const [isDragging, setIsDragging] = useState(false)
+  const [containerWidth, setContainerWidth] = useState(0)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const dragX = useMotionValue(0)
   const addItem = useCartStore((s) => s.addItem)
   const t = useTranslations()
   const fp = useFormatPrice()
 
   const galleryImages = product.images
   const totalSlides = galleryImages.length
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width)
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (containerWidth > 0) {
+      animate(dragX, -currentSlide * containerWidth, {
+        type: "spring",
+        stiffness: 300,
+        damping: 30,
+      })
+    }
+  }, [containerWidth])
+
+  const goToSlide = useCallback((idx: number) => {
+    setCurrentSlide(idx)
+    animate(dragX, -idx * containerWidth, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+    })
+  }, [containerWidth, dragX])
 
   useEffect(() => {
     trackViewItem({
@@ -80,13 +110,21 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
   const handleDragEnd = (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false)
     const { offset, velocity } = info
-    if (Math.abs(offset.x) > SWIPE_THRESHOLD || Math.abs(velocity.x) > 300) {
-      if (offset.x < 0 && currentSlide < totalSlides - 1) {
-        setCurrentSlide((s) => s + 1)
-      } else if (offset.x > 0 && currentSlide > 0) {
-        setCurrentSlide((s) => s - 1)
-      }
+
+    let nextSlide = currentSlide
+    if (velocity.x < -500 || (velocity.x < 0 && offset.x < -containerWidth / 4)) {
+      nextSlide = Math.min(currentSlide + 1, totalSlides - 1)
+    } else if (velocity.x > 500 || (velocity.x > 0 && offset.x > containerWidth / 4)) {
+      nextSlide = Math.max(currentSlide - 1, 0)
     }
+
+    setCurrentSlide(nextSlide)
+    animate(dragX, -nextSlide * containerWidth, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      velocity: velocity.x,
+    })
   }
 
   const currentStock = selectedSize ? product.stock[selectedSize] : null
@@ -149,17 +187,22 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                 transition={{ duration: 0.5 }}
                 className="lg:sticky lg:top-16"
               >
-                <div className="relative aspect-[4/5] lg:aspect-[4/5] bg-secondary overflow-hidden select-none">
+                <div
+                  ref={containerRef}
+                  className="relative aspect-[4/5] lg:aspect-[4/5] bg-secondary overflow-hidden select-none"
+                >
                   <motion.div
                     className="flex h-full"
-                    animate={{ x: `-${currentSlide * 100}%` }}
-                    transition={{ type: "tween", duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+                    style={{ x: dragX, cursor: isDragging ? "grabbing" : "grab" }}
                     drag="x"
-                    dragConstraints={{ left: 0, right: 0 }}
+                    dragConstraints={{
+                      left: -(totalSlides - 1) * containerWidth,
+                      right: 0,
+                    }}
                     dragElastic={0.12}
+                    dragMomentum={false}
                     onDragStart={() => setIsDragging(true)}
                     onDragEnd={handleDragEnd}
-                    style={{ cursor: isDragging ? "grabbing" : "grab" }}
                   >
                     {galleryImages.map((img, idx) => (
                       <div
@@ -185,7 +228,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                   {Array.from({ length: totalSlides }).map((_, idx) => (
                     <button
                       key={idx}
-                      onClick={() => setCurrentSlide(idx)}
+                      onClick={() => goToSlide(idx)}
                       aria-label={`View image ${idx + 1}`}
                       className="relative h-[1.5px] flex-1 group"
                     >
