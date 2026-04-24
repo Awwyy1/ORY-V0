@@ -29,20 +29,20 @@ const cookieCategories: CookieCategory[] = [
     required: true,
     cookies: [
       {
-        name: "ory-cart",
-        provider: "ORY (localStorage)",
+        name: "broov-cart",
+        provider: "BROOV (localStorage)",
         purpose: "Stores your shopping cart items between sessions",
         duration: "Persistent",
       },
       {
-        name: "ory-cookie-consent",
-        provider: "ORY (localStorage)",
+        name: "broov-cookie-consent",
+        provider: "BROOV (localStorage)",
         purpose: "Remembers your cookie consent preference",
         duration: "Persistent",
       },
       {
-        name: "ory-i18n",
-        provider: "ORY (localStorage)",
+        name: "broov-i18n",
+        provider: "BROOV (localStorage)",
         purpose: "Stores your language and currency preferences",
         duration: "Persistent",
       },
@@ -149,7 +149,7 @@ export default function CookieSettingsPage() {
             </Link>
             <Link href="/" className="flex-shrink-0">
               <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">
-                ORY
+                BROOV
               </span>
             </Link>
             <div className="w-14" />
@@ -366,10 +366,10 @@ export default function CookieSettingsPage() {
                   </Link>
                   . If you have questions, contact us at{" "}
                   <a
-                    href="mailto:support@orysilk.com"
+                    href="mailto:support@thebroov.com"
                     className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                   >
-                    support@orysilk.com
+                    support@thebroov.com
                   </a>
                   .
                 </p>

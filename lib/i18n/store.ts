@@ -51,7 +51,7 @@ export const useI18nStore = create<I18nState>()(
       setCurrency: (currency) => set({ currency }),
     }),
     {
-      name: "ory-i18n",
+      name: "broov-i18n",
     }
   )
 )

@@ -64,17 +64,17 @@ const de: Translations = {
     howToMeasure: "Wie Man Misst",
     measureInstructions: "Messen Sie Ihre natürliche Taille an der schmalsten Stelle, normalerweise knapp über dem Bauchnabel. Halten Sie das Maßband anliegend, aber nicht zu fest. Wenn Sie zwischen zwei Größen liegen, empfehlen wir die größere für eine entspanntere Passform.",
     fitNote: "Unsere Passform:",
-    fitDescription: "ORY Boxershorts sind mit einem anatomischen Schnitt für eine bequeme, körpernahe Passform ohne Kompression designt. Der druckfreie Bund sitzt natürlich an Ihrer Taille.",
+    fitDescription: "BROOV Boxershorts sind mit einem anatomischen Schnitt für eine bequeme, körpernahe Passform ohne Kompression designt. Der druckfreie Bund sitzt natürlich an Ihrer Taille.",
   },
 
   philosophy: {
     title: "Philosophie",
     covenantTitle: "Der Seiden-Pakt",
-    covenantBody: "Wir glauben, dass Luxus nicht zerbrechlich sein sollte. Unsere Philosophie basiert auf der Schnittstelle von biologischem Komfort und mechanischer Präzision. ORY zu tragen bedeutet, einen Pakt mit der eigenen Haut einzugehen — ein Versprechen von null Reibung und absolutem Selbstvertrauen.",
+    covenantBody: "Wir glauben, dass Luxus nicht zerbrechlich sein sollte. Unsere Philosophie basiert auf der Schnittstelle von biologischem Komfort und mechanischer Präzision. BROOV zu tragen bedeutet, einen Pakt mit der eigenen Haut einzugehen — ein Versprechen von null Reibung und absolutem Selbstvertrauen.",
     engineeringTitle: "Anatomisches Engineering",
     engineeringBody: "Wir designen keine Unterwäsche; wir entwickeln Lebensräume. Jede Kurve und Naht wird von der Physik des männlichen Körpers in Bewegung bestimmt. Wir verwenden 100% Maulbeerseide der Klasse 6A, weil es das einzige Material ist, das die Komplexität der menschlichen Biologie respektiert.",
     luxuryTitle: "Stiller Luxus",
-    luxuryBody: "Wahres Selbstvertrauen ist leise. Unsere Kleidungsstücke tragen keine sichtbaren Logos. Der Wert von ORY ist nur dem Träger bekannt. Es ist ein privater Standard der Exzellenz für den Mann, der dort das Beste verlangt, wo es am meisten zählt.",
+    luxuryBody: "Wahres Selbstvertrauen ist leise. Unsere Kleidungsstücke tragen keine sichtbaren Logos. Der Wert von BROOV ist nur dem Träger bekannt. Es ist ein privater Standard der Exzellenz für den Mann, der dort das Beste verlangt, wo es am meisten zählt.",
   },
 
   newsletter: {

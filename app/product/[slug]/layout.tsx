@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { getProductBySlug, getProductSlugs } from "@/lib/db/products"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.orysilk.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.thebroov.com"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     openGraph: {
-      title: `${product.name} | ORY`,
+      title: `${product.name} | BROOV`,
       description,
       url,
       type: "website",
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | ORY`,
+      title: `${product.name} | BROOV`,
       description,
       images: [image],
     },

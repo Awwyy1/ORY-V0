@@ -41,7 +41,7 @@ function OrderConfirmationContent() {
     // Clear cart after successful payment
     if (sessionId) {
       trackPurchase(
-        `ORY-${sessionId.slice(-8).toUpperCase()}`,
+        `BRV-${sessionId.slice(-8).toUpperCase()}`,
         shipping.price,
         shipping.price
       )
@@ -58,8 +58,8 @@ function OrderConfirmationContent() {
   if (!mounted) return null
 
   const displayOrderId = sessionId
-    ? `ORY-${sessionId.slice(-8).toUpperCase()}`
-    : legacyOrderId || "ORY-XXXXXXXX"
+    ? `BRV-${sessionId.slice(-8).toUpperCase()}`
+    : legacyOrderId || "BRV-XXXXXXXX"
 
   const displayEmail = shippingInfo.email || sessionData?.customerEmail || "your@email.com"
   const displayCity = shippingInfo.city && shippingInfo.state
@@ -78,7 +78,7 @@ function OrderConfirmationContent() {
       <div className="border-b border-border">
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 flex items-center justify-center h-16 md:h-20">
           <Link href="/" className="flex-shrink-0">
-            <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">ORY</span>
+            <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">BROOV</span>
           </Link>
         </div>
       </div>

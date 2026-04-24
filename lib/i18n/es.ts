@@ -64,17 +64,17 @@ const es: Translations = {
     howToMeasure: "Cómo Medir",
     measureInstructions: "Mide tu cintura natural en el punto más estrecho, normalmente justo por encima del ombligo. Mantén la cinta métrica ajustada pero no apretada. Si estás entre dos tallas, recomendamos elegir la talla más grande para un ajuste más relajado.",
     fitNote: "Nuestro ajuste:",
-    fitDescription: "Los bóxers ORY están diseñados con un corte anatómico para un ajuste cómodo, cercano al cuerpo, sin compresión. La cintura de presión cero se asienta naturalmente en tu cintura.",
+    fitDescription: "Los bóxers BROOV están diseñados con un corte anatómico para un ajuste cómodo, cercano al cuerpo, sin compresión. La cintura de presión cero se asienta naturalmente en tu cintura.",
   },
 
   philosophy: {
     title: "Filosofía",
     covenantTitle: "El Pacto de la Seda",
-    covenantBody: "Creemos que el lujo no debería ser frágil. Nuestra filosofía se centra en la intersección del confort biológico y la precisión mecánica. Llevar ORY es entrar en un pacto con tu propia piel — una promesa de cero fricción y confianza absoluta.",
+    covenantBody: "Creemos que el lujo no debería ser frágil. Nuestra filosofía se centra en la intersección del confort biológico y la precisión mecánica. Llevar BROOV es entrar en un pacto con tu propia piel — una promesa de cero fricción y confianza absoluta.",
     engineeringTitle: "Ingeniería Anatómica",
     engineeringBody: "No diseñamos ropa interior; diseñamos hábitats. Cada curva y costura está dictada por la física del cuerpo masculino en movimiento. Usamos 100% seda de morera Grado 6A porque es el único material que respeta la complejidad de la biología humana.",
     luxuryTitle: "Lujo Discreto",
-    luxuryBody: "La verdadera confianza es silenciosa. Nuestras prendas no llevan logos externos. El valor de ORY solo lo conoce quien lo lleva. Es un estándar privado de excelencia para el hombre que exige lo mejor donde más importa.",
+    luxuryBody: "La verdadera confianza es silenciosa. Nuestras prendas no llevan logos externos. El valor de BROOV solo lo conoce quien lo lleva. Es un estándar privado de excelencia para el hombre que exige lo mejor donde más importa.",
   },
 
   newsletter: {

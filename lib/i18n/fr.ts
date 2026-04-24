@@ -64,17 +64,17 @@ const fr: Translations = {
     howToMeasure: "Comment Mesurer",
     measureInstructions: "Mesurez votre taille naturelle au point le plus étroit, généralement juste au-dessus du nombril. Gardez le mètre ruban ajusté mais pas serré. Si vous êtes entre deux tailles, nous recommandons de choisir la taille supérieure pour un ajustement plus détendu.",
     fitNote: "Notre coupe :",
-    fitDescription: "Les boxers ORY sont conçus avec une coupe anatomique pour un ajustement confortable, près du corps, sans compression. La ceinture zéro pression se positionne naturellement à votre taille.",
+    fitDescription: "Les boxers BROOV sont conçus avec une coupe anatomique pour un ajustement confortable, près du corps, sans compression. La ceinture zéro pression se positionne naturellement à votre taille.",
   },
 
   philosophy: {
     title: "Philosophie",
     covenantTitle: "Le Pacte de la Soie",
-    covenantBody: "Nous croyons que le luxe ne devrait pas être fragile. Notre philosophie repose sur l'intersection du confort biologique et de la précision mécanique. Porter ORY, c'est conclure un pacte avec votre propre peau — une promesse de zéro friction et de confiance absolue.",
+    covenantBody: "Nous croyons que le luxe ne devrait pas être fragile. Notre philosophie repose sur l'intersection du confort biologique et de la précision mécanique. Porter BROOV, c'est conclure un pacte avec votre propre peau — une promesse de zéro friction et de confiance absolue.",
     engineeringTitle: "Ingénierie Anatomique",
     engineeringBody: "Nous ne concevons pas des sous-vêtements ; nous concevons des habitats. Chaque courbe et couture est dictée par la physique du corps masculin en mouvement. Nous utilisons 100% de soie de mûrier Grade 6A car c'est le seul matériau qui respecte la complexité de la biologie humaine.",
     luxuryTitle: "Luxe Discret",
-    luxuryBody: "La vraie confiance est silencieuse. Nos vêtements ne portent aucun logo externe. La valeur d'ORY n'est connue que de celui qui le porte. C'est un standard privé d'excellence pour l'homme qui exige le meilleur là où cela compte le plus.",
+    luxuryBody: "La vraie confiance est silencieuse. Nos vêtements ne portent aucun logo externe. La valeur de BROOV n'est connue que de celui qui le porte. C'est un standard privé d'excellence pour l'homme qui exige le meilleur là où cela compte le plus.",
   },
 
   newsletter: {

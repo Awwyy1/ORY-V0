@@ -6,7 +6,7 @@ const fallbackProducts: Product[] = [
   {
     id: "fallback-stealth",
     slug: "stealth",
-    name: "ORY STEALTH",
+    name: "BROOV STEALTH",
     material: "BLACK OBSIDIAN SILK",
     price: 85,
     currency: "$",
@@ -21,7 +21,7 @@ const fallbackProducts: Product[] = [
   {
     id: "fallback-carbon",
     slug: "carbon",
-    name: "ORY CARBON",
+    name: "BROOV CARBON",
     material: "MATTE GREY FUSION",
     price: 95,
     currency: "$",
@@ -36,7 +36,7 @@ const fallbackProducts: Product[] = [
   {
     id: "fallback-ice",
     slug: "ice",
-    name: "ORY ICE",
+    name: "BROOV ICE",
     material: "COLD SILVER WEAVE",
     price: 85,
     currency: "$",
@@ -51,7 +51,7 @@ const fallbackProducts: Product[] = [
   {
     id: "fallback-midnight",
     slug: "midnight",
-    name: "ORY MIDNIGHT",
+    name: "BROOV MIDNIGHT",
     material: "ROYAL DEEP BLUE",
     price: 110,
     currency: "$",

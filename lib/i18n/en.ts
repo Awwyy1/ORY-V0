@@ -68,18 +68,18 @@ const en = {
     howToMeasure: "How to Measure",
     measureInstructions: "Measure your natural waist at the narrowest point, typically just above the belly button. Keep the measuring tape snug but not tight. If you are between sizes, we recommend sizing up for a more relaxed fit.",
     fitNote: "Our fit:",
-    fitDescription: "ORY boxers are designed with an anatomical cut for a comfortable, close-to-body fit without compression. The zero-pressure waistband sits naturally at your waist.",
+    fitDescription: "BROOV boxers are designed with an anatomical cut for a comfortable, close-to-body fit without compression. The zero-pressure waistband sits naturally at your waist.",
   },
 
   // Philosophy
   philosophy: {
     title: "Philosophy",
     covenantTitle: "The Silk Covenant",
-    covenantBody: "We believe that luxury shouldn't be fragile. Our philosophy centers on the intersection of biological comfort and mechanical precision. To wear ORY is to enter a pact with your own skin — a promise of zero friction and absolute confidence.",
+    covenantBody: "We believe that luxury shouldn't be fragile. Our philosophy centers on the intersection of biological comfort and mechanical precision. To wear BROOV is to enter a pact with your own skin — a promise of zero friction and absolute confidence.",
     engineeringTitle: "Anatomical Engineering",
     engineeringBody: "We don't design underwear; we engineer habitats. Every curve and stitch is dictated by the physics of the male body in motion. We use 100% Grade 6A Mulberry silk because it is the only material that respects the complexity of human biology.",
     luxuryTitle: "Quiet Luxury",
-    luxuryBody: "True confidence is silent. Our garments carry no external logos. The value of ORY is known only to the wearer. It is a private standard of excellence for the man who demands the best where it matters most.",
+    luxuryBody: "True confidence is silent. Our garments carry no external logos. The value of BROOV is known only to the wearer. It is a private standard of excellence for the man who demands the best where it matters most.",
   },
 
   // Newsletter
