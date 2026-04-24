@@ -20,7 +20,7 @@ export default function TermsOfServicePage() {
           </Link>
           <Link href="/" className="flex-shrink-0">
             <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">
-              ORY
+              BROOV
             </span>
           </Link>
           <div className="w-14" />
@@ -48,8 +48,8 @@ export default function TermsOfServicePage() {
               </h2>
               <p>
                 By accessing or using the website{" "}
-                <span className="text-foreground">www.orysilk.com</span> (the &ldquo;Site&rdquo;),
-                operated by ORY (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), you
+                <span className="text-foreground">www.thebroov.com</span> (the &ldquo;Site&rdquo;),
+                operated by BROOV (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), you
                 agree to be bound by these Terms of Service (&ldquo;Terms&rdquo;). If you do not
                 agree to these Terms, please do not use our Site.
               </p>
@@ -170,10 +170,10 @@ export default function TermsOfServicePage() {
                 <li>
                   To initiate a return, please contact us at{" "}
                   <a
-                    href="mailto:support@orysilk.com"
+                    href="mailto:support@thebroov.com"
                     className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                   >
-                    support@orysilk.com
+                    support@thebroov.com
                   </a>{" "}
                   with your order number.
                 </li>
@@ -195,7 +195,7 @@ export default function TermsOfServicePage() {
               </h2>
               <p>
                 All content on this Site — including text, images, graphics, logos, product designs,
-                and software — is the property of ORY or its licensors and is protected by
+                and software — is the property of BROOV or its licensors and is protected by
                 intellectual property laws. You may not reproduce, distribute, modify, or create
                 derivative works from any content without our prior written consent.
               </p>
@@ -242,7 +242,7 @@ export default function TermsOfServicePage() {
                 10. Limitation of Liability
               </h2>
               <p>
-                To the maximum extent permitted by law, ORY and its officers, directors, employees,
+                To the maximum extent permitted by law, BROOV and its officers, directors, employees,
                 and agents shall not be liable for any indirect, incidental, special, consequential,
                 or punitive damages arising from or related to your use of the Site or purchase of
                 our products. Our total liability for any claim shall not exceed the amount you paid
@@ -256,7 +256,7 @@ export default function TermsOfServicePage() {
                 11. Indemnification
               </h2>
               <p>
-                You agree to indemnify and hold harmless ORY and its affiliates from any claims,
+                You agree to indemnify and hold harmless BROOV and its affiliates from any claims,
                 damages, losses, or expenses (including reasonable legal fees) arising from your
                 violation of these Terms or misuse of the Site.
               </p>
@@ -325,17 +325,17 @@ export default function TermsOfServicePage() {
                 If you have any questions about these Terms, please contact us:
               </p>
               <div className="mt-3 border border-border p-4">
-                <p className="text-foreground font-normal">ORY</p>
+                <p className="text-foreground font-normal">BROOV</p>
                 <p className="mt-1">
                   Email:{" "}
                   <a
-                    href="mailto:support@orysilk.com"
+                    href="mailto:support@thebroov.com"
                     className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                   >
-                    support@orysilk.com
+                    support@thebroov.com
                   </a>
                 </p>
-                <p className="mt-1">Website: www.orysilk.com</p>
+                <p className="mt-1">Website: www.thebroov.com</p>
               </div>
             </section>
           </div>

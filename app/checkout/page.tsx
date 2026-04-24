@@ -250,7 +250,7 @@ export default function CheckoutPage() {
       <div className="border-b border-border">
         <div className="max-w-[1200px] mx-auto px-4 md:px-8 flex items-center justify-between h-16 md:h-20">
           <Link href="/" className="flex-shrink-0">
-            <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">ORY</span>
+            <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">BROOV</span>
           </Link>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Lock strokeWidth={1} className="w-4 h-4" />

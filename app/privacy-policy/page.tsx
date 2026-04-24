@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
           </Link>
           <Link href="/" className="flex-shrink-0">
             <span className="font-display text-xl md:text-2xl font-bold tracking-wide text-foreground">
-              ORY
+              BROOV
             </span>
           </Link>
           <div className="w-14" />
@@ -47,8 +47,8 @@ export default function PrivacyPolicyPage() {
                 1. Introduction
               </h2>
               <p>
-                ORY (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website{" "}
-                <span className="text-foreground">www.orysilk.com</span> (the
+                BROOV (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) operates the website{" "}
+                <span className="text-foreground">www.thebroov.com</span> (the
                 &ldquo;Site&rdquo;). This Privacy Policy explains how we collect, use, disclose,
                 and safeguard your personal information when you visit our Site or make a purchase.
                 By using our Site, you consent to the practices described in this policy.
@@ -81,7 +81,7 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li>
                   <span className="text-foreground">Communications:</span> any information you
-                  provide when contacting us via email at support@orysilk.com.
+                  provide when contacting us via email at support@thebroov.com.
                 </li>
               </ul>
 
@@ -281,10 +281,10 @@ export default function PrivacyPolicyPage() {
               <p className="mt-4">
                 To exercise any of these rights, please contact us at{" "}
                 <a
-                  href="mailto:support@orysilk.com"
+                  href="mailto:support@thebroov.com"
                   className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                 >
-                  support@orysilk.com
+                  support@thebroov.com
                 </a>
                 . We will respond within 30 days (or sooner where required by law).
               </p>
@@ -324,17 +324,17 @@ export default function PrivacyPolicyPage() {
                 rights, please contact us:
               </p>
               <div className="mt-3 border border-border p-4">
-                <p className="text-foreground font-normal">ORY</p>
+                <p className="text-foreground font-normal">BROOV</p>
                 <p className="mt-1">
                   Email:{" "}
                   <a
-                    href="mailto:support@orysilk.com"
+                    href="mailto:support@thebroov.com"
                     className="text-foreground underline underline-offset-2 hover:text-foreground/80 transition-colors"
                   >
-                    support@orysilk.com
+                    support@thebroov.com
                   </a>
                 </p>
-                <p className="mt-1">Website: www.orysilk.com</p>
+                <p className="mt-1">Website: www.thebroov.com</p>
               </div>
             </section>
           </div>

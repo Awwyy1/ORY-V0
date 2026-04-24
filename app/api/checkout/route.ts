@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 })
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.orysilk.com"
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.thebroov.com"
 
     // Build line items from cart — verify prices from our product data
     const lineItems = await Promise.all(

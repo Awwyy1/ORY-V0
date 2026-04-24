@@ -6,10 +6,10 @@ import { motion } from "framer-motion"
 import { useTranslations } from "@/lib/i18n"
 
 const shopLinks = [
-  { name: "ORY Stealth", href: "/product/stealth" },
-  { name: "ORY Carbon", href: "/product/carbon" },
-  { name: "ORY Ice", href: "/product/ice" },
-  { name: "ORY Midnight", href: "/product/midnight" },
+  { name: "BROOV Stealth", href: "/product/stealth" },
+  { name: "BROOV Carbon", href: "/product/carbon" },
+  { name: "BROOV Ice", href: "/product/ice" },
+  { name: "BROOV Midnight", href: "/product/midnight" },
 ]
 
 const paymentMethods = [
@@ -34,7 +34,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
           <div className="md:col-span-1">
             <span className="font-display text-xl font-bold tracking-wide text-foreground">
-              ORY
+              BROOV
             </span>
             <p className="mt-4 text-xs font-light text-muted-foreground leading-relaxed max-w-xs">
               {t.footer.brand}
@@ -102,7 +102,7 @@ export function Footer() {
 
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-xs font-light text-muted-foreground">
-            &copy; 2026 ORY. {t.footer.rights}
+            &copy; 2026 BROOV. {t.footer.rights}
           </p>
 
           <div className="flex items-center gap-2">

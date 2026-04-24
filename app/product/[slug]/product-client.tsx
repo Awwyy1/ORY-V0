@@ -122,7 +122,7 @@ export function ProductClient({ product, otherProducts }: ProductClientProps) {
                 href="/"
                 className="text-[11px] font-light text-muted-foreground hover:text-foreground transition-colors tracking-wide"
               >
-                ORY
+                BROOV
               </Link>
               <ChevronRight strokeWidth={1} className="w-2.5 h-2.5 text-muted-foreground/40" />
               <Link

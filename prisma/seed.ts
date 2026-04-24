@@ -8,7 +8,7 @@ const db = new PrismaClient({ adapter })
 const products = [
   {
     slug: "stealth",
-    name: "ORY STEALTH",
+    name: "BROOV STEALTH",
     material: "BLACK OBSIDIAN SILK",
     price: 8500,
     image: "/images/products/stealth.png",
@@ -41,7 +41,7 @@ const products = [
   },
   {
     slug: "carbon",
-    name: "ORY CARBON",
+    name: "BROOV CARBON",
     material: "MATTE GREY FUSION",
     price: 9500,
     image: "/images/products/carbon.png",
@@ -74,7 +74,7 @@ const products = [
   },
   {
     slug: "ice",
-    name: "ORY ICE",
+    name: "BROOV ICE",
     material: "COLD SILVER WEAVE",
     price: 8500,
     image: "/images/products/ice.png",
@@ -107,7 +107,7 @@ const products = [
   },
   {
     slug: "midnight",
-    name: "ORY MIDNIGHT",
+    name: "BROOV MIDNIGHT",
     material: "ROYAL DEEP BLUE",
     price: 11000,
     image: "/images/products/midnight.png",

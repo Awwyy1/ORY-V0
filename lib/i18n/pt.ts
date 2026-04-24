@@ -64,17 +64,17 @@ const pt: Translations = {
     howToMeasure: "Como Medir",
     measureInstructions: "Meça sua cintura natural no ponto mais estreito, geralmente logo acima do umbigo. Mantenha a fita métrica justa, mas não apertada. Se estiver entre dois tamanhos, recomendamos escolher o tamanho maior para um ajuste mais confortável.",
     fitNote: "Nosso caimento:",
-    fitDescription: "As cuecas ORY são projetadas com um corte anatômico para um ajuste confortável, próximo ao corpo, sem compressão. O cós de pressão zero se posiciona naturalmente na sua cintura.",
+    fitDescription: "As cuecas BROOV são projetadas com um corte anatômico para um ajuste confortável, próximo ao corpo, sem compressão. O cós de pressão zero se posiciona naturalmente na sua cintura.",
   },
 
   philosophy: {
     title: "Filosofia",
     covenantTitle: "O Pacto da Seda",
-    covenantBody: "Acreditamos que o luxo não deveria ser frágil. Nossa filosofia se concentra na interseção do conforto biológico e da precisão mecânica. Usar ORY é entrar em um pacto com a sua própria pele — uma promessa de zero atrito e confiança absoluta.",
+    covenantBody: "Acreditamos que o luxo não deveria ser frágil. Nossa filosofia se concentra na interseção do conforto biológico e da precisão mecânica. Usar BROOV é entrar em um pacto com a sua própria pele — uma promessa de zero atrito e confiança absoluta.",
     engineeringTitle: "Engenharia Anatômica",
     engineeringBody: "Não projetamos roupas íntimas; projetamos habitats. Cada curva e costura é ditada pela física do corpo masculino em movimento. Usamos 100% seda de amoreira Grau 6A porque é o único material que respeita a complexidade da biologia humana.",
     luxuryTitle: "Luxo Discreto",
-    luxuryBody: "A verdadeira confiança é silenciosa. Nossas peças não carregam logos externos. O valor da ORY é conhecido apenas por quem a veste. É um padrão privado de excelência para o homem que exige o melhor onde mais importa.",
+    luxuryBody: "A verdadeira confiança é silenciosa. Nossas peças não carregam logos externos. O valor da BROOV é conhecido apenas por quem a veste. É um padrão privado de excelência para o homem que exige o melhor onde mais importa.",
   },
 
   newsletter: {

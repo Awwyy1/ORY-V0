@@ -11,12 +11,12 @@ import { getAllProducts } from "@/lib/db/products"
 
 export const revalidate = 60
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.orysilk.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.thebroov.com"
 
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "ORY",
+  name: "BROOV",
   url: siteUrl,
   logo: `${siteUrl}/icon.svg`,
   description:
@@ -27,7 +27,7 @@ const organizationSchema = {
 const webSiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "ORY",
+  name: "BROOV",
   url: siteUrl,
   description:
     "Luxury 100% pure silk underwear exclusively for men. The ultimate second skin.",

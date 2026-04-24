@@ -1,6 +1,6 @@
 import type { Product } from "@/lib/products"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.orysilk.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.thebroov.com"
 
 interface ProductSchemaProps {
   product: Product
@@ -21,7 +21,7 @@ export function ProductSchema({ product }: ProductSchemaProps) {
     url,
     brand: {
       "@type": "Brand",
-      name: "ORY",
+      name: "BROOV",
     },
     material: "100% Grade 6A Mulberry Silk",
     category: "Clothing > Underwear > Boxer Briefs",
@@ -36,7 +36,7 @@ export function ProductSchema({ product }: ProductSchemaProps) {
           : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "ORY",
+        name: "BROOV",
       },
       shippingDetails: {
         "@type": "OfferShippingDetails",

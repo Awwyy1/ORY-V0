@@ -143,7 +143,7 @@ export function Header({ variant = "transparent" }: HeaderProps) {
               <span
                 className={`font-display text-lg md:text-xl font-bold tracking-wide transition-colors duration-500 ${textClass}`}
               >
-                ORY
+                BROOV
               </span>
             </Link>
 

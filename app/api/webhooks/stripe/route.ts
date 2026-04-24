@@ -97,7 +97,7 @@ async function handleCheckoutCompleted(session: {
   }
 
   // Generate order number
-  const orderNumber = `ORY-${session.id.slice(-8).toUpperCase()}`
+  const orderNumber = `BRV-${session.id.slice(-8).toUpperCase()}`
 
   // Get payment intent ID
   const paymentId =

@@ -1,5 +1,5 @@
-export const COOKIE_CONSENT_KEY = "ory-cookie-consent"
-export const CONSENT_CHANGE_EVENT = "ory-consent-change"
+export const COOKIE_CONSENT_KEY = "broov-cookie-consent"
+export const CONSENT_CHANGE_EVENT = "broov-consent-change"
 
 export type ConsentValue = "accepted" | "declined" | null
 

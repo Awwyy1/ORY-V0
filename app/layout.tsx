@@ -4,13 +4,13 @@ import { CookieBanner } from '@/components/cookie-banner'
 import { ConsentScripts } from '@/components/consent-scripts'
 import './globals.css'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.orysilk.com'
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.thebroov.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'ORY | Premium Silk Underwear for Men',
-    template: '%s | ORY',
+    default: 'BROOV | Premium Silk Underwear for Men',
+    template: '%s | BROOV',
   },
   description:
     'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. Thermoregulating, hypoallergenic, featherlight — the ultimate second skin. Free shipping on orders over $200.',
@@ -22,11 +22,11 @@ export const metadata: Metadata = {
     'silk boxer briefs men',
     'hypoallergenic underwear',
     'thermoregulating underwear',
-    'ORY silk',
+    'BROOV silk',
   ],
-  authors: [{ name: 'ORY' }],
-  creator: 'ORY',
-  publisher: 'ORY',
+  authors: [{ name: 'BROOV' }],
+  creator: 'BROOV',
+  publisher: 'BROOV',
   formatDetection: {
     telephone: false,
   },
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: siteUrl,
-    siteName: 'ORY',
-    title: 'ORY | Premium Silk Underwear for Men',
+    siteName: 'BROOV',
+    title: 'BROOV | Premium Silk Underwear for Men',
     description:
       'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. The ultimate second skin.',
     images: [
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'ORY — Premium Silk Underwear for Men',
+        alt: 'BROOV — Premium Silk Underwear for Men',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ORY | Premium Silk Underwear for Men',
+    title: 'BROOV | Premium Silk Underwear for Men',
     description:
       'Luxury 100% Grade 6A Mulberry silk underwear exclusively for men. The ultimate second skin.',
     images: ['/og-image.png'],
