@@ -19,7 +19,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const didSwipe = useRef(false)
   const fp = useFormatPrice()
 
-  const images = product.images.length > 0 ? product.images : [product.image, product.hoverImage]
+  const images = product.images.length > 0
+    ? product.images
+    : [product.image, product.hoverImage]
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
@@ -37,9 +39,10 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleTouchEnd = (e: React.TouchEvent) => {
     const dx = e.changedTouches[0].clientX - touchStartX.current
     const dy = e.changedTouches[0].clientY - touchStartY.current
+    const maxIdx = images.length - 1
 
     if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
-      if (dx < 0 && currentImage < images.length - 1) {
+      if (dx < 0 && currentImage < maxIdx) {
         setCurrentImage((prev) => prev + 1)
       } else if (dx > 0 && currentImage > 0) {
         setCurrentImage((prev) => prev - 1)
@@ -63,10 +66,7 @@ export function ProductCard({ product }: ProductCardProps) {
       transition={{ duration: 0.6 }}
       className="group"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false)
-        setCurrentImage(0)
-      }}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <Link
         href={`/product/${product.slug}`}
@@ -80,7 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
           onTouchEnd={handleTouchEnd}
         >
           {/* Desktop: hover swap between main and hover image */}
-          <div className="hidden md:block w-full h-full">
+          <div className="hidden md:block absolute inset-0">
             <Image
               src={product.image}
               alt={product.name}
@@ -102,10 +102,10 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Mobile: swipeable gallery */}
-          <div className="md:hidden w-full h-full">
+          <div className="md:hidden absolute inset-0">
             {images.map((img, idx) => (
               <Image
-                key={idx}
+                key={img + idx}
                 src={img}
                 alt={`${product.name} — ${idx + 1} of ${images.length}`}
                 fill
@@ -113,13 +113,12 @@ export function ProductCard({ product }: ProductCardProps) {
                 className={`object-cover transition-opacity duration-300 ${
                   currentImage === idx ? "opacity-100" : "opacity-0"
                 }`}
-                loading={idx === 0 ? "eager" : "lazy"}
+                priority={idx === 0}
               />
             ))}
 
-            {/* Slide indicators */}
             {images.length > 1 && (
-              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
                 {images.map((_, idx) => (
                   <div
                     key={idx}
