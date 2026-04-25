@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -13,7 +13,47 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [currentImage, setCurrentImage] = useState(0)
+  const touchStartX = useRef(0)
+  const touchStartY = useRef(0)
+  const didSwipe = useRef(false)
   const fp = useFormatPrice()
+
+  const images = product.images.length > 0 ? product.images : [product.image, product.hoverImage]
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
+    didSwipe.current = false
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const dx = Math.abs(e.touches[0].clientX - touchStartX.current)
+    if (dx > 10) {
+      didSwipe.current = true
+    }
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchStartX.current
+    const dy = e.changedTouches[0].clientY - touchStartY.current
+
+    if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0 && currentImage < images.length - 1) {
+        setCurrentImage((prev) => prev + 1)
+      } else if (dx > 0 && currentImage > 0) {
+        setCurrentImage((prev) => prev - 1)
+      }
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (didSwipe.current) {
+      e.preventDefault()
+      e.stopPropagation()
+      didSwipe.current = false
+    }
+  }
 
   return (
     <motion.article
@@ -23,28 +63,76 @@ export function ProductCard({ product }: ProductCardProps) {
       transition={{ duration: 0.6 }}
       className="group"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false)
+        setCurrentImage(0)
+      }}
     >
-      <Link href={`/product/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] overflow-hidden bg-secondary mb-4">
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className={`object-cover transition-opacity duration-700 ${
-              isHovered ? "opacity-0" : "opacity-100"
-            }`}
-          />
-          <Image
-            src={product.hoverImage}
-            alt={`${product.name} alternate view`}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className={`object-cover transition-opacity duration-700 ${
-              isHovered ? "opacity-100" : "opacity-0"
-            }`}
-          />
+      <Link
+        href={`/product/${product.slug}`}
+        className="block"
+        onClick={handleClick}
+      >
+        <div
+          className="relative aspect-[3/4] overflow-hidden bg-secondary mb-4"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Desktop: hover swap between main and hover image */}
+          <div className="hidden md:block w-full h-full">
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="25vw"
+              className={`object-cover transition-opacity duration-700 ${
+                isHovered ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <Image
+              src={product.hoverImage}
+              alt={`${product.name} alternate view`}
+              fill
+              sizes="25vw"
+              className={`object-cover transition-opacity duration-700 ${
+                isHovered ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </div>
+
+          {/* Mobile: swipeable gallery */}
+          <div className="md:hidden w-full h-full">
+            {images.map((img, idx) => (
+              <Image
+                key={idx}
+                src={img}
+                alt={`${product.name} — ${idx + 1} of ${images.length}`}
+                fill
+                sizes="50vw"
+                className={`object-cover transition-opacity duration-300 ${
+                  currentImage === idx ? "opacity-100" : "opacity-0"
+                }`}
+                loading={idx === 0 ? "eager" : "lazy"}
+              />
+            ))}
+
+            {/* Slide indicators */}
+            {images.length > 1 && (
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+                {images.map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-[1.5px] rounded-full transition-all duration-300 ${
+                      currentImage === idx
+                        ? "w-4 bg-white"
+                        : "w-2 bg-white/40"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </Link>
 
