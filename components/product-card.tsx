@@ -14,20 +14,14 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
-  const [failedImages, setFailedImages] = useState<Set<number>>(new Set())
   const touchStartX = useRef(0)
   const touchStartY = useRef(0)
   const didSwipe = useRef(false)
   const fp = useFormatPrice()
 
-  const allImages = [product.image, product.hoverImage, ...product.images].filter(
-    (img, i, arr) => arr.indexOf(img) === i
-  )
-  const images = allImages.filter((_, idx) => !failedImages.has(idx))
-
-  const handleImageError = (originalIdx: number) => {
-    setFailedImages((prev) => new Set(prev).add(originalIdx))
-  }
+  const images = product.images.length > 0
+    ? product.images
+    : [product.image, product.hoverImage]
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
@@ -49,7 +43,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
     if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
       if (dx < 0 && currentImage < maxIdx) {
-        setCurrentImage((prev) => Math.min(prev + 1, maxIdx))
+        setCurrentImage((prev) => prev + 1)
       } else if (dx > 0 && currentImage > 0) {
         setCurrentImage((prev) => prev - 1)
       }
@@ -72,10 +66,7 @@ export function ProductCard({ product }: ProductCardProps) {
       transition={{ duration: 0.6 }}
       className="group"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false)
-        setCurrentImage(0)
-      }}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <Link
         href={`/product/${product.slug}`}
@@ -89,7 +80,7 @@ export function ProductCard({ product }: ProductCardProps) {
           onTouchEnd={handleTouchEnd}
         >
           {/* Desktop: hover swap between main and hover image */}
-          <div className="hidden md:block w-full h-full">
+          <div className="hidden md:block absolute inset-0">
             <Image
               src={product.image}
               alt={product.name}
@@ -111,29 +102,23 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Mobile: swipeable gallery */}
-          <div className="md:hidden w-full h-full">
-            {allImages.map((img, idx) => {
-              if (failedImages.has(idx)) return null
-              const visibleIdx = images.indexOf(img)
-              return (
-                <Image
-                  key={img}
-                  src={img}
-                  alt={`${product.name} — ${visibleIdx + 1} of ${images.length}`}
-                  fill
-                  sizes="50vw"
-                  className={`object-cover transition-opacity duration-300 ${
-                    currentImage === visibleIdx ? "opacity-100" : "opacity-0"
-                  }`}
-                  loading={visibleIdx === 0 ? "eager" : "lazy"}
-                  onError={() => handleImageError(idx)}
-                />
-              )
-            })}
+          <div className="md:hidden absolute inset-0">
+            {images.map((img, idx) => (
+              <Image
+                key={img + idx}
+                src={img}
+                alt={`${product.name} — ${idx + 1} of ${images.length}`}
+                fill
+                sizes="50vw"
+                className={`object-cover transition-opacity duration-300 ${
+                  currentImage === idx ? "opacity-100" : "opacity-0"
+                }`}
+                priority={idx === 0}
+              />
+            ))}
 
-            {/* Slide indicators */}
             {images.length > 1 && (
-              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
                 {images.map((_, idx) => (
                   <div
                     key={idx}

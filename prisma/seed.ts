@@ -13,7 +13,7 @@ const products = [
     price: 11000,
     image: "/images/products/stealth.png",
     hoverImage: "/images/products/stealth-hover.png",
-    images: ["/images/products/stealth.png", "/images/products/stealth-hover.png"],
+    images: ["/images/products/stealth.png", "/images/products/stealth-hover.png", "/images/products/stealth-1.png", "/images/products/stealth-2.png", "/images/products/stealth-3.png", "/images/products/stealth-4.png"],
     description:
       "Pure black obsidian silk boxer. Invisible under any clothing, engineered for zero friction and absolute comfort. The darkest expression of quiet luxury.",
     details: [
@@ -46,7 +46,7 @@ const products = [
     price: 11000,
     image: "/images/products/carbon.png",
     hoverImage: "/images/products/carbon-hover.png",
-    images: ["/images/products/carbon.png", "/images/products/carbon-hover.png"],
+    images: ["/images/products/carbon.png", "/images/products/carbon-hover.png", "/images/products/carbon-1.png", "/images/products/carbon-2.png", "/images/products/carbon-3.png"],
     description:
       "Matte grey fusion silk boxer with carbon-tone finish. A refined neutral that pairs with everything. Engineered for those who demand both form and function.",
     details: [
