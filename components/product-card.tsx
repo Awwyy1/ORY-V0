@@ -14,12 +14,20 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set())
   const touchStartX = useRef(0)
   const touchStartY = useRef(0)
   const didSwipe = useRef(false)
   const fp = useFormatPrice()
 
-  const images = product.images.length > 0 ? product.images : [product.image, product.hoverImage]
+  const allImages = [product.image, product.hoverImage, ...product.images].filter(
+    (img, i, arr) => arr.indexOf(img) === i
+  )
+  const images = allImages.filter((_, idx) => !failedImages.has(idx))
+
+  const handleImageError = (originalIdx: number) => {
+    setFailedImages((prev) => new Set(prev).add(originalIdx))
+  }
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
@@ -37,10 +45,11 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleTouchEnd = (e: React.TouchEvent) => {
     const dx = e.changedTouches[0].clientX - touchStartX.current
     const dy = e.changedTouches[0].clientY - touchStartY.current
+    const maxIdx = images.length - 1
 
     if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) {
-      if (dx < 0 && currentImage < images.length - 1) {
-        setCurrentImage((prev) => prev + 1)
+      if (dx < 0 && currentImage < maxIdx) {
+        setCurrentImage((prev) => Math.min(prev + 1, maxIdx))
       } else if (dx > 0 && currentImage > 0) {
         setCurrentImage((prev) => prev - 1)
       }
@@ -103,19 +112,24 @@ export function ProductCard({ product }: ProductCardProps) {
 
           {/* Mobile: swipeable gallery */}
           <div className="md:hidden w-full h-full">
-            {images.map((img, idx) => (
-              <Image
-                key={idx}
-                src={img}
-                alt={`${product.name} — ${idx + 1} of ${images.length}`}
-                fill
-                sizes="50vw"
-                className={`object-cover transition-opacity duration-300 ${
-                  currentImage === idx ? "opacity-100" : "opacity-0"
-                }`}
-                loading={idx === 0 ? "eager" : "lazy"}
-              />
-            ))}
+            {allImages.map((img, idx) => {
+              if (failedImages.has(idx)) return null
+              const visibleIdx = images.indexOf(img)
+              return (
+                <Image
+                  key={img}
+                  src={img}
+                  alt={`${product.name} — ${visibleIdx + 1} of ${images.length}`}
+                  fill
+                  sizes="50vw"
+                  className={`object-cover transition-opacity duration-300 ${
+                    currentImage === visibleIdx ? "opacity-100" : "opacity-0"
+                  }`}
+                  loading={visibleIdx === 0 ? "eager" : "lazy"}
+                  onError={() => handleImageError(idx)}
+                />
+              )
+            })}
 
             {/* Slide indicators */}
             {images.length > 1 && (
