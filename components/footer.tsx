@@ -6,10 +6,10 @@ import { motion } from "framer-motion"
 import { useTranslations } from "@/lib/i18n"
 
 const shopLinks = [
-  { name: "BROOV Stealth", href: "/product/stealth" },
-  { name: "BROOV Carbon", href: "/product/carbon" },
-  { name: "BROOV Ice", href: "/product/ice" },
-  { name: "BROOV Midnight", href: "/product/midnight" },
+  { name: "BROOV Blue", href: "/product/blue" },
+  { name: "BROOV Black", href: "/product/black" },
+  { name: "BROOV Beige", href: "/product/beige" },
+  { name: "BROOV Burgundy", href: "/product/burgundy" },
 ]
 
 const paymentMethods = [
