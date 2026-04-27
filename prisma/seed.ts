@@ -13,7 +13,7 @@ const products = [
     price: 11000,
     image: "/images/products/stealth.png",
     hoverImage: "/images/products/stealth-hover.png",
-    images: ["/images/products/stealth.png", "/images/products/stealth-hover.png", "/images/products/stealth-1.png", "/images/products/stealth-2.png", "/images/products/stealth-3.png", "/images/products/stealth-4.png"],
+    images: ["/images/products/stealth.png", "/images/products/stealth-hover.png", "/images/products/stealth-1.png", "/images/products/stealth-2.png", "/images/products/stealth-3.png"],
     description:
       "Pure black obsidian silk boxer. Invisible under any clothing, engineered for zero friction and absolute comfort. The darkest expression of quiet luxury.",
     details: [
@@ -79,7 +79,7 @@ const products = [
     price: 11000,
     image: "/images/products/ice.png",
     hoverImage: "/images/products/ice-hover.png",
-    images: ["/images/products/ice.png", "/images/products/ice-hover.png"],
+    images: ["/images/products/ice.png", "/images/products/ice-hover.png", "/images/products/ice-1.png", "/images/products/ice-2.png", "/images/products/ice-3.png"],
     description:
       "Cold silver weave silk boxer with a subtle metallic sheen. Thermoregulating properties keep you cool when it matters. The lightest touch against your skin.",
     details: [
@@ -112,7 +112,7 @@ const products = [
     price: 11000,
     image: "/images/products/midnight.png",
     hoverImage: "/images/products/midnight-hover.png",
-    images: ["/images/products/midnight.png", "/images/products/midnight-hover.png"],
+    images: ["/images/products/midnight.png", "/images/products/midnight-hover.png", "/images/products/midnight-1.png", "/images/products/midnight-2.png", "/images/products/midnight-3.png"],
     description:
       "Royal deep blue silk boxer — our flagship piece. The deepest indigo meets the finest 6A Mulberry silk. For moments that demand your absolute best.",
     details: [
