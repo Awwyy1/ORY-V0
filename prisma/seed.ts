@@ -12,8 +12,8 @@ const products = [
     material: "AZURE SILK",
     price: 11000,
     image: "/images/products/stealth.png",
-    hoverImage: "/images/products/stealth-hover.png",
-    images: ["/images/products/stealth.png", "/images/products/stealth-hover.png", "/images/products/stealth-1.png", "/images/products/stealth-2.png", "/images/products/stealth-3.png"],
+    hoverImage: "/images/products/stealth-2.png",
+    images: ["/images/products/stealth.png", "/images/products/stealth-2.png", "/images/products/stealth-3.png", "/images/products/stealth-4.png", "/images/products/stealth-5.png"],
     description:
       "Azure silk boxer in the purest sky blue. Lightweight, breathable, and effortlessly refined. The colour of calm confidence against your skin.",
     details: [
@@ -46,7 +46,7 @@ const products = [
     price: 11000,
     image: "/images/products/carbon.png",
     hoverImage: "/images/products/carbon-hover.png",
-    images: ["/images/products/carbon.png", "/images/products/carbon-hover.png", "/images/products/carbon-1.png", "/images/products/carbon-2.png", "/images/products/carbon-3.png"],
+    images: ["/images/products/carbon.png", "/images/products/carbon-hover.png", "/images/products/carbon-1.png", "/images/products/carbon-4.png", "/images/products/carbon-5.png"],
     description:
       "Pure noir silk boxer. Invisible under any clothing, engineered for zero friction and absolute comfort. The definitive expression of quiet luxury.",
     details: [
@@ -111,8 +111,8 @@ const products = [
     material: "BORDEAUX SILK",
     price: 11000,
     image: "/images/products/midnight.png",
-    hoverImage: "/images/products/midnight-hover.png",
-    images: ["/images/products/midnight.png", "/images/products/midnight-hover.png", "/images/products/midnight-1.png", "/images/products/midnight-2.png", "/images/products/midnight-3.png"],
+    hoverImage: "/images/products/midnight-1.png",
+    images: ["/images/products/midnight.png", "/images/products/midnight-1.png", "/images/products/midnight-2.png", "/images/products/midnight-3.png", "/images/products/midnight-4.png"],
     description:
       "Bordeaux silk boxer in deep burgundy — our boldest piece. Rich wine tones meet the finest 6A Mulberry silk. For moments that demand your absolute best.",
     details: [
